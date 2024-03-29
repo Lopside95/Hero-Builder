@@ -1,0 +1,35 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  pic       String
+}
+
+
+model Hero {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  damage  Int
+  speed   Int
+  img  String  
+  bootsImg  String  
+  weaponImg String  
+}
+
+// const heroSchema = z.object({
+//   name: z.string(),
+//   damage: z.number(),
+//   speed: z.number(),
+//   img: z.string(),
+//   bootsImg: z.string(),
+//   weaponImg: z.string(),
+// });
