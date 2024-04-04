@@ -27,14 +27,15 @@ export const picsSchema = z.object({
   url: z.string(),
 });
 
-const heroDetails = z.object({
-  totalMS: z.number(),
-  totalDmg: z.number(),
-  backstory: z.string(),
+export const heroDetails = z.object({
+  totalMS: z.string(),
+  totalDmg: z.string(),
+  // backstory: z.string(),
+  profilePic: z.string(),
   // name: z.string(),
   name: z.string().min(2, "You need a name").max(25),
-  url: picsSchema,
-  id: z.string(),
+  // url: picsSchema,
+  // id: z.string(),
 });
 
 export const finalHeroSchema = z.object({
@@ -42,7 +43,7 @@ export const finalHeroSchema = z.object({
   boots: boots,
 
   details: heroDetails,
-  gold: z.number(),
+  // gold: z.number(),
   // gold: z.number().refine((val) => val === 0, {
   //   message: "You still have gold",
   // }),

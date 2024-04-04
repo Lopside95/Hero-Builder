@@ -48,8 +48,8 @@ model Weapon {
 
 model HeroDetails {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  totalMS    Int
-  totalDmg   Int
+  totalMS    String
+  totalDmg   String
   name       String
   profilePic String
   // bootsId    String @db.ObjectId
