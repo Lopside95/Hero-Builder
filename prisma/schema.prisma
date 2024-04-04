@@ -18,8 +18,8 @@ model User {
 model Hero {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  damage  Int
-  speed   Int
+  damage  String
+  speed   String
   img  String  
   bootsImg  String  
   weaponImg String  

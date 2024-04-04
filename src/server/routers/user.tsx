@@ -2,6 +2,7 @@ import { z } from "zod";
 import { procedure, router } from "../trpc";
 import { userSchema } from "@/types/user";
 import { prisma } from "@/pages/api/db";
+import { heroSchema } from "@/types/hero";
 
 export const appRouter = router({
   // user: procedure.input(userSchema).query((opts) => {
@@ -26,6 +27,25 @@ export const appRouter = router({
       },
     });
     return newUser;
+  }),
+
+  createNewHero: procedure.input(heroSchema).mutation(async ({ input }) => {
+    const newHero = await prisma.hero.create({
+      data: {
+        name: input.name,
+        damage: input.damage,
+        speed: input.speed,
+        img: input.img,
+        bootsImg: input.bootsImg,
+        weaponImg: input.weaponImg,
+      },
+    });
+    return newHero;
+  }),
+
+  getAllHeroes: procedure.query(async (opts) => {
+    const allHeroes = await prisma.hero.findMany();
+    return allHeroes;
   }),
 });
 

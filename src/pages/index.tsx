@@ -4,6 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { User, userSchema } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+type Dog = {
+  name: string;
+  age: number;
+};
 
 const HomePage = () => {
   const form = useForm<User>({
@@ -14,6 +21,11 @@ const HomePage = () => {
       pic: "",
     },
   });
+
+  const athena: Dog = {
+    name: "sdf",
+    age: 0,
+  };
 
   const { data: user } = trpc.findAll.useQuery();
 
@@ -36,12 +48,17 @@ const HomePage = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div style={{ background: "black", width: "100%", height: "screen" }}>
-          <input {...form.register("name")} />
-          <input {...form.register("email")} />
-          <input {...form.register("pic")} />
+        <div className="bg-gray-500 min-h-screen">
+          {/* <div style={{ background: "black", width: "100%", height: "screen" }}> */}
+          <Input
+            {...form.register("name")}
+            className="bg-black"
+            placeholder="name"
+          />
+          <input {...form.register("email")} placeholder="email" />
+          <input {...form.register("pic")} placeholder="pic" />
         </div>
-        <button>Submit</button>
+        <Button variant="destructive">HEllo</Button>
       </form>
     </FormProvider>
   );

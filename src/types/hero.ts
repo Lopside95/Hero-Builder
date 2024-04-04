@@ -2,8 +2,8 @@ import z from "zod";
 
 export const heroSchema = z.object({
   name: z.string(),
-  damage: z.number(),
-  speed: z.number(),
+  damage: z.string(),
+  speed: z.string(),
   img: z.string(),
   bootsImg: z.string(),
   weaponImg: z.string(),
