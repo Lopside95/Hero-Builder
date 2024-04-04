@@ -5,15 +5,6 @@ import { prisma } from "@/pages/api/db";
 import { heroSchema } from "@/types/hero";
 
 export const appRouter = router({
-  // user: procedure.input(userSchema).query((opts) => {
-  //   return {
-  //     firstUser: {
-  //       name: "Leroy",
-  //       email: "Jenkins",
-  //       pic: "sdfjsndf",
-  //     },
-  //   };
-  // }),
   findAll: procedure.query(async (opts) => {
     const allUsers = await prisma.user.findMany();
   }),
@@ -43,7 +34,7 @@ export const appRouter = router({
     return newHero;
   }),
 
-  getAllHeroes: procedure.query(async (opts) => {
+  getAllHeroes: procedure.query(async () => {
     const allHeroes = await prisma.hero.findMany();
     return allHeroes;
   }),
