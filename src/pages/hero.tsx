@@ -87,6 +87,7 @@ const HeroPage = () => {
             <Input {...form.register("name")} placeholder="name" />
             <Input {...form.register("boots")} placeholder="boots" />
             <Input {...form.register("weapon")} placeholder="weapon" />
+            <Input {...form.register("user")} placeholder="User" />
             {/* <Input {...form.register("profilePic")} /> */}
             {/* <Input {...form.register("bootsImg")} placeholder="bootsIMg" />
             <Input {...form.register("weaponImg")} placeholder="wpnImg" /> */}
