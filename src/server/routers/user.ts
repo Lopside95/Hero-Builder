@@ -1,15 +1,15 @@
 import { prisma } from "@/pages/api/db";
-import { procedure, router } from "../trpc";
+import { publicProcedure, createTRPCRouter } from "../trpc";
 import { userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 
-export const userRouter = router({
-  findAll: procedure.query(async () => {
+export const userRouter = createTRPCRouter({
+  findAll: publicProcedure.query(async () => {
     const allUsers = await prisma.user.findMany();
     return allUsers;
   }),
 
-  createUser: procedure.input(userSchema).mutation(async ({ input }) => {
+  createUser: publicProcedure.input(userSchema).mutation(async ({ input }) => {
     const newUser = await prisma.user.create({
       data: {
         name: input.name,
@@ -20,16 +20,40 @@ export const userRouter = router({
 
     return newUser;
   }),
-  findEvery: procedure.query(async () => {
-    try {
-      const allUsers = await prisma.user.findMany();
-      return allUsers;
-    } catch (error) {
-      console.error("Failed to execute query:", error);
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "An error occurred while retrieving users.",
+  findUserByEmail: publicProcedure
+    .input(userSchema)
+    .query(async ({ input }) => {
+      const foundUser = await prisma.user.findUnique({
+        where: {
+          email: input.email,
+        },
       });
-    }
-  }),
+    }),
+  findHeroesByUser: publicProcedure
+    .input(userSchema)
+    .query(async ({ input }) => {
+      // const userEmail = await prisma.user.findUnique({
+      //   where: {
+      //     email: input.email
+      //   }
+
+      // })
+      const userHeroes = await prisma.user.findUnique({
+        where: {
+          email: input.email,
+        },
+        include: {
+          FinalHero: true,
+        },
+      });
+      return userHeroes;
+    }),
+  // findUserHeroes: publicProcedure.input(userSchema).query(async () => {
+  //   const userEmail = await prisma.user.findUnique({
+  //     where: {
+  //       email: input.email,
+  //     }
+  //   })
+
+  // })
 });

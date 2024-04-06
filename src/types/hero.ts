@@ -1,22 +1,23 @@
 import z, { TypeOf } from "zod";
+import { userSchema } from "./user";
 
-export const boots = z.object({
+export const bootsSchema = z.object({
   // bootsId: z.string(),
   // name: z.string().min(1, "You need boots"),
   name: z.string().min(1, "You need to select boots"),
   moveSpeed: z.number(),
-  // bonus: z.string(),
+  bonus: z.string(),
   description: z.string(),
   cost: z.number(),
   url: z.string(),
 });
 
-export const weapon = z.object({
+export const weaponSchema = z.object({
   // weaponId: z.string(),
   // name: z.string().min(1, "You need a weapon"),
   name: z.string().min(1, "You need to select a weapon"),
   damage: z.number(),
-  // bonus: z.string(),
+  bonus: z.string(),
   description: z.string(),
   cost: z.number(),
   url: z.string(),
@@ -30,7 +31,7 @@ export const picsSchema = z.object({
 export const heroDetails = z.object({
   totalMS: z.string(),
   totalDmg: z.string(),
-  // backstory: z.string(),
+  backstory: z.string(),
   profilePic: z.string(),
   // name: z.string(),
   name: z.string().min(2, "You need a name").max(25),
@@ -39,10 +40,12 @@ export const heroDetails = z.object({
 });
 
 export const finalHeroSchema = z.object({
-  weapon: weapon,
-  boots: boots,
+  weapon: weaponSchema,
+  boots: bootsSchema,
 
   details: heroDetails,
+  email: z.string(),
+  // user: userSchema,
   // gold: z.number(),
   // gold: z.number().refine((val) => val === 0, {
   //   message: "You still have gold",
@@ -55,23 +58,25 @@ export const testHero = z.object({
   weapon: z.string(),
 });
 
+export const exampleHeroSchema = z.object({
+  name: z.string(),
+  damage: z.string(),
+  speed: z.string(),
+  img: z.string(),
+  bootsImg: z.string(),
+  weaponImg: z.string(),
+});
+
+export type FinalHeroSchema = z.infer<typeof finalHeroSchema>;
 export type HeroPics = z.infer<typeof picsSchema>;
 export type HeroDetails = z.infer<typeof heroDetails>;
-export type Boots = z.infer<typeof boots>;
-export type Weapon = z.infer<typeof weapon>;
+export type Boots = z.infer<typeof bootsSchema>;
+export type Weapon = z.infer<typeof weaponSchema>;
+export type ExampleHeroSchema = z.infer<typeof exampleHeroSchema>;
 
 export type TestHero = z.infer<typeof testHero>;
 
 // import z from "zod";
-
-// export const heroSchema = z.object({
-//   name: z.string(),
-//   damage: z.string(),
-//   speed: z.string(),
-//   img: z.string(),
-//   bootsImg: z.string(),
-//   weaponImg: z.string(),
-// });
 
 // export type Hero = z.infer<typeof heroSchema>;
 

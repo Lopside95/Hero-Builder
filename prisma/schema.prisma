@@ -8,13 +8,16 @@ generator client {
 }
 
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  email String @unique
-  pic   String
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String        @unique
+  pic         String
+  FinalHero   FinalHero[]
+  ExampleHero ExampleHero[]
+  simpleHero  SimpleHero[]
 }
 
-model Hero {
+model ExampleHero {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   damage    String
@@ -22,6 +25,17 @@ model Hero {
   img       String
   bootsImg  String
   weaponImg String
+  userId    String @db.ObjectId
+  user      User   @relation(fields: [userId], references: [id])
+}
+
+model SimpleHero {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  boots  String
+  weapon String
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Boots {
@@ -29,7 +43,8 @@ model Boots {
   // bootsId     String @db.ObjectId
   name        String
   moveSpeed   Int
-  description String?
+  description String
+  bonus       String
   cost        Int
   url         String
   FinalHero   FinalHero[]
@@ -40,7 +55,8 @@ model Weapon {
   // weaponId    String @db.ObjectId
   name        String
   damage      Int
-  description String?
+  description String
+  bonus       String
   cost        Int
   url         String
   FinalHero   FinalHero[]
@@ -52,14 +68,7 @@ model HeroDetails {
   totalDmg   String
   name       String
   profilePic String
-  // bootsId    String @db.ObjectId
-  // weaponId   String @db.ObjectId
-  // boots      Boots  @relation(fields: [bootsId], references: [id])
-  // weapon     Weapon @relation(fields: [weaponId], references: [id])
-  // Boots      Boots?  @relation(fields: [bootsId], references: [id])
-  // bootsId    String? @db.ObjectId
-  // Weapon     Weapon? @relation(fields: [weaponId], references: [id])
-  // weaponId   String? @db.ObjectId
+  backstory  String
   FinalHero  FinalHero[]
 }
 
@@ -71,8 +80,18 @@ model FinalHero {
   boots     Boots       @relation(fields: [bootsId], references: [id])
   weapon    Weapon      @relation(fields: [weaponId], references: [id])
   details   HeroDetails @relation(fields: [detailsId], references: [id])
+  userId    String      @db.ObjectId
+  user      User        @relation(fields: [userId], references: [id])
 }
 
+// bootsId    String @db.ObjectId
+// weaponId   String @db.ObjectId
+// boots      Boots  @relation(fields: [bootsId], references: [id])
+// weapon     Weapon @relation(fields: [weaponId], references: [id])
+// Boots      Boots?  @relation(fields: [bootsId], references: [id])
+// bootsId    String? @db.ObjectId
+// Weapon     Weapon? @relation(fields: [weaponId], references: [id])
+// weaponId   String? @db.ObjectId
 // model FinalHero {
 // id          String  @id @default(auto()) @map("_id") @db.ObjectId
 //   name  String

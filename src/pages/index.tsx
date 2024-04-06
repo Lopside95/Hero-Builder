@@ -6,38 +6,93 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
 import { useEffect, useState } from "react";
 import { prisma } from "./api/db";
-
-type Dog = {
-  name: string;
-  age: number;
-};
+import {
+  Boots,
+  FinalHeroSchema,
+  finalHeroSchema,
+  heroDetails,
+} from "@/types/hero";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { TRPCError } from "@trpc/server";
+import Navbar from "@/components/Navbar";
 
 const HomePage = () => {
-  const form = useForm<User>({
-    resolver: zodResolver(userSchema),
+  // const allBoots = trpc.shop.getAllBoots.useQuery();
+  // const allWeapons = trpc.shop.getAllWeapons.useQuery();
+
+  // const firstBoots = allBoots[0]
+
+  const { data: bootsAndWeapons } = trpc.shop.getAllItems.useQuery();
+  // const {bootsData: boots, weaponData: weapon} = trpc.shop.getAllItems.useQuery()
+
+  const bootsArr = bootsAndWeapons ? bootsAndWeapons.boots : [];
+  const weaponsArr = bootsAndWeapons ? bootsAndWeapons.weapons : [];
+  const firstBoots = bootsArr[0];
+  const firstWeapon = weaponsArr[0];
+
+  // const form = useForm<FinalHeroSchema>({
+  //   resolver: zodResolver(finalHeroSchema),
+  //   defaultValues: {
+  //     // make a thing so that every time making new hero it randomises stuff?
+  //     boots: firstBoots,
+  //     weapon: firstWeapon,
+  //     details: {
+  //       totalMS: 0,
+  //       totalDmg: 0,
+  //       backstory: "",
+  //       name: "",
+  //       profilePic: "",
+  //     },
+  //     user: {
+  //       name: "",
+  //       email: "",
+  //       pic: "",
+  //     },
+  //     // gold: 90,
+  //   },
+  // });
+  const form = useForm<FinalHeroSchema>({
+    resolver: zodResolver(finalHeroSchema),
     defaultValues: {
-      name: "",
+      // make a thing so that every time making new hero it randomises stuff?
+      boots: {
+        name: "",
+        moveSpeed: 0,
+        bonus: "",
+        description: "",
+        cost: 0,
+        url: "",
+      },
+      weapon: {
+        name: "",
+        damage: 0,
+        bonus: "",
+        description: "",
+        cost: 0,
+        url: "",
+      },
+      details: {
+        totalMS: "",
+        totalDmg: "",
+        backstory: "",
+        name: "",
+        profilePic: "",
+      },
       email: "",
-      pic: "",
+      // gold: 90,
     },
   });
 
-  const athena: Dog = {
-    name: "sdf",
-    age: 0,
-  };
-
-  const [allUsers, setAllUsers] = useState<User[]>();
-
-  // const { data: user } = trpc.findAll.useQuery();
-
-  // const { data: user, isLoading } = trpc.user.findAll.useQuery();
-
-  // const { data: user } = trpc.user.findEvery.useQuery();
-
+  console.log(bootsAndWeapons);
   const { data: user } = trpc.user.findAll.useQuery();
-
-  // const users = user;
 
   const createAUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
@@ -45,34 +100,93 @@ const HomePage = () => {
     },
   });
 
-  console.log("user", user);
+  const createNewFinalHero = trpc.hero.createFinalHero.useMutation({
+    onSuccess: async () => {
+      alert("Hero created!");
+    },
+  });
+
   // const makeNew = trpc.createUser.useMutation({
   //   onSuccess: async () => {
   //     alert("wogoohohoho");
   //   },
   // });
 
-  const onSubmit: SubmitHandler<User> = async (data: User) => {
-    // await makeNew.mutateAsync(data);
-
-    await createAUser.mutateAsync(data);
+  const onSubmit: SubmitHandler<FinalHeroSchema> = async (
+    data: FinalHeroSchema
+  ) => {
+    await createNewFinalHero.mutateAsync(data);
+    // try {
+    //   await createNewFinalHero.mutateAsync(data);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
-
-  // const {data: user} = trpc.createUser.useMutation({
-  //   onSuccess: async () => {
-  //     await trpc.user.
-  //   }
-  // })
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-gray-500 min-h-screen">
-          {/* <div style={{ background: "black", width: "100%", height: "screen" }}> */}
-          <Input {...form.register("name")} placeholder="name" />
-          <Input {...form.register("email")} placeholder="email" />
-          <Input {...form.register("pic")} placeholder="pic" />
-          <Button variant="default">HEllo</Button>
+        <div className="bg-gray-500 flex flex-col items-center justify-center align-middle min-h-screen">
+          <Navbar />
+          <div className="w-1/4 ">
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="select boots" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Boots</SelectLabel>
+                  {bootsArr.map((boot) => {
+                    return (
+                      <SelectItem
+                        key={boot.id}
+                        value={boot.name}
+                        {...form.register("boots")}
+                      >
+                        {boot.name}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="select boots" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Boots</SelectLabel>
+                  {weaponsArr.map((weapon) => {
+                    return (
+                      <SelectItem
+                        key={weapon.id}
+                        value={weapon.name}
+                        {...form.register("weapon")}
+                      >
+                        {weapon.name}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <div>
+              <Input {...form.register("details.name")} />
+              <Input {...form.register("details.backstory")} />
+              <Input {...form.register("details.profilePic")} />
+              <Input {...form.register("details.totalDmg")} />
+              <Input {...form.register("details.totalMS")} />
+            </div>
+            {/* <Input {...form.register("boots")} />
+            <Input {...form.register("weapon")} /> */}
+            <Input {...form.register("email")} placeholder="email" />
+            {/* <Input {...form.register("user.name")} placeholder="name" `/>
+            <Input {...form.register("user.pic")} placeholder="pic" />` */}
+            <Button variant="default" type="submit">
+              Submit
+            </Button>
+          </div>
         </div>
       </form>
     </FormProvider>
