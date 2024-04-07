@@ -92,7 +92,9 @@ const HomePage = () => {
   });
 
   console.log(bootsAndWeapons);
-  const { data: user } = trpc.user.findAll.useQuery();
+  // const { data: user } = trpc.user.findAll.useQuery();
+
+  const [currentUser, setCurrentUser] = useState<User>();
 
   const createAUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
@@ -100,11 +102,17 @@ const HomePage = () => {
     },
   });
 
-  const createNewFinalHero = trpc.hero.createFinalHero.useMutation({
-    onSuccess: async () => {
-      alert("Hero created!");
-    },
-  });
+  // const { data: currentUser } = trpc.user.getUserById.useQuery();
+
+  const handleFind = async () => {
+    console.log("currentUser", currentUser);
+  };
+
+  // const createNewFinalHero = trpc.hero.createFinalHero.useMutation({
+  //   onSuccess: async () => {
+  //     alert("Hero created!");
+  //   },
+  // });
 
   // const makeNew = trpc.createUser.useMutation({
   //   onSuccess: async () => {
@@ -115,7 +123,7 @@ const HomePage = () => {
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    await createNewFinalHero.mutateAsync(data);
+    // await createNewFinalHero.mutateAsync(data);
     // try {
     //   await createNewFinalHero.mutateAsync(data);
     // } catch (error) {
@@ -189,6 +197,9 @@ const HomePage = () => {
           </div>
         </div>
       </form>
+      <div>
+        <Button onClick={handleFind}>Find</Button>
+      </div>
     </FormProvider>
   );
 };

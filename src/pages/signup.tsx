@@ -1,31 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { heroDetails } from "@/types/hero";
+import { User, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
-import { z } from "zod";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-export const simpleHeroSchema = z.object({
-  name: z.string(),
-  boots: z.string(),
-  weapon: z.string(),
-  user: z.string(),
-});
-
-type HeroDetails = z.infer<typeof heroDetails>;
-
-type Simple = z.infer<typeof simpleHeroSchema>;
-
-const HeroPage = () => {
+const Signup = () => {
   // const form = useForm<HeroDetails>({
   //   resolver: zodResolver(heroDetails),
   //   defaultValues: {
@@ -35,12 +16,13 @@ const HeroPage = () => {
   //     profilePic: "",
   //   },
   // });
-  const form = useForm<Simple>({
-    resolver: zodResolver(simpleHeroSchema),
+  const form = useForm<User>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       name: "",
-      boots: "",
-      weapon: "",
+      email: "",
+      password: "",
+      pic: "",
     },
   });
 
@@ -55,20 +37,20 @@ const HeroPage = () => {
   //   },
   // });
 
+  const createNewUser = trpc.user.createUser.useMutation({
+    onSuccess: () => {
+      alert("user created");
+    },
+  });
+
   // const { data: heroes, isLoading, isError } = trpc.getAllHeroes.useQuery();
 
   //all the routers go through 'api'
 
-  // const createNewSimple = trpc.hero.createSimpleHero.useMutation({
-  //   onSuccess: async () => {
-  //     alert("It worked");
-  //   },
-  // });
-
-  const onSubmit: SubmitHandler<Simple> = async (data: Simple) => {
+  const onSubmit: SubmitHandler<User> = async (data: User) => {
     // await createNewDetails.mutateAsync(data);
 
-    // await createNewSimple.mutateAsync(data);
+    await createNewUser.mutateAsync(data);
 
     console.log("data", data);
   };
@@ -85,9 +67,9 @@ const HeroPage = () => {
             {/* <p className="text-white">{firstHero?.name}</p>
             <img src={firstHero?.profilePic} alt="" className="w-80" /> */}
             <Input {...form.register("name")} placeholder="name" />
-            <Input {...form.register("boots")} placeholder="boots" />
-            <Input {...form.register("weapon")} placeholder="weapon" />
-            <Input {...form.register("user")} placeholder="User" />
+            <Input {...form.register("email")} placeholder="email" />
+            <Input {...form.register("password")} placeholder="pass" />
+            <Input {...form.register("pic")} placeholder="pic" />
             {/* <Input {...form.register("profilePic")} /> */}
             {/* <Input {...form.register("bootsImg")} placeholder="bootsIMg" />
             <Input {...form.register("weaponImg")} placeholder="wpnImg" /> */}
@@ -100,4 +82,4 @@ const HeroPage = () => {
   );
 };
 
-export default HeroPage;
+export default Signup;

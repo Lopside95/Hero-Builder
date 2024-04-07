@@ -35,6 +35,26 @@ const Navbar = () => {
       <span className="flex gap-5">
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            activePage("/login") ? "underline underline-offset-[6px]   " : ""
+          }`}
+          variant="link"
+        >
+          <Link tabIndex={-1} href="/login">
+            Login
+          </Link>
+        </Button>
+        <Button
+          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            activePage("/signup") ? "underline underline-offset-[6px]   " : ""
+          }`}
+          variant="link"
+        >
+          <Link tabIndex={-1} href="/signup">
+            Sign up
+          </Link>
+        </Button>
+        <Button
+          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/hero") ? "underline underline-offset-[6px]   " : ""
           }`}
           variant="link"

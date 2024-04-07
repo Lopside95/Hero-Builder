@@ -4,6 +4,7 @@ import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { DefaultSession, ISODateString } from "next-auth";
 // import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
+import { type Session } from "next-auth";
 
 // export interface DefaultSession {
 //   user?: {
@@ -65,6 +66,8 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
     },
   });
 });
+
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 
 // import { prisma } from "@/pages/api/db";
 // import { initTRPC } from "@trpc/server";

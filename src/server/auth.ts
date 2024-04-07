@@ -1,5 +1,5 @@
 import { prisma } from "@/pages/api/db";
-import { userSchema } from "@/types/user";
+import { loginSchema, userSchema } from "@/types/user";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -8,7 +8,7 @@ import {
 } from "next-auth";
 import { type DefaultJWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
       //eslint-disable-next-lin
       async authorize(credentials) {
         try {
-          const validUser = await userSchema.parseAsync(credentials);
+          const validUser = await loginSchema.parseAsync(credentials);
 
           const user = await prisma.user.findUnique({
             where: {
@@ -87,6 +87,7 @@ export const authOptions: NextAuthOptions = {
           console.log("IM ONLY CALLED when SIGN-IN");
           return user;
         } catch (error) {
+          console.error(error);
           return null;
         }
       },
@@ -124,7 +125,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/",
+    signIn: "/login",
     newUser: "/signup",
     error: "/",
   },
@@ -141,7 +142,10 @@ export const getServerAuthSession = async (ctx: {
 }) => {
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
 
-  if (!session) return null;
+  if (!session) {
+    console.log("no session");
+    return null;
+  }
 
   const user = await prisma.user.findUnique({
     where: {

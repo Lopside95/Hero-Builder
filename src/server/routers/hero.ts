@@ -27,26 +27,26 @@ export const heroRouter = createTRPCRouter({
     return allHeroes;
   }),
 
-  createSimpleHero: publicProcedure
-    .input(simpleHeroSchema)
-    .mutation(async ({ input, ctx }) => {
-      const userName = ctx.session?.user?.name;
-      const newSimple = await prisma.simpleHero.create({
-        data: {
-          name: input.name,
-          boots: input.boots,
-          weapon: input.weapon,
-          user: {
-            connect: {
-              name: input.user,
-              id: input.user,
-              // id: ctx.session?.user.
-            },
-          },
-        },
-      });
-      return newSimple;
-    }),
+  // createSimpleHero: publicProcedure
+  //   .input(simpleHeroSchema)
+  //   .mutation(async ({ input, ctx }) => {
+  //     const userName = ctx.session?.user?.name;
+  //     const newSimple = await prisma.simpleHero.create({
+  //       data: {
+  //         name: input.name,
+  //         boots: input.boots,
+  //         weapon: input.weapon,
+  //         user: {
+  //           connect: {
+  //             name: input.user,
+  //             id: input.user,
+  //             // id: ctx.session?.user.
+  //           },
+  //         },
+  //       },
+  //     });
+  //     return newSimple;
+  //   }),
 
   // createNewHero: publicProcedure
   //   .input(exampleHeroSchema)
