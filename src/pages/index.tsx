@@ -94,7 +94,7 @@ const HomePage = () => {
   console.log(bootsAndWeapons);
   // const { data: user } = trpc.user.findAll.useQuery();
 
-  const [currentUser, setCurrentUser] = useState<User>();
+  const [currentUser, setCurrentUser] = useState();
 
   const createAUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
@@ -102,11 +102,16 @@ const HomePage = () => {
     },
   });
 
+  const { data: user } = trpc.user.getUserById.useQuery();
   // const { data: currentUser } = trpc.user.getUserById.useQuery();
 
   const handleFind = async () => {
-    console.log("currentUser", currentUser);
+    if (user) {
+      setCurrentUser(user);
+    }
   };
+
+  console.log("currentUser", currentUser);
 
   // const createNewFinalHero = trpc.hero.createFinalHero.useMutation({
   //   onSuccess: async () => {

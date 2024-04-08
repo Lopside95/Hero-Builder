@@ -5,6 +5,8 @@ import { DefaultSession, ISODateString } from "next-auth";
 // import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import { type Session } from "next-auth";
+import { error } from "console";
+import { getServerAuthSession } from "./auth";
 
 // export interface DefaultSession {
 //   user?: {
@@ -29,7 +31,9 @@ const createTRPCInnerContext = (opts: CreateContextOptions) => {
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
-  const session = await getSession({ req: opts.req });
+  const session = await getServerAuthSession({ req, res });
+  // const session = await getSession({ req });
+  // const session = await getSession({ req: opts.req });
 
   return createTRPCInnerContext({
     session,
@@ -49,7 +53,7 @@ export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Not logged in" });
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "no session" });
   }
 
   const user = await ctx.prisma.user.findUnique({
@@ -57,11 +61,13 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   });
 
   if (!user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "user not found" });
   }
+
   return next({
     ctx: {
       // infers the `session` as non-nullable
+      // session: { ...ctx.session },
       session: { ...ctx.session, user },
     },
   });

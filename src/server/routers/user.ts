@@ -24,22 +24,62 @@ export const userRouter = createTRPCRouter({
       return newUser;
     }),
 
-  findUserByEmail: publicProcedure
+  userByEmail: publicProcedure
     .input(userSchema)
-    .query(async ({ input }) => {
-      const foundUser = await prisma.user.findUnique({
+    .query(async ({ input, ctx }) => {
+      const currentUser = await ctx.prisma.user.findUnique({
         where: {
-          email: input.email,
+          email: ctx.session?.user.email,
         },
       });
+
+      return currentUser;
+      // const foundUser = await prisma.user.findUnique({
+      //   where: {
+      //     email: input.email,
+      //   },
+      // });
     }),
+
+  updateUser: protectedProcedure
+    .input(userSchema)
+    .mutation(async ({ ctx, input }) => {
+      // const user = await ctx.prisma.user.findUnique({
+      //   where: {
+      //     id: ctx.session.user.id,
+      //   },
+      // });
+
+      const updatedUser = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          name: input.name,
+          email: input.email,
+          password: input.password,
+          pic: input.pic,
+        },
+      });
+
+      return updatedUser;
+    }),
+
   getUserById: protectedProcedure.query(async ({ ctx }) => {
     const user = await ctx.prisma.user.findUnique({
       where: {
         id: ctx.session?.user.id,
       },
     });
-    console.log("user", user);
+
+    if (!user) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "couldn't find",
+      });
+    }
+
+    console.log("userInRouter", user);
     return user;
   }),
 

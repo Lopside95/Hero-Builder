@@ -54,11 +54,20 @@ const LoginPage = () => {
   //   },
   // });
   const [error, setError] = useState<string>("");
+  const [currentUser, setCurrentUser] = useState<User>();
 
   const { control } = useFormContext();
   // const { data: heroes, isLoading, isError } = trpc.getAllHeroes.useQuery();
 
   //all the routers go through 'api'
+
+  // const { data: user } = trpc.user.getUserById.useQuery();
+
+  // console.log("user", user);
+  // const handleGet = async () => {
+  //   await trpc.user.getUserById.useQuery()
+
+  // };
 
   const allUsers = trpc.user.findAll.useQuery();
 
@@ -67,12 +76,14 @@ const LoginPage = () => {
       setError("");
       const res = await signIn("credentials", {
         ...data,
-        callbackUrl: "/",
+        callbackUrl: "/login",
         redirect: false,
       });
 
       if (!res?.error) {
         console.log("sing in worked");
+        setCurrentUser;
+
         //eslint-disable-next-line
         // router.push("/");
       } else {
@@ -83,6 +94,13 @@ const LoginPage = () => {
     }
 
     console.log("data", data);
+  };
+
+  const { data: user } = trpc.user.getUserById.useQuery();
+  const handleGet = async () => {
+    setCurrentUser(user);
+
+    console.log("user", user);
   };
 
   return (
@@ -136,6 +154,9 @@ const LoginPage = () => {
           </div>
         </div>
       </form>
+      <div>
+        <Button onClick={handleGet}>Get</Button>
+      </div>
     </FormProvider>
   );
 };
@@ -160,12 +181,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerAuthSession(context);
 
   if (session) {
+    console.log("Session is active");
     return {
       redirect: {
         destination: "/",
         permanent: false,
       },
     };
+  } else if (!session) {
+    console.log("session not active");
   }
 
   return {

@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { heroDetails } from "@/types/hero";
+import { User, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -35,12 +36,13 @@ const HeroPage = () => {
   //     profilePic: "",
   //   },
   // });
-  const form = useForm<Simple>({
-    resolver: zodResolver(simpleHeroSchema),
+  const form = useForm<User>({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       name: "",
-      boots: "",
-      weapon: "",
+      email: "",
+      password: "",
+      pic: "",
     },
   });
 
@@ -65,8 +67,18 @@ const HeroPage = () => {
   //   },
   // });
 
-  const onSubmit: SubmitHandler<Simple> = async (data: Simple) => {
+  const trpcUtils = trpc.useUtils();
+  const setUpdates = trpc.user.updateUser.useMutation({
+    onSuccess: async () => {
+      alert("updated");
+      await trpcUtils.user.findAll.invalidate();
+    },
+  });
+
+  const onSubmit: SubmitHandler<User> = async (data: User) => {
     // await createNewDetails.mutateAsync(data);
+
+    await setUpdates.mutateAsync(data);
 
     // await createNewSimple.mutateAsync(data);
 
@@ -82,15 +94,15 @@ const HeroPage = () => {
         ) : ( */}
         <div className="bg-base-bg flex flex-col items-center py-20 w-full min-h-screen">
           <div className="w-1/3 ">
-            {/* <p className="text-white">{firstHero?.name}</p>
-            <img src={firstHero?.profilePic} alt="" className="w-80" /> */}
             <Input {...form.register("name")} placeholder="name" />
+            <Input {...form.register("email")} placeholder="email" />
+            <Input {...form.register("password")} placeholder="pass" />
+            <Input {...form.register("pic")} placeholder="pic" />
+            {/* <Input {...form.register("name")} placeholder="name" />
             <Input {...form.register("boots")} placeholder="boots" />
             <Input {...form.register("weapon")} placeholder="weapon" />
-            <Input {...form.register("user")} placeholder="User" />
-            {/* <Input {...form.register("profilePic")} /> */}
-            {/* <Input {...form.register("bootsImg")} placeholder="bootsIMg" />
-            <Input {...form.register("weaponImg")} placeholder="wpnImg" /> */}
+            <Input {...form.register("user")} placeholder="User" /> */}
+
             <Button>Submit</Button>
           </div>
         </div>
