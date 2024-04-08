@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { publicProcedure, createTRPCRouter } from "../trpc";
+import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { userSchema } from "@/types/user";
 import { prisma } from "@/pages/api/db";
 import { exampleHeroSchema, finalHeroSchema, heroDetails } from "@/types/hero";
-import { simpleHeroSchema } from "@/pages/hero";
+import { simpleHeroSchema } from "@/pages/updateUser";
 
 // export const heroSchema = z.object({
 //   name: z.string(),
@@ -25,6 +25,35 @@ export const heroRouter = createTRPCRouter({
   getAllHeroes: publicProcedure.query(async () => {
     const allHeroes = await prisma.exampleHero.findMany();
     return allHeroes;
+  }),
+  newHero: protectedProcedure
+    .input(exampleHeroSchema)
+    .mutation(async ({ input, ctx }) => {
+      const newHero = await ctx.prisma.exampleHero.create({
+        data: {
+          name: input.name,
+          damage: input.damage,
+          speed: input.speed,
+          bootsImg: input.bootsImg,
+          weaponImg: input.weaponImg,
+          img: input.img,
+          user: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+      });
+      return newHero;
+    }),
+  getExample: protectedProcedure.query(async ({ ctx }) => {
+    const example = await ctx.prisma.exampleHero.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+
+    return example;
   }),
 
   // createSimpleHero: publicProcedure

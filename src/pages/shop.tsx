@@ -1,25 +1,13 @@
 import Navbar from "@/components/Navbar";
 import BootsForm from "@/components/bootsForm";
+import { Button } from "@/components/ui/button";
+import WeaponsForm from "@/components/weaponForm";
 import { Boots, bootsSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 const Shop = () => {
-  // const form = useForm<FinalHeroSchema>({
-  //   resolver: zodResolver(finalHeroSchema),
-  //   defaultValues: {
-  //     // make a thing so that every time making new hero it randomises stuff?
-  //     boots: {
-  //       id: "",
-  //       name: "",
-  //       moveSpeed: 0,
-  //       // bonus: "",
-  //       description: "",
-  //       cost: 0,
-  //       url: "",
-  //     },
-
   const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
   const form = useForm<Boots>({
     resolver: zodResolver(bootsSchema),
@@ -34,15 +22,18 @@ const Shop = () => {
 
   // console.log("boots", boots);
 
+  const onSubmit = () => {};
+
   return (
     <FormProvider {...form}>
-      <form>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
-        <div className="w-full min-h-screen bg-base-bg text-base-txtClr">
-          <h1 className=" text-base-txtClr">Shop What</h1>
-          <div>
+        <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
+          <div className="flex">
             <BootsForm />
+            <WeaponsForm />
           </div>
+          <Button>Submit</Button>
         </div>
       </form>
     </FormProvider>

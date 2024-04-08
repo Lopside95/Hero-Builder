@@ -82,7 +82,6 @@ const LoginPage = () => {
 
       if (!res?.error) {
         console.log("sing in worked");
-        setCurrentUser;
 
         //eslint-disable-next-line
         // router.push("/");

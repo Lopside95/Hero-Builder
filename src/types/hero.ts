@@ -29,8 +29,8 @@ export const picsSchema = z.object({
 });
 
 export const heroDetails = z.object({
-  totalMS: z.string(),
-  totalDmg: z.string(),
+  totalSpeed: z.string(),
+  totalDamage: z.string(),
   backstory: z.string(),
   profilePic: z.string(),
   // name: z.string(),

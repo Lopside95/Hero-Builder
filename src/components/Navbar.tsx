@@ -54,9 +54,8 @@ const Navbar = () => {
           </Link>
         </Button>
       </span>
-      <span>
-        <AuthButton />
-      </span>
+
+      <AuthButton />
       <span className="flex gap-5">
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
@@ -90,6 +89,16 @@ const Navbar = () => {
         </Button>
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            activePage("/example") ? "underline underline-offset-[6px]   " : ""
+          }`}
+          variant="link"
+        >
+          <Link tabIndex={-1} href="/example">
+            Example
+          </Link>
+        </Button>
+        <Button
+          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/shop") ? "underline underline-offset-[6px]   " : ""
           }`}
           variant="link"
@@ -99,11 +108,6 @@ const Navbar = () => {
           </Link>
         </Button>
       </span>
-      {/* 
-      <Button>
-      <Link href="/preview">Preview</Link>
-      </Button> */}
-      {/* <ModeToggle /> */}
     </div>
   );
 };

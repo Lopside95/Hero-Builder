@@ -18,18 +18,6 @@ model User {
   simpleHero  SimpleHero[]
 }
 
-model ExampleHero {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  damage    String
-  speed     String
-  img       String
-  bootsImg  String
-  weaponImg String
-  userId    String @db.ObjectId
-  user      User   @relation(fields: [userId], references: [id])
-}
-
 model SimpleHero {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
   name   String
@@ -64,13 +52,13 @@ model Weapon {
 }
 
 model HeroDetails {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  totalMS    String
-  totalDmg   String
-  name       String
-  profilePic String
-  backstory  String
-  FinalHero  FinalHero[]
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  totalSpeed  Int
+  totalDamage Int
+  name        String
+  profilePic  String
+  backstory   String
+  FinalHero   FinalHero[]
 }
 
 model FinalHero {
@@ -83,6 +71,18 @@ model FinalHero {
   details   HeroDetails @relation(fields: [detailsId], references: [id])
   userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id])
+}
+
+model ExampleHero {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  damage    String
+  speed     String
+  img       String
+  bootsImg  String
+  weaponImg String
+  userId    String @db.ObjectId
+  user      User   @relation(fields: [userId], references: [id])
 }
 
 // bootsId    String @db.ObjectId

@@ -76,7 +76,7 @@ const BootsForm = () => {
                 {boots?.map((boot) => {
                   return (
                     <CarouselItem key={boot.name} className="pl-5">
-                      <Card className="flex flex-col bg-base-bg h-full items-center justify-center gap-5 py-5 w-full relative">
+                      <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full relative">
                         {/* <h3
                           className={`${
                             watchedBoots.name === boot.name
@@ -105,6 +105,8 @@ const BootsForm = () => {
                         <FormControl key={boot.name}>
                           <FormItem>
                             <Button
+                              variant="select"
+                              className="hover:text-base-bg  hover:bg-base-txtClr"
                               // className="hover:text-base-bg  hover:bg-base-txtClr"
                               //   variant={
                               //     watchedBoots.name === boot.name
