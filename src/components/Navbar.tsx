@@ -13,11 +13,33 @@ import { Button, ButtonProps } from "./ui/button";
 // import { ModeToggle } from "./themeSwitcher";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const router = useRouter();
 
   const activePage = (path: string) => router.pathname === path;
+
+  const { data: session } = useSession();
+
+  const AuthButton = () => {
+    if (session) {
+      return (
+        <>
+          {session.user.email}
+          <br />
+          <Button onClick={() => signOut()}>Sign out</Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          Not signed in <br />
+          <Button onClick={() => signIn()}>Sign in</Button>
+        </>
+      );
+    }
+  };
   return (
     <div className="flex border justify-evenly bg-base-bg border-none fixed z-50  mb-12 top-0 w-full  gap-32">
       <span>
@@ -31,6 +53,9 @@ const Navbar = () => {
             Home
           </Link>
         </Button>
+      </span>
+      <span>
+        <AuthButton />
       </span>
       <span className="flex gap-5">
         <Button

@@ -108,6 +108,31 @@ export const userRouter = createTRPCRouter({
 
   //     return true;
   //   }),
+  getUserByEmail: publicProcedure
+    .input(z.object({ email: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      if (!input.email) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invalid email",
+        });
+      }
+
+      const existingUser = await ctx.prisma.user.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
+
+      if (existingUser) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "User already exists",
+        });
+      }
+
+      return true;
+    }),
 
   findHeroesByUser: publicProcedure
     .input(userSchema)
