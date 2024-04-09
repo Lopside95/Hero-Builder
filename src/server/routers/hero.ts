@@ -26,26 +26,78 @@ export const heroRouter = createTRPCRouter({
     const allHeroes = await prisma.exampleHero.findMany();
     return allHeroes;
   }),
-  newHero: protectedProcedure
-    .input(exampleHeroSchema)
-    .mutation(async ({ input, ctx }) => {
-      const newHero = await ctx.prisma.exampleHero.create({
-        data: {
-          name: input.name,
-          damage: input.damage,
-          speed: input.speed,
-          bootsImg: input.bootsImg,
-          weaponImg: input.weaponImg,
-          img: input.img,
-          user: {
-            connect: {
-              id: ctx.session.user.id,
-            },
-          },
-        },
-      });
-      return newHero;
-    }),
+  getBootsById: publicProcedure.query(async ({ ctx }) => {}),
+
+  // createFinalhero: protectedProcedure
+  //   .input(finalHeroSchema)
+  //   .mutation(async ({ ctx, input }) => {
+  //     const bootsPayload = {
+  //       name: input.boots.name,
+  //       moveSpeed: input.boots.moveSpeed,
+  //       bonus: input.boots.bonus,
+  //       description: input.boots.description,
+  //       cost: input.boots.cost,
+  //       url: input.boots.url,
+  //     };
+
+  //     const weaponPayload = {
+  //       name: input.weapon.name,
+  //       damage: input.weapon.damage,
+  //       bonus: input.weapon.bonus,
+  //       description: input.weapon.description,
+  //       cost: input.weapon.cost,
+  //       url: input.weapon.url,
+  //     };
+
+  //     const detailsPayload = {
+  //       name: input.details.name,
+  //       totalSpeed: input.details.totalSpeed,
+  //       totalDamage: input.details.totalDamage,
+  //       backstory: input.details.backstory,
+  //       profilePic: input.details.profilePic,
+  //     };
+
+  //     const newFinalHero = await ctx.prisma.finalHero.create({
+  //       data: {
+  //         boots: {
+  //           create: {
+  //             name: input.boots.name,
+  //             moveSpeed: input.boots.moveSpeed,
+  //             bonus: input.boots.bonus,
+  //             description: input.boots.description,
+  //             cost: input.boots.cost,
+  //             url: input.boots.url,
+  //           },
+  //         },
+  //         weapon: {
+  //           create: {
+  //             name: input.weapon.name,
+  //             damage: input.weapon.damage,
+  //             bonus: input.weapon.bonus,
+  //             description: input.weapon.description,
+  //             cost: input.weapon.cost,
+  //             url: input.weapon.url,
+  //           },
+  //         },
+  //         details: {
+  //           create: {
+  //             name: input.details.name,
+  //             totalSpeed: input.details.totalSpeed,
+  //             totalDamage: input.details.totalDamage,
+  //             backstory: input.details.backstory,
+  //             profilePic: input.details.profilePic,
+  //           },
+  //         },
+  //         user: {
+  //           connect: {
+  //             id: ctx.session.user.id,
+  //           },
+  //         },
+  //       },
+  //     });
+  //     return newFinalHero;
+  //   }),
+
   getExample: protectedProcedure.query(async ({ ctx }) => {
     const example = await ctx.prisma.exampleHero.findMany({
       where: {
@@ -56,6 +108,14 @@ export const heroRouter = createTRPCRouter({
     return example;
   }),
 
+  getHeroDetails: publicProcedure.query(async () => {
+    const firstDetails = await prisma.heroDetails.findFirst();
+    return firstDetails;
+  }),
+  getAllBoots: publicProcedure.query(async () => {
+    const allBoots = await prisma.boots.findMany();
+    return allBoots;
+  }),
   // createSimpleHero: publicProcedure
   //   .input(simpleHeroSchema)
   //   .mutation(async ({ input, ctx }) => {
@@ -108,14 +168,28 @@ export const heroRouter = createTRPCRouter({
   //     },
   //   });
   // }),
-  getHeroDetails: publicProcedure.query(async () => {
-    const firstDetails = await prisma.heroDetails.findFirst();
-    return firstDetails;
-  }),
-  getAllBoots: publicProcedure.query(async () => {
-    const allBoots = await prisma.boots.findMany();
-    return allBoots;
-  }),
+
+  // newHero: protectedProcedure
+  //   .input(exampleHeroSchema)
+  //   .mutation(async ({ input, ctx }) => {
+  //     const newHero = await ctx.prisma.exampleHero.create({
+  //       data: {
+  //         name: input.name,
+  //         damage: input.damage,
+  //         speed: input.speed,
+  //         bootsImg: input.bootsImg,
+  //         weaponImg: input.weaponImg,
+  //         img: input.img,
+  //         user: {
+  //           connect: {
+  //             id: ctx.session.user.id,
+  //           },
+  //         },
+  //       },
+  //     });
+  //     return newHero;
+  //   }),
+
   // createFinalHero: publicProcedure
   //   .input(finalHeroSchema)
   //   .mutation(async ({ input }) => {

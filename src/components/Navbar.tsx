@@ -69,6 +69,16 @@ const Navbar = () => {
         </Button>
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            activePage("/create") ? "underline underline-offset-[6px]   " : ""
+          }`}
+          variant="link"
+        >
+          <Link tabIndex={-1} href="/create">
+            Create
+          </Link>
+        </Button>
+        <Button
+          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/signup") ? "underline underline-offset-[6px]   " : ""
           }`}
           variant="link"
@@ -79,12 +89,12 @@ const Navbar = () => {
         </Button>
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/hero") ? "underline underline-offset-[6px]   " : ""
+            activePage("/profile") ? "underline underline-offset-[6px]   " : ""
           }`}
           variant="link"
         >
-          <Link tabIndex={-1} href="/hero">
-            Hero
+          <Link tabIndex={-1} href="/profile">
+            Profile
           </Link>
         </Button>
         <Button
@@ -97,7 +107,7 @@ const Navbar = () => {
             Example
           </Link>
         </Button>
-        <Button
+        {/* <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/shop") ? "underline underline-offset-[6px]   " : ""
           }`}
@@ -106,7 +116,7 @@ const Navbar = () => {
           <Link tabIndex={-1} href="/shop">
             Shop
           </Link>
-        </Button>
+        </Button> */}
       </span>
     </div>
   );

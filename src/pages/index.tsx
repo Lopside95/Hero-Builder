@@ -1,372 +1,84 @@
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { User, userSchema } from "@/types/user";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { trpc } from "@/utils/trpc";
-import { useEffect, useState } from "react";
-import { prisma } from "./api/db";
-import {
-  Boots,
-  FinalHeroSchema,
-  finalHeroSchema,
-  heroDetails,
-} from "@/types/hero";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { TRPCError } from "@trpc/server";
 import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import { HeroPics } from "@/types/hero";
+import Link from "next/link";
+import { useQueries, useQuery } from "react-query";
+import LoginPage from "./login";
 
-const HomePage = () => {
-  // const allBoots = trpc.shop.getAllBoots.useQuery();
-  // const allWeapons = trpc.shop.getAllWeapons.useQuery();
+// export interface CreateProps {
+//   gameInfo: GameInformation;
+// }
+type IndexPics = {
+  id: string;
+  url: string;
+}[];
 
-  // const firstBoots = allBoots[0]
+const Home = () => {
+  // const { isLoading, setIsLoading } = useFinalHero();
 
-  const { data: bootsAndWeapons } = trpc.shop.getAllItems.useQuery();
-  // const {bootsData: boots, weaponData: weapon} = trpc.shop.getAllItems.useQuery()
+  // const [images, setImages] = useState<HeroPics[] | undefined>();
 
-  const bootsArr = bootsAndWeapons ? bootsAndWeapons.boots : [];
-  const weaponsArr = bootsAndWeapons ? bootsAndWeapons.weapons : [];
-  const firstBoots = bootsArr[0];
-  const firstWeapon = weaponsArr[0];
-
-  // const form = useForm<FinalHeroSchema>({
-  //   resolver: zodResolver(finalHeroSchema),
-  //   defaultValues: {
-  //     // make a thing so that every time making new hero it randomises stuff?
-  //     boots: firstBoots,
-  //     weapon: firstWeapon,
-  //     details: {
-  //       totalMS: 0,
-  //       totalDmg: 0,
-  //       backstory: "",
-  //       name: "",
-  //       profilePic: "",
-  //     },
-  //     user: {
-  //       name: "",
-  //       email: "",
-  //       pic: "",
-  //     },
-  //     // gold: 90,
-  //   },
-  // });
-  const form = useForm<FinalHeroSchema>({
-    resolver: zodResolver(finalHeroSchema),
-    defaultValues: {
-      // make a thing so that every time making new hero it randomises stuff?
-      boots: {
-        name: "",
-        moveSpeed: 0,
-        bonus: "",
-        description: "",
-        cost: 0,
-        url: "",
-      },
-      weapon: {
-        name: "",
-        damage: 0,
-        bonus: "",
-        description: "",
-        cost: 0,
-        url: "",
-      },
-      details: {
-        totalSpeed: "",
-        totalDamage: "",
-        backstory: "",
-        name: "",
-        profilePic: "",
-      },
-      email: "",
-      // gold: 90,
+  const indexPics: IndexPics = [
+    {
+      id: "bootsPic",
+      url: "https://storage.cloud.google.com/shop-boots/elderboots.jpg?authuser=1",
     },
-  });
-
-  console.log(bootsAndWeapons);
-  // const { data: user } = trpc.user.findAll.useQuery();
-
-  const [currentUser, setCurrentUser] = useState();
-
-  const createAUser = trpc.user.createUser.useMutation({
-    onSuccess: async () => {
-      alert("made");
+    {
+      id: "weaponPic",
+      url: "https://storage.cloud.google.com/weapon-items/eagleStaff.jpg?authuser=1",
     },
-  });
+    {
+      id: "profilePic",
+      url: "https://storage.cloud.google.com/hero-profiles/orc.png?authuser=1",
+    },
+  ];
 
-  const { data: user } = trpc.user.getUserById.useQuery();
+  // const fetchPics = async () => {
+  //   const res = await fetch(
+  //     "https://storage.cloud.google.com/shop-boots/elderboots.jpg?authuser=1"
+  //   );
 
-  const onSubmit: SubmitHandler<FinalHeroSchema> = async (
-    data: FinalHeroSchema
-  ) => {
-    // await createNewFinalHero.mutateAsync(data);
-    // try {
-    //   await createNewFinalHero.mutateAsync(data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
+  //   const data = res.json();
+
+  //   console.log("data", data);
+  // };
+
+  // useEffect(() => {
+  //   fetchPics();
+  // }, []);
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-gray-500 flex flex-col items-center justify-center align-middle min-h-screen">
-          <Navbar />
-          <div className="w-1/4 ">
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="select boots" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Boots</SelectLabel>
-                  {bootsArr.map((boot) => {
-                    return (
-                      <SelectItem
-                        key={boot.id}
-                        value={boot.name}
-                        {...form.register("boots")}
-                      >
-                        {boot.name}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="select boots" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Boots</SelectLabel>
-                  {weaponsArr.map((weapon) => {
-                    return (
-                      <SelectItem
-                        key={weapon.id}
-                        value={weapon.name}
-                        {...form.register("weapon")}
-                      >
-                        {weapon.name}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <div>
-              <Input {...form.register("details.name")} />
-              <Input {...form.register("details.backstory")} />
-              <Input {...form.register("details.profilePic")} />
-              <Input {...form.register("details.totalDamage")} />
-              <Input {...form.register("details.totalSpeed")} />
-            </div>
+    <div className="bg-base-bg items-center flex flex-col min-h-screen">
+      <Navbar />
+      <div className="w-3/4 flex flex-col items-center gap-5 pt-20 ">
+        <span className="text-6xl text-base-txtClr">
+          Welcome to the hero builder
+        </span>
+        <span className="text-3xl w-2/3 text-center py-10 text-base-txtClr">
+          Buy items and use your remaining gold to adjust the final stats of
+          your hero before saving them to a gallery and building your team
+        </span>
+        <Button variant="select" className="w-1/4 h-12 text-lg">
+          <Link href="/items">Get Building</Link>
+        </Button>
 
-            <Input {...form.register("email")} placeholder="email" />
-
-            <Button variant="default" type="submit">
-              Submit
-            </Button>
-          </div>
+        <div className="flex gap-8 py-10 ">
+          {indexPics.map((pic) => {
+            return (
+              <img
+                loading="eager"
+                key={pic.id}
+                alt=""
+                src={pic.url}
+                className="w-52 rounded-full"
+              />
+            );
+          })}
         </div>
-      </form>
-    </FormProvider>
+      </div>
+      {/* <LoginPage /> */}
+    </div>
   );
 };
 
-export default HomePage;
-// import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-// import { User, userSchema } from "@/types/user";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import { trpc } from "@/utils/trpc";
-// import { useEffect, useState } from "react";
-// import { prisma } from "./api/db";
-// import {
-//   Boots,
-//   FinalHeroSchema,
-//   finalHeroSchema,
-//   heroDetails,
-// } from "@/types/hero";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-// import { TRPCError } from "@trpc/server";
-// import Navbar from "@/components/Navbar";
-
-// const HomePage = () => {
-//   // const allBoots = trpc.shop.getAllBoots.useQuery();
-//   // const allWeapons = trpc.shop.getAllWeapons.useQuery();
-
-//   // const firstBoots = allBoots[0]
-
-//   const { data: bootsAndWeapons } = trpc.shop.getAllItems.useQuery();
-//   // const {bootsData: boots, weaponData: weapon} = trpc.shop.getAllItems.useQuery()
-
-//   const bootsArr = bootsAndWeapons ? bootsAndWeapons.boots : [];
-//   const weaponsArr = bootsAndWeapons ? bootsAndWeapons.weapons : [];
-//   const firstBoots = bootsArr[0];
-//   const firstWeapon = weaponsArr[0];
-
-//   // const form = useForm<FinalHeroSchema>({
-//   //   resolver: zodResolver(finalHeroSchema),
-//   //   defaultValues: {
-//   //     // make a thing so that every time making new hero it randomises stuff?
-//   //     boots: firstBoots,
-//   //     weapon: firstWeapon,
-//   //     details: {
-//   //       totalMS: 0,
-//   //       totalDmg: 0,
-//   //       backstory: "",
-//   //       name: "",
-//   //       profilePic: "",
-//   //     },
-//   //     user: {
-//   //       name: "",
-//   //       email: "",
-//   //       pic: "",
-//   //     },
-//   //     // gold: 90,
-//   //   },
-//   // });
-//   const form = useForm<FinalHeroSchema>({
-//     resolver: zodResolver(finalHeroSchema),
-//     defaultValues: {
-//       // make a thing so that every time making new hero it randomises stuff?
-//       boots: {
-//         name: "",
-//         moveSpeed: 0,
-//         bonus: "",
-//         description: "",
-//         cost: 0,
-//         url: "",
-//       },
-//       weapon: {
-//         name: "",
-//         damage: 0,
-//         bonus: "",
-//         description: "",
-//         cost: 0,
-//         url: "",
-//       },
-//       details: {
-//         totalSpeed: "",
-//         totalDamage: "",
-//         backstory: "",
-//         name: "",
-//         profilePic: "",
-//       },
-//       email: "",
-//       // gold: 90,
-//     },
-//   });
-
-//   console.log(bootsAndWeapons);
-//   // const { data: user } = trpc.user.findAll.useQuery();
-
-//   const [currentUser, setCurrentUser] = useState();
-
-//   const createAUser = trpc.user.createUser.useMutation({
-//     onSuccess: async () => {
-//       alert("made");
-//     },
-//   });
-
-//   const { data: user } = trpc.user.getUserById.useQuery();
-
-//   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
-//     data: FinalHeroSchema
-//   ) => {
-//     // await createNewFinalHero.mutateAsync(data);
-//     // try {
-//     //   await createNewFinalHero.mutateAsync(data);
-//     // } catch (error) {
-//     //   console.error(error);
-//     // }
-//   };
-
-//   return (
-//     <FormProvider {...form}>
-//       <form onSubmit={form.handleSubmit(onSubmit)}>
-//         <div className="bg-gray-500 flex flex-col items-center justify-center align-middle min-h-screen">
-//           <Navbar />
-//           <div className="w-1/4 ">
-//             <Select>
-//               <SelectTrigger>
-//                 <SelectValue placeholder="select boots" />
-//               </SelectTrigger>
-//               <SelectContent>
-//                 <SelectGroup>
-//                   <SelectLabel>Boots</SelectLabel>
-//                   {bootsArr.map((boot) => {
-//                     return (
-//                       <SelectItem
-//                         key={boot.id}
-//                         value={boot.name}
-//                         {...form.register("boots")}
-//                       >
-//                         {boot.name}
-//                       </SelectItem>
-//                     );
-//                   })}
-//                 </SelectGroup>
-//               </SelectContent>
-//             </Select>
-//             <Select>
-//               <SelectTrigger>
-//                 <SelectValue placeholder="select boots" />
-//               </SelectTrigger>
-//               <SelectContent>
-//                 <SelectGroup>
-//                   <SelectLabel>Boots</SelectLabel>
-//                   {weaponsArr.map((weapon) => {
-//                     return (
-//                       <SelectItem
-//                         key={weapon.id}
-//                         value={weapon.name}
-//                         {...form.register("weapon")}
-//                       >
-//                         {weapon.name}
-//                       </SelectItem>
-//                     );
-//                   })}
-//                 </SelectGroup>
-//               </SelectContent>
-//             </Select>
-//             <div>
-//               <Input {...form.register("details.name")} />
-//               <Input {...form.register("details.backstory")} />
-//               <Input {...form.register("details.profilePic")} />
-//               <Input {...form.register("details.totalDamage")} />
-//               <Input {...form.register("details.totalSpeed")} />
-//             </div>
-
-//             <Input {...form.register("email")} placeholder="email" />
-
-//             <Button variant="default" type="submit">
-//               Submit
-//             </Button>
-//           </div>
-//         </div>
-//       </form>
-//     </FormProvider>
-//   );
-// };
-
-// export default HomePage;
+export default Home;

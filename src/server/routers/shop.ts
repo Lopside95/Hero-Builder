@@ -21,6 +21,13 @@ export const shopRouter = createTRPCRouter({
       weapons: allWeapons,
     };
   }),
+  // getBootsById: publicProcedure.query(async ({input})=> {
+  //   const theBoots = await prisma.boots.findUnique({
+  //     where: {
+  //       id: input.boots.id
+  //     }
+  //   })
+  // })
 });
 // import { z } from "zod";
 // import { publicProcedure, router } from "../trpc";

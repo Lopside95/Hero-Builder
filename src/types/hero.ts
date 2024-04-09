@@ -29,8 +29,8 @@ export const picsSchema = z.object({
 });
 
 export const heroDetails = z.object({
-  totalSpeed: z.string(),
-  totalDamage: z.string(),
+  totalSpeed: z.number(),
+  totalDamage: z.number(),
   backstory: z.string(),
   profilePic: z.string(),
   // name: z.string(),
@@ -44,9 +44,8 @@ export const finalHeroSchema = z.object({
   boots: bootsSchema,
 
   details: heroDetails,
-  email: z.string(),
   // user: userSchema,
-  // gold: z.number(),
+  gold: z.number(),
   // gold: z.number().refine((val) => val === 0, {
   //   message: "You still have gold",
   // }),

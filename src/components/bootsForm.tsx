@@ -36,8 +36,6 @@ const BootsForm = () => {
 
   // const { isLoading, setIsLoading } = useFinalHero();
 
-  console.log("boots", boots);
-
   const bootsDictionary = boots
     ? boots.reduce((acc, boot) => {
         acc[boot.name] = {
@@ -54,11 +52,7 @@ const BootsForm = () => {
       }, {} as Record<string | number, Boots>)
     : {};
 
-  const watchedBootsName = watch("boots.name");
-
-  console.log("watchedBootsName", watchedBootsName);
-
-  // console.log("watchedBoots", watchedBoots);
+  const watchedBoots = watch("boots");
 
   return (
     <FormField
@@ -105,19 +99,30 @@ const BootsForm = () => {
                         <FormControl key={boot.name}>
                           <FormItem>
                             <Button
-                              variant="select"
-                              className="hover:text-base-bg  hover:bg-base-txtClr"
+                              // variant="select"
+                              variant={
+                                watchedBoots.name === boot.name
+                                  ? "disabled"
+                                  : "select"
+                              }
+                              className=""
                               // className="hover:text-base-bg  hover:bg-base-txtClr"
                               //   variant={
                               //     watchedBoots.name === boot.name
                               //       ? "disabled"
                               //       : "select"
                               //   }
-                              onClick={() =>
-                                setValue("boots.name", watchedBootsName)
-                              }
+                              // onClick={() =>
+                              //   setValue("boots.name", watchedBootsName)
+                              // }
                               {...field}
                               value={boot.name}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                field.onChange(boot);
+                                setValue("boots", boot);
+                                setValue("details.totalSpeed", boot.moveSpeed);
+                              }}
                               // onClick={() => {
                               //   field.onChange(boot);
                               //   setValue("details.totalMS", boot.moveSpeed);

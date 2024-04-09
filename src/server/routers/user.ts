@@ -9,6 +9,14 @@ export const userRouter = createTRPCRouter({
     const allUsers = await prisma.user.findMany();
     return allUsers;
   }),
+  getHeroesByUserId: protectedProcedure.query(async ({ ctx }) => {
+    const userHeroes = await prisma.finalHero.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+    return userHeroes;
+  }),
 
   createUser: publicProcedure
     .input(userSchema)
@@ -83,31 +91,6 @@ export const userRouter = createTRPCRouter({
     return user;
   }),
 
-  // getUserByEmail: publicProcedure
-  //   .input(z.object({ email: z.string().email() }))
-  //   .mutation(async ({ ctx, input }) => {
-  //     if (!input.email) {
-  //       throw new TRPCError({
-  //         code: "BAD_REQUEST",
-  //         message: "Invalid email",
-  //       });
-  //     }
-
-  //     const existingUser = await ctx.prisma.user.findUnique({
-  //       where: {
-  //         email: input.email,
-  //       },
-  //     });
-
-  //     if (existingUser) {
-  //       throw new TRPCError({
-  //         code: "BAD_REQUEST",
-  //         message: "User already exists",
-  //       });
-  //     }
-
-  //     return true;
-  //   }),
   getUserByEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -134,25 +117,25 @@ export const userRouter = createTRPCRouter({
       return true;
     }),
 
-  findHeroesByUser: publicProcedure
-    .input(userSchema)
-    .query(async ({ input }) => {
-      // const userEmail = await prisma.user.findUnique({
-      //   where: {
-      //     email: input.email
-      //   }
+  // findHeroesByUser: publicProcedure
+  //   .input(userSchema)
+  //   .query(async ({ input }) => {
+  //     // const userEmail = await prisma.user.findUnique({
+  //     //   where: {
+  //     //     email: input.email
+  //     //   }
 
-      // })
-      const userHeroes = await prisma.user.findUnique({
-        where: {
-          email: input.email,
-        },
-        include: {
-          FinalHero: true,
-        },
-      });
-      return userHeroes;
-    }),
+  //     // })
+  //     const userHeroes = await prisma.user.findUnique({
+  //       where: {
+  //         email: input.email,
+  //       },
+  //       include: {
+  //         FinalHero: true,
+  //       },
+  //     });
+  //     return userHeroes;
+  //   }),
   // findUserHeroes: publicProcedure.input(userSchema).query(async () => {
   //   const userEmail = await prisma.user.findUnique({
   //     where: {
@@ -162,3 +145,28 @@ export const userRouter = createTRPCRouter({
 
   // })
 });
+// getUserByEmail: publicProcedure
+//   .input(z.object({ email: z.string().email() }))
+//   .mutation(async ({ ctx, input }) => {
+//     if (!input.email) {
+//       throw new TRPCError({
+//         code: "BAD_REQUEST",
+//         message: "Invalid email",
+//       });
+//     }
+
+//     const existingUser = await ctx.prisma.user.findUnique({
+//       where: {
+//         email: input.email,
+//       },
+//     });
+
+//     if (existingUser) {
+//       throw new TRPCError({
+//         code: "BAD_REQUEST",
+//         message: "User already exists",
+//       });
+//     }
+
+//     return true;
+//   }),

@@ -54,10 +54,6 @@ const WeaponsForm = () => {
       }, {} as Record<string | number, Weapon>)
     : {};
 
-  const bow: Weapon = weaponsDictionary["bowOfRedeemer"];
-  const staff: Weapon = weaponsDictionary["eagleStaff"];
-  const sword: Weapon = weaponsDictionary["doomSword"];
-
   const watchedWeapon = watch("weapon");
   const wVal = getValues();
 
@@ -77,15 +73,7 @@ const WeaponsForm = () => {
                 return (
                   <CarouselItem key={weapon.id} className="pl-5">
                     <Card className="flex h-full flex-col items-center justify-center gap-5 py-5 w-full relative">
-                      <h3
-                      // className={`${
-                      //   watchedWeapon.name === weapon.name
-                      //     ? "underline underline-offset-4"
-                      //     : ""
-                      // }`}
-                      >
-                        {weapon.name}
-                      </h3>
+                      <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
                       <p>{`Description: ${weapon.description}`}</p>
                       {/* <p>{`Bonus: ${weapon.bonus}`}</p> */}
@@ -98,14 +86,14 @@ const WeaponsForm = () => {
                       <FormControl key={weapon.id}>
                         <FormItem>
                           <Button
-                            variant="select"
-                            className="hover:text-base-bg  hover:bg-base-txtClr"
                             // variant="select"
-                            // variant={
-                            //   watchedWeapon.name === weapon.name
-                            //     ? "disabled"
-                            //     : "select"
-                            // }
+                            className=""
+                            // variant="select"
+                            variant={
+                              watchedWeapon.name === weapon.name
+                                ? "disabled"
+                                : "select"
+                            }
                             // // className="bg-base-txtClr text-base-bg hover:text-base-bg"
                             // {...field}
                             // value={weapon.id}
@@ -114,6 +102,14 @@ const WeaponsForm = () => {
                             //   setValue("details.totalDmg", weapon.damage);
                             //   setSelectedWeapon(weapon.id);
                             // }}
+                            {...field}
+                            value={weapon.name}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              field.onChange(weapon);
+                              setValue("weapon", weapon);
+                              setValue("details.totalDamage", weapon.damage);
+                            }}
                           >
                             Select
                           </Button>

@@ -1,4 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Navbar from "@/components/Navbar";
+import UserLogin from "@/components/login";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -81,10 +84,9 @@ const LoginPage = () => {
       });
 
       if (!res?.error) {
-        console.log("sing in worked");
+        console.log("sign in worked");
 
         //eslint-disable-next-line
-        // router.push("/");
       } else {
         setError("Invalid email or password");
       }
@@ -96,84 +98,20 @@ const LoginPage = () => {
   };
 
   const { data: user } = trpc.user.getUserById.useQuery();
-  const handleGet = async () => {
-    setCurrentUser(user);
-
-    console.log("user", user);
-  };
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
-        {/* {isLoading ? (
-          <div>Loading...</div>
-        ) : ( */}
         <div className="bg-base-bg flex flex-col items-center text-base-txtClr py-20 w-full min-h-screen">
-          <div className="w-1/3 ">
-            <FormField
-              name="email"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Email
-                    <FormMessage className="text-red-400" />
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-base-bg"
-                      {...field}
-                      placeholder="Hero name *"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="password"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Password
-                    <FormMessage className="text-red-400" />
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-base-bg"
-                      {...field}
-                      placeholder="pword"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Submit</Button>
-          </div>
+          <UserLogin />
+          <Button>Login</Button>
         </div>
       </form>
-      <div>
-        <Button onClick={handleGet}>Get</Button>
-      </div>
     </FormProvider>
   );
 };
 
-{
-  /* <Input {...form.register("email")} placeholder="email" />
-<Input {...form.register("password")} placeholder="pass" /> */
-}
-{
-  /* <Input {...form.register("pic")} placeholder="pic" /> */
-}
-{
-  /* <Input {...form.register("profilePic")} /> */
-}
-{
-  /* <Input {...form.register("bootsImg")} placeholder="bootsIMg" />
-<Input {...form.register("weaponImg")} placeholder="wpnImg" /> */
-}
 export default LoginPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
