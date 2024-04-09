@@ -26,6 +26,7 @@ import Navbar from "@/components/Navbar";
 import BootsForm from "@/components/bootsForm";
 import WeaponsForm from "@/components/weaponForm";
 import DetailsForm from "@/components/detailsForm";
+import { useSession } from "next-auth/react";
 
 const Home = () => {
   // const allBoots = trpc.shop.getAllBoots.useQuery();
@@ -96,18 +97,28 @@ const Home = () => {
   // const { data: user } = trpc.user.findAll.useQuery();
 
   const { data: user } = trpc.user.getUserById.useQuery();
-  const trpcUtils = trpc.useUtils();
+  const utils = trpc.useUtils();
 
-  const createNewHero = trpc.hero.createFinalhero.useMutation({
+  const { update: updateSession } = useSession();
+
+  // const createNewHero = trpc.hero.createFinalhero.useMutation({
+  //   onSuccess: async () => {
+  //     alert("new hero created");
+  //     await trpcUtils.hero.invalidate();
+  //   },
+  // });
+  const createNewHero = trpc.user.createFinalHero.useMutation({
     onSuccess: async () => {
       alert("new hero created");
-      await trpcUtils.hero.invalidate();
+      // await utils.user.invalidate();
+      // updateSession();
     },
   });
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
+    alert("clicked");
     await createNewHero.mutateAsync(data);
 
     // await createNewFinalHero.mutateAsync(data);
@@ -141,7 +152,7 @@ const Home = () => {
               <span>Health: 0</span>
             </div>
           </div>
-          <Button>Submit</Button>
+          <Button type="submit">Submit</Button>
           <Button
             onClick={(e) => {
               e.preventDefault();

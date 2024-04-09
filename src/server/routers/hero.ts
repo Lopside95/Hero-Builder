@@ -28,6 +28,25 @@ export const heroRouter = createTRPCRouter({
   }),
   getBootsById: publicProcedure.query(async ({ ctx }) => {}),
 
+  getExample: protectedProcedure.query(async ({ ctx }) => {
+    const example = await ctx.prisma.exampleHero.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+
+    return example;
+  }),
+
+  getHeroDetails: publicProcedure.query(async () => {
+    const firstDetails = await prisma.heroDetails.findFirst();
+    return firstDetails;
+  }),
+  getAllBoots: publicProcedure.query(async () => {
+    const allBoots = await prisma.boots.findMany();
+    return allBoots;
+  }),
+
   // createFinalhero: protectedProcedure
   //   .input(finalHeroSchema)
   //   .mutation(async ({ ctx, input }) => {
@@ -97,25 +116,6 @@ export const heroRouter = createTRPCRouter({
   //     });
   //     return newFinalHero;
   //   }),
-
-  getExample: protectedProcedure.query(async ({ ctx }) => {
-    const example = await ctx.prisma.exampleHero.findMany({
-      where: {
-        userId: ctx.session.user.id,
-      },
-    });
-
-    return example;
-  }),
-
-  getHeroDetails: publicProcedure.query(async () => {
-    const firstDetails = await prisma.heroDetails.findFirst();
-    return firstDetails;
-  }),
-  getAllBoots: publicProcedure.query(async () => {
-    const allBoots = await prisma.boots.findMany();
-    return allBoots;
-  }),
   // createSimpleHero: publicProcedure
   //   .input(simpleHeroSchema)
   //   .mutation(async ({ input, ctx }) => {

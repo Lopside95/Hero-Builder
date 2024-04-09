@@ -3,6 +3,7 @@ import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { finalHeroSchema } from "@/types/hero";
 
 export const userRouter = createTRPCRouter({
   findAll: publicProcedure.query(async ({ ctx }) => {
@@ -90,6 +91,64 @@ export const userRouter = createTRPCRouter({
     console.log("userInRouter", user);
     return user;
   }),
+  createFinalHero: protectedProcedure
+    .input(finalHeroSchema)
+    .mutation(async ({ ctx, input }) => {
+      const userId = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+      });
+      // const bootsId = await ctx.prisma.boots.findUnique({
+      //   where: {
+      //     id: input.boots.bootsId,
+      //   },
+      // });
+      // const weaponId = await ctx.prisma.weapon.findUnique({
+      //   where: {
+      //     id: input.weapon.weaponId,
+      //   },
+      // });
+      const newFinalHero = await prisma.finalHero.create({
+        data: {
+          details: {
+            create: {
+              name: input.details.name,
+              totalSpeed: input.details.totalSpeed,
+              totalDamage: input.details.totalDamage,
+              backstory: input.details.backstory,
+              profilePic: input.details.profilePic,
+            },
+          },
+          boots: {
+            connect: {
+              id: input.boots.bootsId,
+            },
+          },
+          weapon: {
+            connect: {
+              id: input.weapon.weaponId,
+            },
+          },
+          user: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+      });
+
+      try {
+        return newFinalHero;
+      } catch (error) {
+        if (error instanceof TRPCError) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error.message,
+          });
+        }
+      }
+    }),
 
   getUserByEmail: publicProcedure
     .input(z.object({ email: z.string() }))
@@ -116,35 +175,34 @@ export const userRouter = createTRPCRouter({
 
       return true;
     }),
-
-  // findHeroesByUser: publicProcedure
-  //   .input(userSchema)
-  //   .query(async ({ input }) => {
-  //     // const userEmail = await prisma.user.findUnique({
-  //     //   where: {
-  //     //     email: input.email
-  //     //   }
-
-  //     // })
-  //     const userHeroes = await prisma.user.findUnique({
-  //       where: {
-  //         email: input.email,
-  //       },
-  //       include: {
-  //         FinalHero: true,
-  //       },
-  //     });
-  //     return userHeroes;
-  //   }),
-  // findUserHeroes: publicProcedure.input(userSchema).query(async () => {
-  //   const userEmail = await prisma.user.findUnique({
-  //     where: {
-  //       email: input.email,
-  //     }
-  //   })
-
-  // })
 });
+// findHeroesByUser: publicProcedure
+//   .input(userSchema)
+//   .query(async ({ input }) => {
+//     // const userEmail = await prisma.user.findUnique({
+//     //   where: {
+//     //     email: input.email
+//     //   }
+
+//     // })
+//     const userHeroes = await prisma.user.findUnique({
+//       where: {
+//         email: input.email,
+//       },
+//       include: {
+//         FinalHero: true,
+//       },
+//     });
+//     return userHeroes;
+//   }),
+// findUserHeroes: publicProcedure.input(userSchema).query(async () => {
+//   const userEmail = await prisma.user.findUnique({
+//     where: {
+//       email: input.email,
+//     }
+//   })
+
+// })
 // getUserByEmail: publicProcedure
 //   .input(z.object({ email: z.string().email() }))
 //   .mutation(async ({ ctx, input }) => {

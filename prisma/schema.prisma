@@ -29,7 +29,7 @@ model SimpleHero {
 
 model Boots {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  // bootsId     String      @db.ObjectId
+  bootsId     String      @db.ObjectId
   name        String
   moveSpeed   Int
   description String
@@ -41,7 +41,7 @@ model Boots {
 
 model Weapon {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  // weaponId    String      @db.ObjectId
+  weaponId    String      @db.ObjectId
   name        String
   damage      Int
   description String

@@ -54,6 +54,8 @@ const BootsForm = () => {
 
   const watchedBoots = watch("boots");
 
+  console.log("boots", boots);
+
   return (
     <FormField
       name="boots"
