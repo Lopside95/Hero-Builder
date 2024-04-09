@@ -27,14 +27,10 @@ import { trpc } from "@/utils/trpc";
 const BootsForm = () => {
   const [api, setApi] = useState<CarouselApi>();
 
-  // const { chosenBoots, setChosenBoots, gold, setGold } = useHeroContext();
-
   const { watch, control, getValues, setValue } =
     useFormContext<FinalHeroSchema>();
 
   const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
-
-  // const { isLoading, setIsLoading } = useFinalHero();
 
   const bootsDictionary = boots
     ? boots.reduce((acc, boot) => {
@@ -53,8 +49,6 @@ const BootsForm = () => {
     : {};
 
   const watchedBoots = watch("boots");
-
-  console.log("boots", boots);
 
   return (
     <FormField

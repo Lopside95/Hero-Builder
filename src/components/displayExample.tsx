@@ -15,13 +15,8 @@ const DisplayExample = () => {
 
   const { data: boots } = trpc.shop.getAllBoots.useQuery();
 
-  console.log("boots", boots);
-
   const bootsArr: Boots[] =
     boots !== undefined && boots.length > 0 ? boots : [];
-
-  console.log("bootsArr", bootsArr);
-  console.log("allBoots", allBoots);
 
   return (
     <div className="bg-gray-700 w-1/2">

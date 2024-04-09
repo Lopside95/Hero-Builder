@@ -94,11 +94,7 @@ export const userRouter = createTRPCRouter({
   createFinalHero: protectedProcedure
     .input(finalHeroSchema)
     .mutation(async ({ ctx, input }) => {
-      const userId = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-      });
+      const userId = ctx.session.user.id;
       // const bootsId = await ctx.prisma.boots.findUnique({
       //   where: {
       //     id: input.boots.bootsId,
@@ -141,17 +137,18 @@ export const userRouter = createTRPCRouter({
           },
         },
       });
+      return newFinalHero;
 
-      try {
-        return newFinalHero;
-      } catch (error) {
-        if (error instanceof TRPCError) {
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: error.message,
-          });
-        }
-      }
+      // try {
+      //   return newFinalHero;
+      // } catch (error) {
+      //   if (error instanceof TRPCError) {
+      //     throw new TRPCError({
+      //       code: "INTERNAL_SERVER_ERROR",
+      //       message: error.message,
+      //     });
+      //   }
+      // }
     }),
   // createFinalHero: protectedProcedure
   //   .input(finalHeroSchema)

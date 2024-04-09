@@ -29,40 +29,6 @@ import DetailsForm from "@/components/detailsForm";
 import { useSession } from "next-auth/react";
 
 const Home = () => {
-  // const allBoots = trpc.shop.getAllBoots.useQuery();
-  // const allWeapons = trpc.shop.getAllWeapons.useQuery();
-
-  // const firstBoots = allBoots[0]
-
-  // const { data: bootsAndWeapons } = trpc.shop.getAllItems.useQuery();
-  // // const {bootsData: boots, weaponData: weapon} = trpc.shop.getAllItems.useQuery()
-
-  // const bootsArr = bootsAndWeapons ? bootsAndWeapons.boots : [];
-  // const weaponsArr = bootsAndWeapons ? bootsAndWeapons.weapons : [];
-  // const firstBoots = bootsArr[0];
-  // const firstWeapon = weaponsArr[0];
-
-  // const form = useForm<FinalHeroSchema>({
-  //   resolver: zodResolver(finalHeroSchema),
-  //   defaultValues: {
-  //     // make a thing so that every time making new hero it randomises stuff?
-  //     boots: firstBoots,
-  //     weapon: firstWeapon,
-  //     details: {
-  //       totalMS: 0,
-  //       totalDmg: 0,
-  //       backstory: "",
-  //       name: "",
-  //       profilePic: "",
-  //     },
-  //     user: {
-  //       name: "",
-  //       email: "",
-  //       pic: "",
-  //     },
-  //     // gold: 90,
-  //   },
-  // });
   const form = useForm<FinalHeroSchema>({
     resolver: zodResolver(finalHeroSchema),
     defaultValues: {
@@ -167,6 +133,41 @@ const Home = () => {
 };
 
 export default Home;
+
+// const allBoots = trpc.shop.getAllBoots.useQuery();
+// const allWeapons = trpc.shop.getAllWeapons.useQuery();
+
+// const firstBoots = allBoots[0]
+
+// const { data: bootsAndWeapons } = trpc.shop.getAllItems.useQuery();
+// // const {bootsData: boots, weaponData: weapon} = trpc.shop.getAllItems.useQuery()
+
+// const bootsArr = bootsAndWeapons ? bootsAndWeapons.boots : [];
+// const weaponsArr = bootsAndWeapons ? bootsAndWeapons.weapons : [];
+// const firstBoots = bootsArr[0];
+// const firstWeapon = weaponsArr[0];
+
+// const form = useForm<FinalHeroSchema>({
+//   resolver: zodResolver(finalHeroSchema),
+//   defaultValues: {
+//     // make a thing so that every time making new hero it randomises stuff?
+//     boots: firstBoots,
+//     weapon: firstWeapon,
+//     details: {
+//       totalMS: 0,
+//       totalDmg: 0,
+//       backstory: "",
+//       name: "",
+//       profilePic: "",
+//     },
+//     user: {
+//       name: "",
+//       email: "",
+//       pic: "",
+//     },
+//     // gold: 90,
+//   },
+// });
 
 // import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 // import { User, userSchema } from "@/types/user";
