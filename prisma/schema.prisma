@@ -29,7 +29,7 @@ model SimpleHero {
 
 model Boots {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  bootsId     String      @db.ObjectId
+  // bootsId     String
   name        String
   moveSpeed   Int
   description String
@@ -41,7 +41,7 @@ model Boots {
 
 model Weapon {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  weaponId    String      @db.ObjectId
+  // weaponId    String
   name        String
   damage      Int
   description String
@@ -71,8 +71,6 @@ model FinalHero {
   details   HeroDetails @relation(fields: [detailsId], references: [id])
   userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id])
-
-  @@index([userId])
 }
 
 model ExampleHero {

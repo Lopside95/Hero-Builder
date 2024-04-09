@@ -5,10 +5,10 @@ import { prisma } from "@/pages/api/db";
 import { finalHeroSchema, heroDetails } from "@/types/hero";
 
 export const shopRouter = createTRPCRouter({
-  getAllBoots: publicProcedure.query(async () => {
-    const allBoots = await prisma.boots.findMany();
-    return allBoots;
-  }),
+  // getAllBoots: publicProcedure.query(async () => {
+  //   const allBoots = await prisma.boots.findMany();
+  //   return allBoots;
+  // }),
   getAllWeapons: publicProcedure.query(async () => {
     const allWeapons = await prisma.weapon.findMany();
     return allWeapons;
@@ -21,10 +21,14 @@ export const shopRouter = createTRPCRouter({
       weapons: allWeapons,
     };
   }),
-  getNewBoots: publicProcedure.query(async ({ ctx }) => {
-    const newAll = await ctx.prisma.boots.findMany();
-    return newAll;
+  getAllBoots: publicProcedure.query(async ({ ctx }) => {
+    const allBoots = await ctx.prisma.boots.findMany();
+    return allBoots;
   }),
+  // getNewBoots: publicProcedure.query(async ({ ctx }) => {
+  //   const newAll = await prisma.boots.findMany();
+  //   return newAll;
+  // }),
   // getBootsById: publicProcedure.query(async ({input})=> {
   //   const theBoots = await prisma.boots.findUnique({
   //     where: {

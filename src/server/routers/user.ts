@@ -241,34 +241,35 @@ export const userRouter = createTRPCRouter({
 
       return true;
     }),
+
+  // findHeroesByUser: publicProcedure
+  //   .input(userSchema)
+  //   .query(async ({ input }) => {
+  //     // const userEmail = await prisma.user.findUnique({
+  //     //   where: {
+  //     //     email: input.email
+  //     //   }
+
+  //     // })
+  //     const userHeroes = await prisma.user.findUnique({
+  //       where: {
+  //         email: input.email,
+  //       },
+  //       include: {
+  //         FinalHero: true,
+  //       },
+  //     });
+  //     return userHeroes;
+  //   }),
+  // findUserHeroes: publicProcedure.input(userSchema).query(async () => {
+  //   const userEmail = await prisma.user.findUnique({
+  //     where: {
+  //       email: input.email,
+  //     }
+  //   })
+
+  // })
 });
-// findHeroesByUser: publicProcedure
-//   .input(userSchema)
-//   .query(async ({ input }) => {
-//     // const userEmail = await prisma.user.findUnique({
-//     //   where: {
-//     //     email: input.email
-//     //   }
-
-//     // })
-//     const userHeroes = await prisma.user.findUnique({
-//       where: {
-//         email: input.email,
-//       },
-//       include: {
-//         FinalHero: true,
-//       },
-//     });
-//     return userHeroes;
-//   }),
-// findUserHeroes: publicProcedure.input(userSchema).query(async () => {
-//   const userEmail = await prisma.user.findUnique({
-//     where: {
-//       email: input.email,
-//     }
-//   })
-
-// })
 // getUserByEmail: publicProcedure
 //   .input(z.object({ email: z.string().email() }))
 //   .mutation(async ({ ctx, input }) => {

@@ -19,12 +19,12 @@ const CreateExample = () => {
     },
   });
 
-  const trpcUtils = trpc.useUtils();
+  const utils = trpc.useUtils();
 
-  const createNewExample = trpc.hero.newHero.useMutation({
+  const createNewExample = trpc.hero.newExampleHero.useMutation({
     onSuccess: async () => {
       alert("created");
-      await trpcUtils.hero.invalidate();
+      await utils.hero.invalidate();
     },
   });
 
@@ -44,7 +44,7 @@ const CreateExample = () => {
           <div className="w-80 text-base-bg ">
             <Input {...form.register("name")} placeholder="name" />
             <Input {...form.register("damage")} placeholder="damage" />
-            <Input {...form.register("speed")} placeholder="ss" />
+            <Input {...form.register("speed")} placeholder="speed" />
             <Input {...form.register("bootsImg")} placeholder="bootsImg" />
             <Input {...form.register("weaponImg")} placeholder="weaponImg" />
             <Input {...form.register("img")} placeholder="img" />
