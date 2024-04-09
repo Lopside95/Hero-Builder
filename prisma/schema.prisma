@@ -71,6 +71,8 @@ model FinalHero {
   details   HeroDetails @relation(fields: [detailsId], references: [id])
   userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model ExampleHero {

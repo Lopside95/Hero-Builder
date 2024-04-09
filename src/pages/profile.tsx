@@ -28,14 +28,17 @@ type HeroDetails = z.infer<typeof heroDetails>;
 type Simple = z.infer<typeof simpleHeroSchema>;
 
 const Profile = () => {
-  const { data: userHeroes } = trpc.user.getHeroesByUserId.useQuery();
+  // const { data: userHeroes } = trpc.user.getHeroesByUserId.useQuery();
 
-  const { data: boots } = trpc.shop.getAllBoots.useQuery();
-  const { data: weapons } = trpc.shop.getAllWeapons.useQuery();
+  // const { data: boots } = trpc.shop.getAllBoots.useQuery();
+  // const { data: weapons } = trpc.shop.getAllWeapons.useQuery();
 
-  const heroesArr = userHeroes;
+  // const heroesArr = userHeroes;
 
-  console.log("heroesArr", heroesArr);
+  // console.log("heroesArr", heroesArr);
+
+  const { data: boots } = trpc.shop.getNewBoots.useQuery();
+  console.log("boots", boots);
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">

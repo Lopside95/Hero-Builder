@@ -21,6 +21,10 @@ export const shopRouter = createTRPCRouter({
       weapons: allWeapons,
     };
   }),
+  getNewBoots: publicProcedure.query(async ({ ctx }) => {
+    const newAll = await ctx.prisma.boots.findMany();
+    return newAll;
+  }),
   // getBootsById: publicProcedure.query(async ({input})=> {
   //   const theBoots = await prisma.boots.findUnique({
   //     where: {

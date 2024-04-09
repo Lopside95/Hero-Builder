@@ -37,7 +37,7 @@ const WeaponsForm = () => {
   const [selectedWeapon, setSelectedWeapon] = useState<string | undefined>();
 
   const { data: weapons, isLoading } = trpc.shop.getAllWeapons.useQuery();
-
+  console.log("weapons", weapons);
   const [api, setApi] = useState<CarouselApi>();
   const weaponsDictionary = weapons
     ? weapons.reduce((acc, weapon) => {
@@ -71,7 +71,7 @@ const WeaponsForm = () => {
             <CarouselContent className="">
               {weapons?.map((weapon) => {
                 return (
-                  <CarouselItem key={weapon.id} className="pl-5">
+                  <CarouselItem key={weapon.name} className="pl-5">
                     <Card className="flex h-full flex-col items-center justify-center gap-5 py-5 w-full relative">
                       <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
