@@ -4,6 +4,7 @@ import { userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { finalHeroSchema } from "@/types/hero";
+import { connect } from "http2";
 
 export const userRouter = createTRPCRouter({
   findAll: publicProcedure.query(async ({ ctx }) => {
@@ -91,128 +92,14 @@ export const userRouter = createTRPCRouter({
     console.log("userInRouter", user);
     return user;
   }),
-  createFinalHero: protectedProcedure
-    .input(finalHeroSchema)
-    .mutation(async ({ ctx, input }) => {
-      const userId = ctx.session.user.id;
-      // const bootsId = await ctx.prisma.boots.findUnique({
-      //   where: {
-      //     id: input.boots.bootsId,
-      //   },
-      // });
-      // const weaponId = await ctx.prisma.weapon.findUnique({
-      //   where: {
-      //     id: input.weapon.weaponId,
-      //   },
-      // });
-      const newFinalHero = await prisma.finalHero.create({
-        data: {
-          details: {
-            create: {
-              name: input.details.name,
-              totalSpeed: input.details.totalSpeed,
-              totalDamage: input.details.totalDamage,
-              backstory: input.details.backstory,
-              profilePic: input.details.profilePic,
-            },
-          },
-          boots: {
-            connect: {
-              where: {
-                boots: {
-                  name: input.boots.name,
-                },
-              },
-            },
-          },
-          weapon: {
-            connect: {
-              id: input.weapon.weaponId,
-            },
-          },
-          user: {
-            connect: {
-              id: ctx.session.user.id,
-            },
-          },
-        },
-      });
-      return newFinalHero;
-
-      // try {
-      //   return newFinalHero;
-      // } catch (error) {
-      //   if (error instanceof TRPCError) {
-      //     throw new TRPCError({
-      //       code: "INTERNAL_SERVER_ERROR",
-      //       message: error.message,
-      //     });
-      //   }
-      // }
-    }),
-  // createFinalHero: protectedProcedure
-  //   .input(finalHeroSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     const userId = await ctx.prisma.user.findUnique({
-  //       where: {
-  //         id: ctx.session.user.id,
-  //       },
-  //     });
-  //     // const bootsId = await ctx.prisma.boots.findUnique({
-  //     //   where: {
-  //     //     id: input.boots.bootsId,
-  //     //   },
-  //     // });
-  //     // const weaponId = await ctx.prisma.weapon.findUnique({
-  //     //   where: {
-  //     //     id: input.weapon.weaponId,
-  //     //   },
-  //     // });
-  //     const newFinalHero = await prisma.finalHero.create({
-  //       data: {
-  //         details: {
-  //           create: {
-  //             name: input.details.name,
-  //             totalSpeed: input.details.totalSpeed,
-  //             totalDamage: input.details.totalDamage,
-  //             backstory: input.details.backstory,
-  //             profilePic: input.details.profilePic,
-  //           },
-  //         },
-  //         boots: {
-  //           connect: {
-  //             where: {
-  //               boots: {
-  //                 name: input.boots.name,
-  //               },
-  //             },
-  //           },
-  //         },
-  //         weapon: {
-  //           connect: {
-  //             id: input.weapon.weaponId,
-  //           },
-  //         },
-  //         user: {
-  //           connect: {
-  //             id: ctx.session.user.id,
-  //           },
-  //         },
-  //       },
-  //     });
-
-  //     try {
-  //       return newFinalHero;
-  //     } catch (error) {
-  //       if (error instanceof TRPCError) {
-  //         throw new TRPCError({
-  //           code: "INTERNAL_SERVER_ERROR",
-  //           message: error.message,
-  //         });
-  //       }
-  //     }
-  //   }),
-
+  getFinalHeroByUserId: protectedProcedure.query(async ({ ctx }) => {
+    const userHero = await ctx.prisma.finalHero.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+    return userHero;
+  }),
   getUserByEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -238,6 +125,53 @@ export const userRouter = createTRPCRouter({
 
       return true;
     }),
+  // createFinalHero: protectedProcedure
+  //   .input(finalHeroSchema)
+  //   .mutation(async ({ ctx, input }) => {
+  //     const userId = ctx.session.user.id;
+  //     const weaponId = prisma.boots.findUnique({
+  //       where: {
+
+  //       }
+  //     })
+  // const bootsId = await ctx.prisma.boots.findUnique({
+  //   where: {
+  //     id: input.boots.bootsId,
+  //   },
+  // });
+  // const weaponId = await ctx.prisma.weapon.findUnique({
+  //   where: {
+  //     id: input.weapon.weaponId,
+  //   },
+  // // });
+  // const newFinalHero = await prisma.finalHero.create({
+  //   data: {
+  //     details: {
+  //       create: {
+  //         name: input.details.name,
+  //         totalSpeed: input.details.totalSpeed,
+  //         totalDamage: input.details.totalDamage,
+  //         backstory: input.details.backstory,
+  //         profilePic: input.details.profilePic,
+  //       }
+  //     },
+  //     boots: {
+  //       connect: {
+  //         name: input.boots.name,
+  //         bonus: input.boots.bonus,
+  //         moveSpeed: input.boots.moveSpeed,
+  //         description: input.boots.description,
+  //         url: input.boots.url,
+  //         cost: input.boots.cost,
+  //         id: prisma.boots.findUnique({
+  //           where: {
+  //             id: input.boots.
+  //           }
+  //         })
+  //       }
+  //     }
+  //   }
+  // })
 
   // findHeroesByUser: publicProcedure
   //   .input(userSchema)
@@ -267,6 +201,103 @@ export const userRouter = createTRPCRouter({
 
   // })
 });
+// const newFinalHero = await prisma.finalHero.create({
+//   data: {
+//     details: {
+//       create: {
+// name: input.details.1
+//       },
+//     },
+//     boots: {
+//       connect: {
+//         name:
+//     weapon: {
+//       connect: {
+//         id: input.weapon.weaponId,
+//       },
+//     },
+//     user: {
+//       connect: {
+//         id: ctx.session.user.id,
+//       },
+//     },
+//   },
+// });
+// return newFinalHero;
+
+// try {
+//   return newFinalHero;
+// } catch (error) {
+//   if (error instanceof TRPCError) {
+//     throw new TRPCError({
+//       code: "INTERNAL_SERVER_ERROR",
+//       message: error.message,
+//     });
+//   }
+// }
+// createFinalHero: protectedProcedure
+//   .input(finalHeroSchema)
+//   .mutation(async ({ ctx, input }) => {
+//     const userId = await ctx.prisma.user.findUnique({
+//       where: {
+//         id: ctx.session.user.id,
+//       },
+//     });
+//     // const bootsId = await ctx.prisma.boots.findUnique({
+//     //   where: {
+//     //     id: input.boots.bootsId,
+//     //   },
+//     // });
+//     // const weaponId = await ctx.prisma.weapon.findUnique({
+//     //   where: {
+//     //     id: input.weapon.weaponId,
+//     //   },
+//     // });
+//     const newFinalHero = await prisma.finalHero.create({
+//       data: {
+//         details: {
+//           create: {
+//             name: input.details.name,
+//             totalSpeed: input.details.totalSpeed,
+//             totalDamage: input.details.totalDamage,
+//             backstory: input.details.backstory,
+//             profilePic: input.details.profilePic,
+//           },
+//         },
+//         boots: {
+//           connect: {
+//             where: {
+//               boots: {
+//                 name: input.boots.name,
+//               },
+//             },
+//           },
+//         },
+//         weapon: {
+//           connect: {
+//             id: input.weapon.weaponId,
+//           },
+//         },
+//         user: {
+//           connect: {
+//             id: ctx.session.user.id,
+//           },
+//         },
+//       },
+//     });
+
+//     try {
+//       return newFinalHero;
+//     } catch (error) {
+//       if (error instanceof TRPCError) {
+//         throw new TRPCError({
+//           code: "INTERNAL_SERVER_ERROR",
+//           message: error.message,
+//         });
+//       }
+//     }
+//   }),
+
 // getUserByEmail: publicProcedure
 //   .input(z.object({ email: z.string().email() }))
 //   .mutation(async ({ ctx, input }) => {

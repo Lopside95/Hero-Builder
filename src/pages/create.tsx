@@ -73,7 +73,7 @@ const Home = () => {
   //     await trpcUtils.hero.invalidate();
   //   },
   // });
-  const createNewHero = trpc.user.createFinalHero.useMutation({
+  const createNewHero = trpc.hero.newFinalHero.useMutation({
     onSuccess: async () => {
       alert("new hero created");
       // await utils.user.invalidate();

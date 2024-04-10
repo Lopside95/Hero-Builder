@@ -95,12 +95,12 @@ const BootsForm = () => {
                         <FormControl key={boot.name}>
                           <FormItem>
                             <Button
-                              // variant="select"
-                              variant={
-                                watchedBoots.name === boot.name
-                                  ? "disabled"
-                                  : "select"
-                              }
+                              variant="select"
+                              // variant={
+                              //   watchedBoots.name === boot.name
+                              //     ? "disabled"
+                              //     : "select"
+                              // }
                               className=""
                               // className="hover:text-base-bg  hover:bg-base-txtClr"
                               //   variant={

@@ -79,6 +79,18 @@ const Navbar = () => {
         </Button>
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            activePage("/createBoots")
+              ? "underline underline-offset-[6px]   "
+              : ""
+          }`}
+          variant="link"
+        >
+          <Link tabIndex={-1} href="/createBoots">
+            Create boots
+          </Link>
+        </Button>
+        <Button
+          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/signup") ? "underline underline-offset-[6px]   " : ""
           }`}
           variant="link"

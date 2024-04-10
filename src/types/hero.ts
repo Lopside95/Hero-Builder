@@ -2,13 +2,17 @@ import z, { TypeOf } from "zod";
 import { userSchema } from "./user";
 
 export const bootsSchema = z.object({
-  // bootsId: z.string(),
-  // name: z.string().min(1, "You need boots"),
   name: z.string().min(1, "You need to select boots"),
-  moveSpeed: z.number(),
+  moveSpeed: z.number({
+    required_error: "speed is required",
+    invalid_type_error: "speed must be a number",
+  }),
   bonus: z.string(),
   description: z.string(),
-  cost: z.number(),
+  cost: z.number({
+    required_error: "Cost is required",
+    invalid_type_error: "Cost must be a number",
+  }),
   url: z.string(),
 });
 
@@ -66,6 +70,18 @@ export const exampleHeroSchema = z.object({
   weaponImg: z.string(),
 });
 
+export const finalHeroPrisma = z.object({
+  name: z.string().min(2, "You need a name").max(25),
+  totalSpeed: z.number(),
+  totalDamage: z.number(),
+  backstory: z.string(),
+  profilePic: z.string(),
+  // name: z.string(),
+  boots: z.string(),
+  weapon: z.string(),
+});
+
+export type FinalHeroPrisma = z.infer<typeof finalHeroPrisma>;
 export type FinalHeroSchema = z.infer<typeof finalHeroSchema>;
 export type HeroPics = z.infer<typeof picsSchema>;
 export type HeroDetails = z.infer<typeof heroDetails>;

@@ -2,9 +2,16 @@ import { z } from "zod";
 import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { userSchema } from "@/types/user";
 import { prisma } from "@/pages/api/db";
-import { exampleHeroSchema, finalHeroSchema, heroDetails } from "@/types/hero";
+import {
+  bootsSchema,
+  exampleHeroSchema,
+  finalHeroPrisma,
+  finalHeroSchema,
+  heroDetails,
+} from "@/types/hero";
 import { simpleHeroSchema } from "@/pages/updateUser";
 import { connect } from "http2";
+import { create } from "domain";
 
 // export const heroSchema = z.object({
 //   name: z.string(),
@@ -68,26 +75,75 @@ export const heroRouter = createTRPCRouter({
       });
       return newHero;
     }),
-  // newFinalHero: protectedProcedure.input(finalHeroSchema).mutation(async ({ctx, input}) => {
-  //   const userId =  ctx.session.user.id;
-  //   const newFinalHero = await prisma.finalHero.create({
-  //     data: {
-  //       boots: {
-  //         connect: {
-  //           id: input.boots.id
-  //                 name: input.boots.name,
-  //     moveSpeed: input.boots.moveSpeed,
-  //     bonus: input.boots.bonus,
-  //     description: input.boots.description,
-  //     cost: input.boots.cost,
-  //     url: input.boots.url,
-  //         }
-  //       }
-  //     }
-  //   })
+  newFinalHero: protectedProcedure
+    .input(finalHeroPrisma)
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
 
-  // })
+      const detailsPayload = {
+        name: input.name,
+        totalSpeed: input.totalSpeed,
+        totalDamage: input.totalDamage,
+        backstory: input.backstory,
+        profilePic: input.profilePic,
+      };
+
+      // const newPrismaHero = ctx.prisma.finalFinalHero.create({
+      //   data: {
+      //     name: input.name,
+      //     moveSpeed: input.totalSpeed,
+      //     damage: input.totalDamage,
+      //     backstory: input.backstory,
+      //     pic: input.profilePic,
+
+      //     include
+
+      //   }
+      // })
+    }),
 });
+
+// const createdHeroDetails = await ctx.prisma.finalHero.fields.detailsId.create({
+//   data: {
+//     details: {
+//       create: detailsPayload,
+//     },
+
+//   }
+// })
+
+//   const createdHero = await ctx.prisma.finalHero.create({
+//     data: {
+//       details: {
+//         create: {
+// name: input.details.name,
+// totalSpeed: input.details.totalSpeed,
+// totalDamage: input.details.totalDamage,
+// backstory: input.details.backstory,
+// profilePic: input.details.profilePic,
+//         },
+//       },
+//       boots: {
+//         connect: bootsI,
+//       },
+//       weapon: {
+//         create: {
+//           name: input.weapon.name,
+//           damage: input.weapon.damage,
+//           bonus: input.weapon.bonus,
+//           description: input.weapon.description,
+//           cost: input.weapon.cost,
+//           url: input.weapon.url,
+//         },
+//       },
+//       user: {
+//         connect: {
+//           id: ctx.session.user.id,
+//         },
+//       },
+//     },
+//   });
+// }),
 
 // createFinalhero: protectedProcedure
 //   .input(finalHeroSchema)
@@ -95,27 +151,27 @@ export const heroRouter = createTRPCRouter({
 //     const bootsPayload = {
 //       name: input.boots.name,
 //       moveSpeed: input.boots.moveSpeed,
-//       bonus: input.boots.bonus,
-//       description: input.boots.description,
-//       cost: input.boots.cost,
-//       url: input.boots.url,
+// bonus: input.boots.bonus,
+// description: input.boots.description,
+// cost: input.boots.cost,
+// url: input.boots.url,
 //     };
 
 //     const weaponPayload = {
-//       name: input.weapon.name,
-//       damage: input.weapon.damage,
-//       bonus: input.weapon.bonus,
-//       description: input.weapon.description,
-//       cost: input.weapon.cost,
-//       url: input.weapon.url,
+// name: input.weapon.name,
+// damage: input.weapon.damage,
+// bonus: input.weapon.bonus,
+// description: input.weapon.description,
+// cost: input.weapon.cost,
+// url: input.weapon.url,
 //     };
 
 //     const detailsPayload = {
-//       name: input.details.name,
-//       totalSpeed: input.details.totalSpeed,
-//       totalDamage: input.details.totalDamage,
-//       backstory: input.details.backstory,
-//       profilePic: input.details.profilePic,
+// name: input.details.name,
+// totalSpeed: input.details.totalSpeed,
+// totalDamage: input.details.totalDamage,
+// backstory: input.details.backstory,
+// profilePic: input.details.profilePic,
 //     };
 
 //     const newFinalHero = await ctx.prisma.finalHero.create({

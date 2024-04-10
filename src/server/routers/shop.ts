@@ -2,7 +2,7 @@ import { z } from "zod";
 import { publicProcedure, createTRPCRouter } from "../trpc";
 import { userSchema } from "@/types/user";
 import { prisma } from "@/pages/api/db";
-import { finalHeroSchema, heroDetails } from "@/types/hero";
+import { bootsSchema, finalHeroSchema, heroDetails } from "@/types/hero";
 
 export const shopRouter = createTRPCRouter({
   // getAllBoots: publicProcedure.query(async () => {
@@ -25,6 +25,22 @@ export const shopRouter = createTRPCRouter({
     const allBoots = await ctx.prisma.boots.findMany();
     return allBoots;
   }),
+  createNewBoots: publicProcedure
+    .input(bootsSchema)
+    .mutation(async ({ input, ctx }) => {
+      const newBoots = await prisma.boots.create({
+        data: {
+          name: input.name,
+          moveSpeed: input.moveSpeed as number,
+          bonus: input.bonus,
+          description: input.description,
+          cost: input.cost,
+          url: input.url,
+        },
+      });
+      return newBoots;
+    }),
+
   // getNewBoots: publicProcedure.query(async ({ ctx }) => {
   //   const newAll = await prisma.boots.findMany();
   //   return newAll;
