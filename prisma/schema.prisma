@@ -55,26 +55,43 @@ model Weapon {
 }
 
 model HeroDetails {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   totalSpeed  Int
   totalDamage Int
   name        String
   profilePic  String
   backstory   String
-  FinalHero   FinalHero[]
+  // FinalHero   FinalHero[]
 }
 
 model FinalHero {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  bootsId   String      @db.ObjectId
-  weaponId  String      @db.ObjectId
-  detailsId String      @db.ObjectId
-  boots     Boots       @relation(fields: [bootsId], references: [id])
-  weapon    Weapon      @relation(fields: [weaponId], references: [id])
-  details   HeroDetails @relation(fields: [detailsId], references: [id])
-  userId    String      @db.ObjectId
-  user      User        @relation(fields: [userId], references: [id])
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  bootsId    String @db.ObjectId
+  weaponId   String @db.ObjectId
+  // detailsId String      @db.ObjectId
+  speed      Int
+  damage     Int
+  name       String
+  profilePic String
+  backstory  String
+  boots      Boots  @relation(fields: [bootsId], references: [id])
+  weapon     Weapon @relation(fields: [weaponId], references: [id])
+  // details   HeroDetails @relation(fields: [detailsId], references: [id])
+  userId     String @db.ObjectId
+  user       User   @relation(fields: [userId], references: [id])
 }
+
+// model FinalHero {
+//   id        String      @id @default(auto()) @map("_id") @db.ObjectId
+//   bootsId   String      @db.ObjectId
+//   weaponId  String      @db.ObjectId
+//   detailsId String      @db.ObjectId
+//   boots     Boots       @relation(fields: [bootsId], references: [id])
+//   weapon    Weapon      @relation(fields: [weaponId], references: [id])
+//   details   HeroDetails @relation(fields: [detailsId], references: [id])
+//   userId    String      @db.ObjectId
+//   user      User        @relation(fields: [userId], references: [id])
+// }
 
 model FinalFinalHero {
   id        String @id @default(auto()) @map("_id") @db.ObjectId

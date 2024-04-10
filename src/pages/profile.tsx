@@ -23,12 +23,10 @@ export const simpleHeroSchema = z.object({
   user: z.string(),
 });
 
-type HeroDetails = z.infer<typeof heroDetails>;
-
-type Simple = z.infer<typeof simpleHeroSchema>;
-
 const Profile = () => {
-  // const { data: userHeroes } = trpc.user.getHeroesByUserId.useQuery();
+  const { data: finalHeroes } = trpc.user.getFinalHeroes.useQuery();
+
+  console.log("finalHeroes", finalHeroes);
 
   // const { data: boots } = trpc.shop.getAllBoots.useQuery();
   // const { data: weapons } = trpc.shop.getAllWeapons.useQuery();

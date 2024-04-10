@@ -17,7 +17,7 @@ const DetailsForm = () => {
     <div>
       {/* <h1 className="text-base-txtClr">{gold}</h1> */}
       <FormField
-        name="details.name"
+        name="name"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -36,7 +36,7 @@ const DetailsForm = () => {
         )}
       />
       <FormField
-        name="details.backstory"
+        name="backstory"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -55,7 +55,7 @@ const DetailsForm = () => {
         )}
       />
       <FormField
-        name="details.profilePic"
+        name="profilePic"
         control={control}
         render={({ field }) => (
           <FormItem>

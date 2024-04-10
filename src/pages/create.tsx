@@ -49,13 +49,12 @@ const Home = () => {
         cost: 0,
         url: "",
       },
-      details: {
-        totalSpeed: 0,
-        totalDamage: 0,
-        backstory: "",
-        name: "",
-        profilePic: "",
-      },
+      speed: 0,
+      damage: 0,
+      name: "",
+      profilePic: "",
+      backstory: "",
+
       gold: 85,
     },
   });
@@ -73,7 +72,8 @@ const Home = () => {
   //     await trpcUtils.hero.invalidate();
   //   },
   // });
-  const createNewHero = trpc.hero.newFinalHero.useMutation({
+
+  const createNewHero = trpc.hero.createNewHero.useMutation({
     onSuccess: async () => {
       alert("new hero created");
       // await utils.user.invalidate();
@@ -98,8 +98,8 @@ const Home = () => {
   const gold = form.watch("gold");
   const boots = form.watch("boots");
   const weapon = form.watch("weapon");
-  const damage = form.watch("details.totalDamage");
-  const speed = form.watch("details.totalSpeed");
+  const damage = form.watch("damage");
+  const speed = form.watch("speed");
   const adjustedGold = gold - (boots.cost + weapon.cost);
 
   return (

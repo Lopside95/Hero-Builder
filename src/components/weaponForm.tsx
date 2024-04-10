@@ -42,6 +42,7 @@ const WeaponsForm = () => {
   const weaponsDictionary = weapons
     ? weapons.reduce((acc, weapon) => {
         acc[weapon.name] = {
+          id: weapon.id,
           name: weapon.name,
           damage: weapon.damage,
           bonus: weapon.bonus,
@@ -103,12 +104,12 @@ const WeaponsForm = () => {
                             //   setSelectedWeapon(weapon.id);
                             // }}
                             {...field}
-                            value={weapon.name}
+                            value={weapon.id}
                             onClick={(e) => {
                               e.preventDefault();
                               field.onChange(weapon);
                               setValue("weapon", weapon);
-                              setValue("details.totalDamage", weapon.damage);
+                              setValue("damage", weapon.damage);
                             }}
                           >
                             Select

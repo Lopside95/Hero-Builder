@@ -35,7 +35,7 @@ const BootsForm = () => {
   const bootsDictionary = boots
     ? boots.reduce((acc, boot) => {
         acc[boot.name] = {
-          // id: boot.id,
+          id: boot.id,
           name: boot.name,
           moveSpeed: boot.moveSpeed,
           bonus: boot.bonus,
@@ -65,7 +65,7 @@ const BootsForm = () => {
               <CarouselContent className="">
                 {boots?.map((boot) => {
                   return (
-                    <CarouselItem key={boot.name} className="pl-5">
+                    <CarouselItem key={boot.id} className="pl-5">
                       <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full relative">
                         {/* <h3
                           className={`${
@@ -95,12 +95,12 @@ const BootsForm = () => {
                         <FormControl key={boot.name}>
                           <FormItem>
                             <Button
-                              variant="select"
-                              // variant={
-                              //   watchedBoots.name === boot.name
-                              //     ? "disabled"
-                              //     : "select"
-                              // }
+                              // variant="select"
+                              variant={
+                                watchedBoots.name === boot.name
+                                  ? "disabled"
+                                  : "select"
+                              }
                               className=""
                               // className="hover:text-base-bg  hover:bg-base-txtClr"
                               //   variant={
@@ -112,12 +112,12 @@ const BootsForm = () => {
                               //   setValue("boots.name", watchedBootsName)
                               // }
                               {...field}
-                              value={boot.name}
+                              value={boot.id}
                               onClick={(e) => {
                                 e.preventDefault();
                                 field.onChange(boot);
                                 setValue("boots", boot);
-                                setValue("details.totalSpeed", boot.moveSpeed);
+                                setValue("speed", boot.moveSpeed);
                               }}
                               // onClick={() => {
                               //   field.onChange(boot);

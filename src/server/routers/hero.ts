@@ -5,7 +5,6 @@ import { prisma } from "@/pages/api/db";
 import {
   bootsSchema,
   exampleHeroSchema,
-  finalHeroPrisma,
   finalHeroSchema,
   heroDetails,
 } from "@/types/hero";
@@ -34,7 +33,6 @@ export const heroRouter = createTRPCRouter({
     const allHeroes = await prisma.exampleHero.findMany();
     return allHeroes;
   }),
-  getBootsById: publicProcedure.query(async ({ ctx }) => {}),
 
   getExample: protectedProcedure.query(async ({ ctx }) => {
     const example = await ctx.prisma.exampleHero.findMany({
@@ -54,6 +52,15 @@ export const heroRouter = createTRPCRouter({
     const allBoots = await prisma.boots.findMany();
     return allBoots;
   }),
+  getBootsById: publicProcedure
+    .input(bootsSchema)
+    .query(async ({ ctx, input }) => {
+      const myBoots = await ctx.prisma.boots.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
   newExampleHero: protectedProcedure
     .input(exampleHeroSchema)
     .mutation(async ({ ctx, input }) => {
@@ -75,33 +82,74 @@ export const heroRouter = createTRPCRouter({
       });
       return newHero;
     }),
-  newFinalHero: protectedProcedure
-    .input(finalHeroPrisma)
-    .mutation(async ({ ctx, input }) => {
-      const userId = ctx.session.user.id;
+  createNewHero: protectedProcedure
+    .input(finalHeroSchema)
+    .mutation(async ({ input, ctx }) => {
+      // this is just an example of the way I'm trying to do this
+      const newHero = await prisma.finalHero.create({
+        data: {
+          name: input.name,
+          speed: input.speed,
+          damage: input.damage,
+          backstory: input.backstory,
+          profilePic: input.profilePic,
+          boots: {
+            connect: {
+              id: input.boots.id,
+            },
+          },
+          // weapon: input.weapon,
 
-      const detailsPayload = {
-        name: input.name,
-        totalSpeed: input.totalSpeed,
-        totalDamage: input.totalDamage,
-        backstory: input.backstory,
-        profilePic: input.profilePic,
-      };
-
-      // const newPrismaHero = ctx.prisma.finalFinalHero.create({
-      //   data: {
-      //     name: input.name,
-      //     moveSpeed: input.totalSpeed,
-      //     damage: input.totalDamage,
-      //     backstory: input.backstory,
-      //     pic: input.profilePic,
-
-      //     include
-
-      //   }
-      // })
+          user: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+          weapon: {
+            connect: {
+              id: input.weapon.id,
+            },
+          },
+          // boots: {
+          //   connect: {
+          //     id: input.boots.id,
+          //   },
+          // },
+          // weapon: {
+          //   connect: {
+          //     id: input.weapon.id,
+          //   },
+          // },
+          // boots: {
+          //   bootsId: input.boots.id // THIS DOESN'T WORK, WHY? Can I not retrieve the id of the boots through the form selection?
+          //   // I have the same issue for the weapon
+          // }
+        },
+      });
+      return newHero;
     }),
 });
+
+// const detailsPayload = {
+//   name: input.name,
+//   totalSpeed: input.totalSpeed,
+//   totalDamage: input.totalDamage,
+//   backstory: input.backstory,
+//   profilePic: input.profilePic,
+// };
+
+// const newPrismaHero = ctx.prisma.finalFinalHero.create({
+//   data: {
+//     name: input.name,
+//     moveSpeed: input.totalSpeed,
+//     damage: input.totalDamage,
+//     backstory: input.backstory,
+//     pic: input.profilePic,
+
+//     include
+
+//   }
+// })
 
 // const createdHeroDetails = await ctx.prisma.finalHero.fields.detailsId.create({
 //   data: {

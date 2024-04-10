@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import BootsForm from "@/components/bootsForm";
 import NumberField from "@/components/numberInput";
 import TextField from "@/components/textInput";
@@ -48,6 +49,7 @@ const CreateBoots = () => {
     <div className="bg-base-bg flex flex-col pl-80 justify-center align-middle w-full min-h-screen">
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Navbar />
           <TextField fieldName="name" fieldLabel="Name" />
           <NumberField fieldName="moveSpeed" fieldLabel="Move Speed" />
           <NumberField fieldName="cost" fieldLabel="Cost" />

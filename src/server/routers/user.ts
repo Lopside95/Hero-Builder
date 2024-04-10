@@ -92,7 +92,7 @@ export const userRouter = createTRPCRouter({
     console.log("userInRouter", user);
     return user;
   }),
-  getFinalHeroByUserId: protectedProcedure.query(async ({ ctx }) => {
+  getFinalHeroes: protectedProcedure.query(async ({ ctx }) => {
     const userHero = await ctx.prisma.finalHero.findMany({
       where: {
         userId: ctx.session.user.id,
@@ -100,6 +100,15 @@ export const userRouter = createTRPCRouter({
     });
     return userHero;
   }),
+
+  // getHeroDetailsByUser: protectedProcedure.query(async ({ctx}) => {
+
+  //   const heroDeets = await ctx.prisma.heroDetails.findFirst({
+  //     where: {
+  //       userId
+  //     }
+  //   })
+  // })
   getUserByEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async ({ ctx, input }) => {

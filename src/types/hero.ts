@@ -2,6 +2,7 @@ import z, { TypeOf } from "zod";
 import { userSchema } from "./user";
 
 export const bootsSchema = z.object({
+  id: z.string(),
   name: z.string().min(1, "You need to select boots"),
   moveSpeed: z.number({
     required_error: "speed is required",
@@ -17,6 +18,8 @@ export const bootsSchema = z.object({
 });
 
 export const weaponSchema = z.object({
+  id: z.string(),
+
   // weaponId: z.string(),
   // name: z.string().min(1, "You need a weapon"),
   name: z.string().min(1, "You need to select a weapon"),
@@ -43,17 +46,17 @@ export const heroDetails = z.object({
   // id: z.string(),
 });
 
-export const finalHeroSchema = z.object({
-  weapon: weaponSchema,
-  boots: bootsSchema,
+// export const finalHeroSchema = z.object({
+//   weapon: weaponSchema,
+//   boots: bootsSchema,
 
-  details: heroDetails,
-  // user: userSchema,
-  gold: z.number(),
-  // gold: z.number().refine((val) => val === 0, {
-  //   message: "You still have gold",
-  // }),
-});
+//   details: heroDetails,
+//   // user: userSchema,
+//   gold: z.number(),
+//   // gold: z.number().refine((val) => val === 0, {
+//   //   message: "You still have gold",
+//   // }),
+// });
 
 export const testHero = z.object({
   name: z.string(),
@@ -70,18 +73,19 @@ export const exampleHeroSchema = z.object({
   weaponImg: z.string(),
 });
 
-export const finalHeroPrisma = z.object({
+export const finalHeroSchema = z.object({
   name: z.string().min(2, "You need a name").max(25),
-  totalSpeed: z.number(),
-  totalDamage: z.number(),
+  speed: z.number(),
+  damage: z.number(),
   backstory: z.string(),
   profilePic: z.string(),
   // name: z.string(),
-  boots: z.string(),
-  weapon: z.string(),
+  boots: bootsSchema,
+  weapon: weaponSchema,
+  gold: z.number(),
 });
 
-export type FinalHeroPrisma = z.infer<typeof finalHeroPrisma>;
+// export type FinalHeroPrisma = z.infer<typeof finalHeroPrisma>;
 export type FinalHeroSchema = z.infer<typeof finalHeroSchema>;
 export type HeroPics = z.infer<typeof picsSchema>;
 export type HeroDetails = z.infer<typeof heroDetails>;
