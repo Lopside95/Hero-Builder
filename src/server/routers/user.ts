@@ -44,22 +44,11 @@ export const userRouter = createTRPCRouter({
       });
 
       return currentUser;
-      // const foundUser = await prisma.user.findUnique({
-      //   where: {
-      //     email: input.email,
-      //   },
-      // });
     }),
 
   updateUser: protectedProcedure
     .input(userSchema)
     .mutation(async ({ ctx, input }) => {
-      // const user = await ctx.prisma.user.findUnique({
-      //   where: {
-      //     id: ctx.session.user.id,
-      //   },
-      // });
-
       const updatedUser = await ctx.prisma.user.update({
         where: {
           id: ctx.session.user.id,
@@ -137,41 +126,7 @@ export const userRouter = createTRPCRouter({
       });
       return secondHero;
     }),
-  // createUserHero: protectedProcedure
-  //   .input(finalHeroSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     const secondHero = await prisma.userHero.create({
-  //       data: {
-  //         name: input.name,
-  //         speed: input.speed,
-  //         damage: input.damage,
-  //         story: input.backstory,
-  //         img: input.profilePic,
-  //         heroBoots: {
-  //           name: input.boots.name,
-  //           img: input.boots.url,
-  //           speed: input.boots.moveSpeed,
-  //           bonus: input.boots.bonus,
-  //           description: input.boots.description,
-  //           cost: input.boots.cost,
-  //         },
-  //         heroWeapon: {
-  //           name: input.weapon.name,
-  //           img: input.weapon.url,
-  //           damage: input.weapon.damage,
-  //           bonus: input.weapon.bonus,
-  //           description: input.weapon.description,
-  //           cost: input.weapon.cost,
-  //         },
-  //         user: {
-  //           connect: {
-  //             id: ctx.session.user.id,
-  //           },
-  //         },
-  //       },
-  //     });
-  //     return secondHero;
-  //   }),
+
   getUserHeroes: protectedProcedure.query(async ({ ctx }) => {
     return await prisma.userHero.findMany({
       where: {

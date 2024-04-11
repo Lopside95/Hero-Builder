@@ -27,6 +27,7 @@ import BootsForm from "@/components/bootsForm";
 import WeaponsForm from "@/components/weaponForm";
 import DetailsForm from "@/components/detailsForm";
 import { useSession } from "next-auth/react";
+import PicturesForm from "@/components/picsForm";
 
 const Home = () => {
   const form = useForm<FinalHeroSchema>({
@@ -64,13 +65,7 @@ const Home = () => {
 
   const { update: updateSession } = useSession();
 
-  const createNewHero = trpc.hero.createNewHero.useMutation({
-    onSuccess: async () => {
-      alert("new hero created");
-    },
-  });
-
-  const createUserHero = trpc.user.createUserHero.useMutation({
+  const createNewHero = trpc.user.createUserHero.useMutation({
     onSuccess: async () => {
       alert("User hero created");
       updateSession();
@@ -80,7 +75,7 @@ const Home = () => {
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    await createUserHero.mutateAsync(data);
+    await createNewHero.mutateAsync(data);
   };
 
   const gold = form.watch("gold");
@@ -107,14 +102,8 @@ const Home = () => {
             </div>
           </div>
           <Button type="submit">Submit</Button>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            Log
-          </Button>
         </div>
+        <PicturesForm />
       </form>
     </FormProvider>
   );

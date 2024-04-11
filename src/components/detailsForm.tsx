@@ -8,10 +8,13 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { FinalHeroSchema } from "@/types/hero";
+import { trpc } from "@/utils/trpc";
 
 const DetailsForm = () => {
   const { watch, control, getValues, setValue } =
     useFormContext<FinalHeroSchema>();
+
+  const { data: heroPics } = trpc.shop.getAllHeroPics.useQuery();
 
   return (
     <div>
@@ -54,6 +57,9 @@ const DetailsForm = () => {
           </FormItem>
         )}
       />
+      <div>
+        <img src={heroPics && heroPics[0].url} className="w-32" alt="" />
+      </div>
       <FormField
         name="profilePic"
         control={control}

@@ -18,8 +18,11 @@ export const shopRouter = createTRPCRouter({
     };
   }),
   getAllBoots: publicProcedure.query(async ({ ctx }) => {
-    const allBoots = await ctx.prisma.boots.findMany();
+    const allBoots = await prisma.boots.findMany();
     return allBoots;
+  }),
+  getAllHeroPics: publicProcedure.query(async () => {
+    return await prisma.heroImages.findMany();
   }),
   createNewBoots: publicProcedure
     .input(bootsSchema)
@@ -27,7 +30,7 @@ export const shopRouter = createTRPCRouter({
       const newBoots = await prisma.boots.create({
         data: {
           name: input.name,
-          moveSpeed: input.moveSpeed as number,
+          moveSpeed: input.moveSpeed,
           bonus: input.bonus,
           description: input.description,
           cost: input.cost,
