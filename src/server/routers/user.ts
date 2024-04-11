@@ -3,21 +3,11 @@ import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { finalHeroSchema } from "@/types/hero";
-import { connect } from "http2";
 
 export const userRouter = createTRPCRouter({
   findAll: publicProcedure.query(async ({ ctx }) => {
     const allUsers = await prisma.user.findMany();
     return allUsers;
-  }),
-  getHeroesByUserId: protectedProcedure.query(async ({ ctx }) => {
-    const userHeroes = await prisma.finalHero.findMany({
-      where: {
-        userId: ctx.session.user.id,
-      },
-    });
-    return userHeroes;
   }),
 
   createUser: publicProcedure
@@ -32,18 +22,6 @@ export const userRouter = createTRPCRouter({
         },
       });
       return newUser;
-    }),
-
-  userByEmail: publicProcedure
-    .input(userSchema)
-    .query(async ({ input, ctx }) => {
-      const currentUser = await ctx.prisma.user.findUnique({
-        where: {
-          email: ctx.session?.user.email,
-        },
-      });
-
-      return currentUser;
     }),
 
   updateUser: protectedProcedure
@@ -63,7 +41,6 @@ export const userRouter = createTRPCRouter({
 
       return updatedUser;
     }),
-
   getUserById: protectedProcedure.query(async ({ ctx }) => {
     const user = await ctx.prisma.user.findUnique({
       where: {
@@ -81,58 +58,14 @@ export const userRouter = createTRPCRouter({
     console.log("userInRouter", user);
     return user;
   }),
-  getFinalHeroes: protectedProcedure.query(async ({ ctx }) => {
-    const userHero = await ctx.prisma.finalHero.findMany({
-      where: {
-        userId: ctx.session.user.id,
-      },
-    });
-    return userHero;
-  }),
-  createUserHero: protectedProcedure
-    .input(finalHeroSchema)
-    .mutation(async ({ ctx, input }) => {
-      const secondHero = await prisma.userHero.create({
-        data: {
-          details: {
-            name: input.name,
-            speed: input.speed,
-            damage: input.damage,
-            story: input.backstory,
-            img: input.profilePic,
-          },
-          boots: {
-            name: input.boots.name,
-            img: input.boots.url,
-            speed: input.boots.moveSpeed,
-            bonus: input.boots.bonus,
-            description: input.boots.description,
-            cost: input.boots.cost,
-          },
-          weapon: {
-            name: input.weapon.name,
-            img: input.weapon.url,
-            damage: input.weapon.damage,
-            bonus: input.weapon.bonus,
-            description: input.weapon.description,
-            cost: input.weapon.cost,
-          },
-          user: {
-            connect: {
-              id: ctx.session.user.id,
-            },
-          },
-        },
-      });
-      return secondHero;
-    }),
 
-  getUserHeroes: protectedProcedure.query(async ({ ctx }) => {
-    return await prisma.userHero.findMany({
+  getHeroesByUser: protectedProcedure.query(async ({ ctx }) => {
+    const finalHeroes = await ctx.prisma.finalHero.findMany({
       where: {
         userId: ctx.session.user.id,
       },
     });
+    return finalHeroes;
   }),
 
   getUserByEmail: publicProcedure

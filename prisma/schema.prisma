@@ -8,22 +8,40 @@ generator client {
 }
 
 model User {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  email       String        @unique
-  password    String
-  pic         String
-  FinalHero   FinalHero[]
-  ExampleHero ExampleHero[]
-  simpleHero  SimpleHero[]
-  UserHero    UserHero[]
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String      @unique
+  password  String
+  pic       String
+  FinalHero FinalHero[]
 }
 
-model UserHero {
+model Boots {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  speed       Int
+  bonus       String
+  description String
+  cost        Int
+  img         String
+}
+
+model Weapon {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  damage      Int
+  bonus       String
+  description String
+  cost        Int
+  img         String
+}
+
+model FinalHero {
   id      String      @id @default(auto()) @map("_id") @db.ObjectId
   details DetailsType
   boots   BootsType
   weapon  WeaponType
+  gold    Int
   userId  String      @db.ObjectId
   user    User        @relation(fields: [userId], references: [id])
 }
@@ -41,22 +59,11 @@ type DetailsType {
   story  String
 }
 
-model Boots {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  moveSpeed   Int
-  description String
-  bonus       String
-  cost        Int
-  url         String
-  FinalHero   FinalHero[]
-}
-
 type BootsType {
   name        String
   speed       Int
-  description String
   bonus       String
+  description String
   cost        Int
   img         String
 }
@@ -64,64 +71,8 @@ type BootsType {
 type WeaponType {
   name        String
   damage      Int
-  description String
   bonus       String
+  description String
   cost        Int
   img         String
-}
-
-model Weapon {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  damage      Int
-  description String
-  bonus       String
-  cost        Int
-  url         String
-  FinalHero   FinalHero[]
-}
-
-model HeroDetails {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  totalSpeed  Int
-  totalDamage Int
-  name        String
-  profilePic  String
-  backstory   String
-}
-
-model FinalHero {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  bootsId    String @db.ObjectId
-  weaponId   String @db.ObjectId
-  speed      Int
-  damage     Int
-  name       String
-  profilePic String
-  backstory  String
-  boots      Boots  @relation(fields: [bootsId], references: [id])
-  weapon     Weapon @relation(fields: [weaponId], references: [id])
-  userId     String @db.ObjectId
-  user       User   @relation(fields: [userId], references: [id])
-}
-
-model ExampleHero {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  damage    String
-  speed     String
-  img       String
-  bootsImg  String
-  weaponImg String
-  userId    String @db.ObjectId
-  user      User   @relation(fields: [userId], references: [id])
-}
-
-model SimpleHero {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  boots  String
-  weapon String
-  userId String @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id])
 }

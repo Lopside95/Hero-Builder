@@ -1,16 +1,6 @@
 import Link from "next/link";
 import { Button, ButtonProps } from "./ui/button";
-// import {
-//   NavigationMenu,
-//   NavigationMenuContent,
-//   NavigationMenuIndicator,
-//   NavigationMenuItem,
-//   NavigationMenuLink,
-//   NavigationMenuList,
-//   NavigationMenuTrigger,
-//   NavigationMenuViewport,
-// } from "./ui/navigation-menu";
-// import { ModeToggle } from "./themeSwitcher";
+
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -109,26 +99,6 @@ const Navbar = () => {
             Profile
           </Link>
         </Button>
-        <Button
-          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/example") ? "underline underline-offset-[6px]   " : ""
-          }`}
-          variant="link"
-        >
-          <Link tabIndex={-1} href="/example">
-            Example
-          </Link>
-        </Button>
-        {/* <Button
-          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/shop") ? "underline underline-offset-[6px]   " : ""
-          }`}
-          variant="link"
-        >
-          <Link tabIndex={-1} href="/shop">
-            Shop
-          </Link>
-        </Button> */}
       </span>
     </div>
   );

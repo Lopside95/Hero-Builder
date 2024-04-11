@@ -1,23 +1,15 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { HeroPics } from "@/types/hero";
 import Link from "next/link";
 import { useQueries, useQuery } from "react-query";
 import LoginPage from "./login";
 
-// export interface CreateProps {
-//   gameInfo: GameInformation;
-// }
 type IndexPics = {
   id: string;
   url: string;
 }[];
 
 const Home = () => {
-  // const { isLoading, setIsLoading } = useFinalHero();
-
-  // const [images, setImages] = useState<HeroPics[] | undefined>();
-
   const indexPics: IndexPics = [
     {
       id: "bootsPic",
@@ -32,20 +24,6 @@ const Home = () => {
       url: "https://storage.cloud.google.com/hero-profiles/orc.png?authuser=1",
     },
   ];
-
-  // const fetchPics = async () => {
-  //   const res = await fetch(
-  //     "https://storage.cloud.google.com/shop-boots/elderboots.jpg?authuser=1"
-  //   );
-
-  //   const data = res.json();
-
-  //   console.log("data", data);
-  // };
-
-  // useEffect(() => {
-  //   fetchPics();
-  // }, []);
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">

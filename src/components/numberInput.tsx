@@ -26,11 +26,6 @@ const NumberField = ({ fieldName, fieldLabel }: TextFieldInterface) => {
             </FormLabel>
             <FormControl>
               <Input className="w-1/4" />
-
-              {/* <Input
-                {...register("fieldName", { valueAsNumber: true })}
-                className="w-1/4"
-              /> */}
             </FormControl>
           </FormItem>
         </>

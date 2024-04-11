@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Navbar from "@/components/Navbar";
-import UserLogin from "@/components/login";
+import UserLogin from "@/components/user/login";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,

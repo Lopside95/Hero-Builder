@@ -11,7 +11,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { Coins } from "lucide-react";
 import { bootsSchema } from "@/types/hero";
-import { FormControl, FormField, FormItem } from "./ui/form";
+import { FormControl, FormField, FormItem } from "../ui/form";
 import {
   Carousel,
   CarouselApi,
@@ -19,9 +19,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
+} from "../ui/carousel";
+import { Card } from "../ui/card";
+import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
 export type WeaponProps = {
   name: string;
@@ -47,7 +47,7 @@ const WeaponsForm = () => {
           bonus: weapon.bonus,
           description: weapon.description,
           cost: weapon.cost,
-          url: weapon.url,
+          url: weapon.img,
         };
 
         return acc;
@@ -79,7 +79,7 @@ const WeaponsForm = () => {
                       {/* <p>{`Bonus: ${weapon.bonus}`}</p> */}
                       <p>{`Cost: ${weapon.cost}`}</p>
                       <img
-                        src={weapon.url}
+                        src={weapon.img}
                         alt=""
                         className="w-60 rounded-md"
                       />
@@ -108,7 +108,7 @@ const WeaponsForm = () => {
                               e.preventDefault();
                               field.onChange(weapon);
                               setValue("weapon", weapon);
-                              setValue("damage", weapon.damage);
+                              setValue("details.damage", weapon.damage);
                             }}
                           >
                             Select

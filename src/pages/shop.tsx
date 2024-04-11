@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
-import BootsForm from "@/components/bootsForm";
+import BootsForm from "@/components/create/bootsForm";
 import { Button } from "@/components/ui/button";
-import WeaponsForm from "@/components/weaponForm";
+import WeaponsForm from "@/components/create/weaponForm";
 import { Boots, bootsSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,10 +13,10 @@ const Shop = () => {
     resolver: zodResolver(bootsSchema),
     defaultValues: {
       name: "",
-      moveSpeed: 0,
+      speed: 0,
       description: "",
       cost: 0,
-      url: "",
+      img: "",
     },
   });
 

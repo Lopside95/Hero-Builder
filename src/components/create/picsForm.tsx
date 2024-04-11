@@ -11,7 +11,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { Coins } from "lucide-react";
 import { bootsSchema } from "@/types/hero";
-import { FormControl, FormField, FormItem } from "./ui/form";
+import { FormControl, FormField, FormItem } from "../ui/form";
 import {
   Carousel,
   CarouselApi,
@@ -19,9 +19,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
+} from "../ui/carousel";
+import { Card } from "../ui/card";
+import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
 
 const PicturesForm = () => {
@@ -30,34 +30,11 @@ const PicturesForm = () => {
   const [api, setApi] = useState<CarouselApi>();
   const { control, setValue, watch } = useFormContext<FinalHeroSchema>();
 
-  const watchedUrl = watch("profilePic");
-
-  // const picsDictionary = images
-  //   ? images.reduce((acc, img) => {
-  //       acc[img.id] = {
-  //         url: img.url,
-  //       };
-  //       return acc;
-  //     }, {} as Record<string>)
-  //   : {};
-
-  // const picsDictionary = heroPics ? heroPics.reduce((acc, pic) => {
-
-  //     acc[pic.id] = {
-  //         id: pic.id,
-  //         name: pic.name,
-  //         url: pic.url,
-  //     }
-
-  //     return acc
-
-  // }, {})
-
-  //   const picOne: HeroPictures = picsDictionary ? picsDictionary["Archer"] : {};
+  const watchedImg = watch("details.img");
 
   return (
     <FormField
-      name="profilePic"
+      name="details.img"
       control={control}
       render={({ field }) => (
         // <div className=" ">
@@ -78,13 +55,13 @@ const PicturesForm = () => {
                           {/* <DialogClose asChild> */}
                           <Button
                             variant={
-                              watchedUrl === img.url ? "disabled" : "select"
+                              watchedImg === img.url ? "disabled" : "select"
                             }
                             {...field}
                             value={img.url}
                             onClick={() => {
                               field.onChange();
-                              setValue("profilePic", img.url);
+                              setValue("details.img", img.url);
                             }}
                           >
                             Select

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { publicProcedure, createTRPCRouter } from "../trpc";
 import { userSchema } from "@/types/user";
 import { prisma } from "@/pages/api/db";
-import { bootsSchema, finalHeroSchema, heroDetails } from "@/types/hero";
+import { bootsSchema, finalHeroSchema } from "@/types/hero";
 
 export const shopRouter = createTRPCRouter({
   getAllWeapons: publicProcedure.query(async () => {
@@ -30,11 +30,11 @@ export const shopRouter = createTRPCRouter({
       const newBoots = await prisma.boots.create({
         data: {
           name: input.name,
-          moveSpeed: input.moveSpeed,
+          speed: input.speed,
           bonus: input.bonus,
           description: input.description,
           cost: input.cost,
-          url: input.url,
+          img: input.img,
         },
       });
       return newBoots;

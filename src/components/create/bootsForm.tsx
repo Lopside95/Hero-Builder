@@ -11,7 +11,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { Coins } from "lucide-react";
 import { bootsSchema } from "@/types/hero";
-import { FormControl, FormField, FormItem } from "./ui/form";
+import { FormControl, FormField, FormItem } from "../ui/form";
 import {
   Carousel,
   CarouselApi,
@@ -19,9 +19,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
+} from "../ui/carousel";
+import { Card } from "../ui/card";
+import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
 
 const BootsForm = () => {
@@ -37,11 +37,11 @@ const BootsForm = () => {
         acc[boot.name] = {
           id: boot.id,
           name: boot.name,
-          moveSpeed: boot.moveSpeed,
+          speed: boot.speed,
           bonus: boot.bonus,
           description: boot.description || "",
           cost: boot.cost,
-          url: boot.url,
+          img: boot.img,
         };
 
         return acc;
@@ -77,7 +77,7 @@ const BootsForm = () => {
                           {boot.name}
                         </h3> */}
                         <h1>{boot.name}</h1>
-                        <p>{`Move speed: ${boot.moveSpeed}`}</p>
+                        <p>{`Move speed: ${boot.speed}`}</p>
                         <p>{`Description: ${boot.description}`}</p>
                         {/* <p className="w-2/3">{`Bonus: ${boot.bonus}`}</p> */}
                         <span className="flex gap-3">
@@ -87,7 +87,7 @@ const BootsForm = () => {
                         {/* <p>{` ${boot.cost} `}</p> */}
                         {/* <Suspense fallback={<p>Loading...</p>}> */}
                         <img
-                          src={boot.url}
+                          src={boot.img}
                           alt=""
                           className="w-60 rounded-md  "
                         />
@@ -117,11 +117,11 @@ const BootsForm = () => {
                                 e.preventDefault();
                                 field.onChange(boot);
                                 setValue("boots", boot);
-                                setValue("speed", boot.moveSpeed);
+                                setValue("details.speed", boot.speed);
                               }}
                               // onClick={() => {
                               //   field.onChange(boot);
-                              //   setValue("details.totalMS", boot.moveSpeed);
+                              //   setValue("details.totalMS", boot.speed);
                               // }}
                             >
                               Select

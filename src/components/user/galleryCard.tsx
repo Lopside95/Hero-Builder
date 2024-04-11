@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { UserHero } from "@/types/hero";
-import { Card } from "./ui/card";
+import { Card } from "../ui/card";
 import { Suspense } from "react";
 import { HeroInterface } from "./gallery";
 
@@ -22,14 +21,11 @@ const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
       <article className="flex gap-10">
         <div className=" flex flex-col items-center gap-3 ">
           <img src={boots.img} className="w-80 rounded-full" alt="" />
-          {/* <h3>{hero.boots.name}</h3> */}
         </div>
         <div className="flex flex-col items-center gap-3">
           <img src={weapon.img} className="w-80 rounded-full" alt="" />
-          {/* <h3>{hero.weapon.name}</h3> */}
         </div>
       </article>
-      {/* <div className="flex flex-col gap-4"></div> */}
     </Card>
   );
 };

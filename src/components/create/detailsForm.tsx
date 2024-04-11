@@ -5,8 +5,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+} from "../ui/form";
+import { Input } from "../ui/input";
 import { FinalHeroSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
 
@@ -18,9 +18,8 @@ const DetailsForm = () => {
 
   return (
     <div>
-      {/* <h1 className="text-base-txtClr">{gold}</h1> */}
       <FormField
-        name="name"
+        name="details.name"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -39,7 +38,7 @@ const DetailsForm = () => {
         )}
       />
       <FormField
-        name="backstory"
+        name="details.story"
         control={control}
         render={({ field }) => (
           <FormItem>
@@ -61,7 +60,7 @@ const DetailsForm = () => {
         <img src={heroPics && heroPics[0].url} className="w-32" alt="" />
       </div>
       <FormField
-        name="profilePic"
+        name="details.img"
         control={control}
         render={({ field }) => (
           <FormItem>

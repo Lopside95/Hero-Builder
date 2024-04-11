@@ -1,12 +1,21 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Navbar from "@/components/Navbar";
+import BootsForm from "@/components/create/bootsForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { z } from "zod";
 
-const Signup = () => {
+const UserAccount = () => {
   const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -17,14 +26,16 @@ const Signup = () => {
     },
   });
 
-  const createNewUser = trpc.user.createUser.useMutation({
-    onSuccess: () => {
-      alert("user created");
+  const trpcUtils = trpc.useUtils();
+  const setUpdates = trpc.user.updateUser.useMutation({
+    onSuccess: async () => {
+      alert("updated");
+      await trpcUtils.user.findAll.invalidate();
     },
   });
 
   const onSubmit: SubmitHandler<User> = async (data: User) => {
-    await createNewUser.mutateAsync(data);
+    await setUpdates.mutateAsync(data);
 
     console.log("data", data);
   };
@@ -33,9 +44,7 @@ const Signup = () => {
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
-        {/* {isLoading ? (
-          <div>Loading...</div>
-        ) : ( */}
+
         <div className="bg-base-bg flex flex-col items-center py-20 w-full min-h-screen">
           <div className="w-1/3 ">
             <Input {...form.register("name")} placeholder="name" />
@@ -46,10 +55,9 @@ const Signup = () => {
             <Button>Submit</Button>
           </div>
         </div>
-        {/* )} */}
       </form>
     </FormProvider>
   );
 };
 
-export default Signup;
+export default UserAccount;

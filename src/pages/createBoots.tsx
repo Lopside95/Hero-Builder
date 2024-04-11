@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import BootsForm from "@/components/bootsForm";
+import BootsForm from "@/components/create/bootsForm";
 import NumberField from "@/components/numberInput";
 import TextField from "@/components/textInput";
 import { Button } from "@/components/ui/button";
@@ -26,11 +26,11 @@ const CreateBoots = () => {
     resolver: zodResolver(bootsSchema),
     defaultValues: {
       name: "",
-      moveSpeed: 40,
+      speed: 40,
       description: "",
       cost: 45,
       bonus: "",
-      url: "",
+      img: "",
     },
   });
 
@@ -51,18 +51,11 @@ const CreateBoots = () => {
         <Navbar />
         <div className="bg-base-bg flex flex-col pl-80 justify-center align-middle w-full min-h-screen">
           <TextField fieldName="name" fieldLabel="Name" />
-          <NumberField fieldName="moveSpeed" fieldLabel="Move Speed" />
+          <NumberField fieldName="speed" fieldLabel="Move Speed" />
           <NumberField fieldName="cost" fieldLabel="Cost" />
-          <TextField fieldName="url" fieldLabel="Image" />
+          <TextField fieldName="img" fieldLabel="Image" />
           <TextField fieldName="description" fieldLabel="description" />
           <TextField fieldName="bonus" fieldLabel="bonus" />
-          {/* <Input {...form.register("name")} placeholder="name" /> */}
-          {/* <Input {...form.register("moveSpeed")} placeholder="speed" /> */}
-          {/* <Input {...form.register("description")} placeholder="description" />
-          <Input {...form.register("cost")} placeholder="cost" />
-          <Input {...form.register("url")} placeholder="image" />
-          <Input {...form.register("bonus")} placeholder="bonus" /> */}
-          {/* <Button>Submit</Button> */}
           <Button>Create</Button>
         </div>
       </form>
