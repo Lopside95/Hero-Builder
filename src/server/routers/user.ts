@@ -100,17 +100,19 @@ export const userRouter = createTRPCRouter({
     });
     return userHero;
   }),
-  createSecondHero: protectedProcedure
+  createUserHero: protectedProcedure
     .input(finalHeroSchema)
     .mutation(async ({ ctx, input }) => {
-      const secondHero = await prisma.secondHero.create({
+      const secondHero = await prisma.userHero.create({
         data: {
-          name: input.name,
-          speed: input.speed,
-          damage: input.damage,
-          story: input.backstory,
-          img: input.profilePic,
-          heroBoots: {
+          details: {
+            name: input.name,
+            speed: input.speed,
+            damage: input.damage,
+            story: input.backstory,
+            img: input.profilePic,
+          },
+          boots: {
             name: input.boots.name,
             img: input.boots.url,
             speed: input.boots.moveSpeed,
@@ -118,7 +120,7 @@ export const userRouter = createTRPCRouter({
             description: input.boots.description,
             cost: input.boots.cost,
           },
-          heroWeapon: {
+          weapon: {
             name: input.weapon.name,
             img: input.weapon.url,
             damage: input.weapon.damage,
@@ -135,46 +137,41 @@ export const userRouter = createTRPCRouter({
       });
       return secondHero;
     }),
-  getSecondheroes: protectedProcedure.query(async ({ ctx }) => {
-    return await prisma.secondHero.findMany({
-      where: {
-        userId: ctx.session.user.id,
-      },
-    });
-  }),
-
-  createUserHero: protectedProcedure
-    .input(finalHeroSchema)
-    .mutation(async ({ ctx, input }) => {
-      const newUserHero = await prisma.userHero.create({
-        data: {
-          name: input.name,
-          speed: input.speed,
-          damage: input.damage,
-          story: input.backstory,
-          img: input.profilePic,
-          bName: input.boots.name,
-          bImg: input.boots.url,
-          bSpeed: input.boots.moveSpeed,
-          bBonus: input.boots.bonus,
-          bDescription: input.boots.description,
-          bCost: input.boots.cost,
-          wName: input.weapon.name,
-          wImg: input.weapon.url,
-          wDamage: input.weapon.damage,
-          wBonus: input.weapon.bonus,
-          wDescription: input.weapon.description,
-          wCost: input.weapon.cost,
-
-          user: {
-            connect: {
-              id: ctx.session.user.id,
-            },
-          },
-        },
-      });
-      return newUserHero;
-    }),
+  // createUserHero: protectedProcedure
+  //   .input(finalHeroSchema)
+  //   .mutation(async ({ ctx, input }) => {
+  //     const secondHero = await prisma.userHero.create({
+  //       data: {
+  //         name: input.name,
+  //         speed: input.speed,
+  //         damage: input.damage,
+  //         story: input.backstory,
+  //         img: input.profilePic,
+  //         heroBoots: {
+  //           name: input.boots.name,
+  //           img: input.boots.url,
+  //           speed: input.boots.moveSpeed,
+  //           bonus: input.boots.bonus,
+  //           description: input.boots.description,
+  //           cost: input.boots.cost,
+  //         },
+  //         heroWeapon: {
+  //           name: input.weapon.name,
+  //           img: input.weapon.url,
+  //           damage: input.weapon.damage,
+  //           bonus: input.weapon.bonus,
+  //           description: input.weapon.description,
+  //           cost: input.weapon.cost,
+  //         },
+  //         user: {
+  //           connect: {
+  //             id: ctx.session.user.id,
+  //           },
+  //         },
+  //       },
+  //     });
+  //     return secondHero;
+  //   }),
   getUserHeroes: protectedProcedure.query(async ({ ctx }) => {
     return await prisma.userHero.findMany({
       where: {
@@ -182,6 +179,7 @@ export const userRouter = createTRPCRouter({
       },
     });
   }),
+
   getUserByEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .mutation(async ({ ctx, input }) => {

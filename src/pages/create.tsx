@@ -59,38 +59,20 @@ const Home = () => {
     },
   });
 
-  // const { data: user } = trpc.user.findAll.useQuery();
-
   const { data: user } = trpc.user.getUserById.useQuery();
   const utils = trpc.useUtils();
 
   const { update: updateSession } = useSession();
 
-  // const createNewHero = trpc.hero.createFinalhero.useMutation({
-  //   onSuccess: async () => {
-  //     alert("new hero created");
-  //     await trpcUtils.hero.invalidate();
-  //   },
-  // });
-
   const createNewHero = trpc.hero.createNewHero.useMutation({
     onSuccess: async () => {
       alert("new hero created");
-      // await utils.user.invalidate();
-      // updateSession();
     },
   });
 
-  const createNewUserHero = trpc.user.createUserHero.useMutation({
+  const createUserHero = trpc.user.createUserHero.useMutation({
     onSuccess: async () => {
       alert("User hero created");
-      updateSession();
-    },
-  });
-
-  const createNewSecondHero = trpc.user.createSecondHero.useMutation({
-    onSuccess: async () => {
-      alert("it worked");
       updateSession();
     },
   });
@@ -98,16 +80,7 @@ const Home = () => {
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    // await createNewHero.mutateAsync(data);
-
-    await createNewSecondHero.mutateAsync(data);
-
-    // await createNewFinalHero.mutateAsync(data);
-    // try {
-    //   await createNewFinalHero.mutateAsync(data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    await createUserHero.mutateAsync(data);
   };
 
   const gold = form.watch("gold");

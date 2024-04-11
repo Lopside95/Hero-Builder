@@ -86,38 +86,6 @@ export const finalHeroSchema = z.object({
 });
 
 export const userHeroSchema = z.object({
-  name: z.string().min(2, "You need a name").max(25),
-  speed: z.number(),
-  damage: z.number(),
-  story: z.string(),
-  img: z.string(),
-  bName: z.string().min(1, "You need to select boots"),
-  bSpeed: z.number({
-    required_error: "speed is required",
-    invalid_type_error: "speed must be a number",
-  }),
-  bBonus: z.string(),
-  bDescription: z.string(),
-  bCost: z.number({
-    required_error: "Cost is required",
-    invalid_type_error: "Cost must be a number",
-  }),
-  bImg: z.string(),
-  wName: z.string().min(1, "You need to select a weapon"),
-  wDamage: z.number({
-    required_error: "damage is required",
-    invalid_type_error: "damage must be a number",
-  }),
-  wBonus: z.string(),
-  wDescription: z.string(),
-  wCost: z.number({
-    required_error: "Cost is required",
-    invalid_type_error: "Cost must be a number",
-  }),
-  wImg: z.string(),
-});
-
-export const secondHeroSchema = z.object({
   details: z.object({
     name: z.string().min(2, "You need a name").max(25),
     speed: z.number(),
@@ -125,7 +93,7 @@ export const secondHeroSchema = z.object({
     story: z.string(),
     img: z.string(),
   }),
-  heroBoots: z.object({
+  boots: z.object({
     name: z.string().min(1, "You need to select boots"),
     speed: z.number(),
     bonus: z.string(),
@@ -133,7 +101,7 @@ export const secondHeroSchema = z.object({
     cost: z.number(),
     img: z.string(),
   }),
-  heroWeapon: z.object({
+  weapon: z.object({
     name: z.string().min(1, "You need to select boots"),
     speed: z.number(),
     bonus: z.string(),
@@ -142,7 +110,6 @@ export const secondHeroSchema = z.object({
     img: z.string(),
   }),
 });
-export type SecondHero = z.infer<typeof secondHeroSchema>;
 
 // export type FinalHeroPrisma = z.infer<typeof finalHeroPrisma>;
 export type UserHero = z.infer<typeof userHeroSchema>;

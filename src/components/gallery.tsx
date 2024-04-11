@@ -1,12 +1,45 @@
 import { trpc } from "@/utils/trpc";
 import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
-import { FinalHeroSchema, finalHeroSchema } from "@/types/hero";
-import { Boots, FinalHero } from "@prisma/client";
+
 import { Card, CardContent } from "./ui/card";
+import GalleryCard from "./galleryCard";
+import { UserHero } from "@/types/hero";
+
+type HeroDetails = {
+  name: string;
+  speed: number;
+  damage: number;
+  story: string;
+  img: string;
+};
+type HeroBoots = {
+  name: string;
+  speed: number;
+  img: string;
+  bonus: string;
+  description: string;
+  cost: number;
+};
+
+type HeroWeapon = {
+  name: string;
+  damage: number;
+  img: string;
+  bonus: string;
+  description: string;
+  cost: number;
+};
+
+export interface HeroInterface {
+  details: HeroDetails;
+  boots: HeroBoots;
+  weapon: HeroWeapon;
+}
 
 const Gallery = () => {
-  const { data: heroes, isLoading } = trpc.user.getSecondheroes.useQuery();
+  const { data: heroes, isLoading } = trpc.user.getUserHeroes.useQuery();
+
+  // const firstHero = heroes ? heroes[0] : undefined;
 
   return (
     <div className="w-full pt-20 flex flex-col  items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
@@ -17,26 +50,35 @@ const Gallery = () => {
         <div>
           {heroes?.map((hero) => {
             return (
-              <Card key={hero.name}>
-                <CardContent>
-                  <ul>
-                    <li>{hero.name}</li>
-                    <li>{hero.story}</li>
-                    <li>{hero.damage}</li>
-                    <li>{hero.speed}</li>
-                    <li>{hero.heroBoots.name}</li>
-                    {/* <li>{hero.weapon.name}</li>
-                    <li>{hero.boots.name}</li> */}
-                  </ul>
-                </CardContent>
-              </Card>
+              <div key={hero.id}>
+                <GalleryCard
+                  details={hero.details as HeroDetails}
+                  boots={hero.boots as HeroBoots}
+                  weapon={hero.weapon as HeroWeapon}
+                />
+              </div>
             );
           })}
-
-          {/* <p>{allHeroes ? allHeroes[1].boots.name : "Nope"}</p> */}
-
-          {/* <img src={firstBootsImg} alt="" className="w-40" /> */}
         </div>
+        // <div>
+        //   {heroes?.map((hero) => {
+        //     return (
+        //       <Card key={hero.name}>
+        //         <CardContent>
+        //           <ul>
+        //             <li>{hero.name}</li>
+        //             <li>{hero.story}</li>
+        //             <li>{hero.damage}</li>
+        //             <li>{hero.speed}</li>
+        //             <li>{hero.heroBoots.name}</li>
+
+        //           </ul>
+        //         </CardContent>
+        //       </Card>
+        //     );
+        //   })}
+
+        // </div>
       )}
     </div>
   );
