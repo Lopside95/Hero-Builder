@@ -12,22 +12,6 @@ import { simpleHeroSchema } from "@/pages/updateUser";
 import { connect } from "http2";
 import { create } from "domain";
 
-// export const heroSchema = z.object({
-//   name: z.string(),
-//   damage: z.string(),
-//   speed: z.string(),
-//   img: z.string(),
-//   bootsImg: z.string(),
-//   weaponImg: z.string(),
-// });
-
-// model SimpleHero {
-//   id     String @id @default(auto()) @map("_id") @db.ObjectId
-//   name   String
-//   boots  String
-//   weapon String
-// }
-
 export const heroRouter = createTRPCRouter({
   getAllHeroes: publicProcedure.query(async () => {
     const allHeroes = await prisma.exampleHero.findMany();
@@ -85,7 +69,6 @@ export const heroRouter = createTRPCRouter({
   createNewHero: protectedProcedure
     .input(finalHeroSchema)
     .mutation(async ({ input, ctx }) => {
-      // this is just an example of the way I'm trying to do this
       const newHero = await prisma.finalHero.create({
         data: {
           name: input.name,
@@ -98,7 +81,6 @@ export const heroRouter = createTRPCRouter({
               id: input.boots.id,
             },
           },
-          // weapon: input.weapon,
 
           user: {
             connect: {
@@ -110,20 +92,6 @@ export const heroRouter = createTRPCRouter({
               id: input.weapon.id,
             },
           },
-          // boots: {
-          //   connect: {
-          //     id: input.boots.id,
-          //   },
-          // },
-          // weapon: {
-          //   connect: {
-          //     id: input.weapon.id,
-          //   },
-          // },
-          // boots: {
-          //   bootsId: input.boots.id // THIS DOESN'T WORK, WHY? Can I not retrieve the id of the boots through the form selection?
-          //   // I have the same issue for the weapon
-          // }
         },
       });
       return newHero;

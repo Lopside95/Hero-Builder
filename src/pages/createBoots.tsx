@@ -46,10 +46,10 @@ const CreateBoots = () => {
   };
 
   return (
-    <div className="bg-base-bg flex flex-col pl-80 justify-center align-middle w-full min-h-screen">
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Navbar />
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Navbar />
+        <div className="bg-base-bg flex flex-col pl-80 justify-center align-middle w-full min-h-screen">
           <TextField fieldName="name" fieldLabel="Name" />
           <NumberField fieldName="moveSpeed" fieldLabel="Move Speed" />
           <NumberField fieldName="cost" fieldLabel="Cost" />
@@ -64,9 +64,9 @@ const CreateBoots = () => {
           <Input {...form.register("bonus")} placeholder="bonus" /> */}
           {/* <Button>Submit</Button> */}
           <Button>Create</Button>
-        </form>
-      </FormProvider>
-    </div>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 

@@ -2,12 +2,14 @@
 
 import Navbar from "@/components/Navbar";
 import BootsForm from "@/components/bootsForm";
+import Gallery from "@/components/gallery";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { heroDetails } from "@/types/hero";
+import { Boots, FinalHeroSchema, heroDetails } from "@/types/hero";
 import { User, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -24,10 +26,6 @@ export const simpleHeroSchema = z.object({
 });
 
 const Profile = () => {
-  const { data: finalHeroes } = trpc.user.getFinalHeroes.useQuery();
-
-  console.log("finalHeroes", finalHeroes);
-
   // const { data: boots } = trpc.shop.getAllBoots.useQuery();
   // const { data: weapons } = trpc.shop.getAllWeapons.useQuery();
 
@@ -39,7 +37,8 @@ const Profile = () => {
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
       <Navbar />
       <div>
-        <h1>Hero Here</h1>
+        {/* <h1>{finalHeroes ? finalHeroes[0].bootsId : ""}</h1> */}
+        <Gallery />
       </div>
     </div>
   );

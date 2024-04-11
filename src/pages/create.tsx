@@ -100,7 +100,7 @@ const Home = () => {
   const weapon = form.watch("weapon");
   const damage = form.watch("damage");
   const speed = form.watch("speed");
-  const adjustedGold = gold - (boots.cost + weapon.cost);
+  const adjustedGold = gold ? gold - (boots.cost + weapon.cost) : 0;
 
   return (
     <FormProvider {...form}>

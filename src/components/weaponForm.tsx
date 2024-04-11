@@ -37,7 +37,6 @@ const WeaponsForm = () => {
   const [selectedWeapon, setSelectedWeapon] = useState<string | undefined>();
 
   const { data: weapons, isLoading } = trpc.shop.getAllWeapons.useQuery();
-  console.log("weapons", weapons);
   const [api, setApi] = useState<CarouselApi>();
   const weaponsDictionary = weapons
     ? weapons.reduce((acc, weapon) => {
