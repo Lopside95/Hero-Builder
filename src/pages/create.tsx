@@ -81,11 +81,26 @@ const Home = () => {
     },
   });
 
+  const createNewUserHero = trpc.user.createUserHero.useMutation({
+    onSuccess: async () => {
+      alert("User hero created");
+      updateSession();
+    },
+  });
+
+  const createNewSecondHero = trpc.user.createSecondHero.useMutation({
+    onSuccess: async () => {
+      alert("it worked");
+      updateSession();
+    },
+  });
+
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    alert("clicked");
-    await createNewHero.mutateAsync(data);
+    // await createNewHero.mutateAsync(data);
+
+    await createNewSecondHero.mutateAsync(data);
 
     // await createNewFinalHero.mutateAsync(data);
     // try {

@@ -16,15 +16,44 @@ model User {
   FinalHero   FinalHero[]
   ExampleHero ExampleHero[]
   simpleHero  SimpleHero[]
+  UserHero    UserHero[]
+  SecondHero  SecondHero[]
 }
 
-model SimpleHero {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  boots  String
-  weapon String
-  userId String @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id])
+model UserHero {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  speed        Int
+  damage       Int
+  name         String
+  img          String
+  story        String
+  bName        String
+  bSpeed       Int
+  bBonus       String
+  bCost        Int
+  bDescription String
+  bImg         String
+  wName        String
+  wDamage      Int
+  wBonus       String
+  wCost        Int
+  wDescription String
+  wImg         String
+  userId       String @db.ObjectId
+  user         User   @relation(fields: [userId], references: [id])
+}
+
+model SecondHero {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  speed      Int
+  damage     Int
+  name       String
+  img        String
+  story      String
+  heroBoots  BootsType
+  heroWeapon WeaponType
+  userId     String     @db.ObjectId
+  user       User       @relation(fields: [userId], references: [id])
 }
 
 model Boots {
@@ -36,6 +65,24 @@ model Boots {
   cost        Int
   url         String
   FinalHero   FinalHero[]
+}
+
+type BootsType {
+  name        String
+  speed       Int
+  description String
+  bonus       String
+  cost        Int
+  img         String
+}
+
+type WeaponType {
+  name        String
+  damage      Int
+  description String
+  bonus       String
+  cost        Int
+  img         String
 }
 
 model Weapon {
@@ -83,4 +130,13 @@ model ExampleHero {
   weaponImg String
   userId    String @db.ObjectId
   user      User   @relation(fields: [userId], references: [id])
+}
+
+model SimpleHero {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  boots  String
+  weapon String
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
 }
