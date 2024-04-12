@@ -42,8 +42,6 @@ export interface HeroInterface {
 const Gallery = () => {
   const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
 
-  const heroData = heroes ? heroes : {};
-
   return (
     <div className="w-full pt-20 flex flex-col  items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
       <Navbar />
@@ -51,27 +49,19 @@ const Gallery = () => {
         <div>Loading ...</div>
       ) : (
         <div>
-          <Image
-            src={heroes ? heroes[0].boots.img : ""}
-            width={500}
-            height={500}
-            alt=""
-          />
+          {heroes?.map((hero) => {
+            return (
+              <div key={hero.id}>
+                <GalleryCard
+                  details={hero.details as Details}
+                  boots={hero.boots as Boots}
+                  weapon={hero.weapon as Weapon}
+                />
+                <Separator className="" />
+              </div>
+            );
+          })}
         </div>
-        // <div>
-        //   {heroes?.map((hero) => {
-        //     return (
-        //       <div key={hero.id}>
-        //         <GalleryCard
-        //           details={hero.details as Details}
-        //           boots={hero.boots as Boots}
-        //           weapon={hero.weapon as Weapon}
-        //         />
-        //         <Separator className="" />
-        //       </div>
-        //     );
-        //   })}
-        // </div>
       )}
     </div>
   );

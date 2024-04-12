@@ -23,6 +23,7 @@ import {
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
+import Image from "next/image";
 export type WeaponProps = {
   name: string;
   damage: number;
@@ -77,10 +78,12 @@ const WeaponsForm = () => {
                       <p>{`Damage: ${weapon.damage}`}</p>
                       <p>{`Description: ${weapon.description}`}</p>
                       <p>{`Cost: ${weapon.cost}`}</p>
-                      <img
+                      <Image
                         src={weapon.img}
                         alt=""
-                        className="w-60 rounded-md"
+                        height={400}
+                        width={400}
+                        className="w-60 rounded-md  "
                       />
                       <FormControl key={weapon.id}>
                         <FormItem>

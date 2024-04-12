@@ -23,6 +23,7 @@ import {
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
+import Image from "next/image";
 
 const BootsForm = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -75,9 +76,11 @@ const BootsForm = () => {
                           <p>{boot.cost}</p>
                         </span>
 
-                        <img
+                        <Image
                           src={boot.img}
                           alt=""
+                          height={400}
+                          width={400}
                           className="w-60 rounded-md  "
                         />
                         {/* </Suspense> */}

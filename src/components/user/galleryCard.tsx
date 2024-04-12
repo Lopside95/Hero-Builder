@@ -11,15 +11,17 @@ const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
       {/* <section className="flex-flex-col align-middle "> */}
       <h1 className="self-center text-3xl">{details.name}</h1>
       <p>{details.story}</p>
+
       <article className="flex items-center w-full justify-center gap-20">
         {/* <img src={details.img} className="w-80  rounded-full" alt="" /> */}
         <Image
           src={details.img}
-          width={500}
-          height={500}
-          className="w-80  rounded-full"
+          className="w-80 rounded-full"
           alt=""
+          width={300}
+          height={300}
         />
+
         <div className="flex gap-3 flex-col">
           <h3>Damage: {details.damage}</h3>
           <h3>Move speed: {details.speed}</h3>
@@ -29,12 +31,25 @@ const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
       </article>
       <article className="flex gap-10">
         <div className=" flex flex-col items-center gap-3 ">
-          <img src={boots.img} className="w-80 rounded-full" alt="" />
+          <Image
+            src={boots.img}
+            className="w-80 rounded-full"
+            alt=""
+            width={300}
+            height={300}
+          />
         </div>
         <div className="flex flex-col items-center gap-3">
-          <img src={weapon.img} className="w-80 rounded-full" alt="" />
+          <Image
+            src={weapon.img}
+            className="w-80 rounded-full"
+            alt=""
+            width={300}
+            height={300}
+          />
         </div>
       </article>
+      <div></div>
       {/* </section> */}
     </Card>
   );

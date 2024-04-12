@@ -23,6 +23,7 @@ import {
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
+import Image from "next/image";
 
 const PicturesForm = () => {
   const { data: images } = trpc.shop.getAllHeroPics.useQuery();
@@ -49,7 +50,14 @@ const PicturesForm = () => {
                 return (
                   <CarouselItem key={img.id} className="">
                     <Card className="flex flex-col items-center justify-center gap-5 bg-transparent w-full relative">
-                      <img src={img.url} alt="" className="w-60 rounded-md" />
+                      {/* <img src={img.url} alt="" className="w-60 rounded-md" /> */}
+                      <Image
+                        src={img.url}
+                        alt=""
+                        height={400}
+                        width={400}
+                        className="w-60 rounded-md  "
+                      />
                       <FormControl key={img.id}>
                         <FormItem>
                           {/* <DialogClose asChild> */}

@@ -12,22 +12,9 @@ type IndexPics = {
 }[];
 
 const Home = () => {
-  const indexPics: IndexPics = [
-    {
-      id: "bootsPic",
-      url: "https://storage.cloud.google.com/shop-boots/elderboots.jpg?authuser=1",
-    },
-    {
-      id: "weaponPic",
-      url: "https://storage.cloud.google.com/weapon-items/eagleStaff.jpg?authuser=1",
-    },
-    {
-      id: "profilePic",
-      url: "https://storage.cloud.google.com/hero-profiles/orc.png?authuser=1",
-    },
-  ];
-
   const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
+
+  // const
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
