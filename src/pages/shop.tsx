@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import BootsForm from "@/components/create/bootsForm";
 import { Button } from "@/components/ui/button";
-import WeaponsForm from "@/components/create/weaponForm";
+import WeaponsForm from "@/components/create/weaponsForm";
 import { Boots, bootsSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";

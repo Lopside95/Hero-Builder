@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 import { getServerSession } from "next-auth";
 import SessionProvider from "../src/components/SessionProvider";
+import { trpc } from "./utils/trpc";
 
 interface Props {
   children: React.ReactNode;
@@ -42,7 +43,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <Suspense fallback="lskdfns">{children}</Suspense>
           </ThemeProvider>
         </SessionProvider>
       </body>

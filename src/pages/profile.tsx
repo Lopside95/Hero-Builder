@@ -2,6 +2,10 @@
 
 import Navbar from "@/components/Navbar";
 import Gallery from "@/components/user/gallery";
+import { FinalHeroSchema } from "@/types/hero";
+import { trpc } from "@/utils/trpc";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
   FormProvider,
   SubmitErrorHandler,

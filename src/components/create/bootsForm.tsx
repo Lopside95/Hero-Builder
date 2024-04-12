@@ -66,26 +66,15 @@ const BootsForm = () => {
                 {boots?.map((boot) => {
                   return (
                     <CarouselItem key={boot.id} className="pl-5">
-                      <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full relative">
-                        {/* <h3
-                          className={`${
-                            watchedBoots.name === boot.name
-                              ? "underline underline-offset-4"
-                              : ""
-                          }`}
-                        >
-                          {boot.name}
-                        </h3> */}
+                      <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full">
                         <h1>{boot.name}</h1>
                         <p>{`Move speed: ${boot.speed}`}</p>
                         <p>{`Description: ${boot.description}`}</p>
-                        {/* <p className="w-2/3">{`Bonus: ${boot.bonus}`}</p> */}
                         <span className="flex gap-3">
                           <Coins className="text-yellow-500" />{" "}
                           <p>{boot.cost}</p>
                         </span>
-                        {/* <p>{` ${boot.cost} `}</p> */}
-                        {/* <Suspense fallback={<p>Loading...</p>}> */}
+
                         <img
                           src={boot.img}
                           alt=""
@@ -102,39 +91,26 @@ const BootsForm = () => {
                                   : "select"
                               }
                               className=""
-                              // className="hover:text-base-bg  hover:bg-base-txtClr"
-                              //   variant={
-                              //     watchedBoots.name === boot.name
-                              //       ? "disabled"
-                              //       : "select"
-                              //   }
-                              // onClick={() =>
-                              //   setValue("boots.name", watchedBootsName)
-                              // }
                               {...field}
                               value={boot.id}
                               onClick={(e) => {
-                                e.preventDefault();
+                                // e.preventDefault();
                                 field.onChange(boot);
                                 setValue("boots", boot);
                                 setValue("details.speed", boot.speed);
                               }}
-                              // onClick={() => {
-                              //   field.onChange(boot);
-                              //   setValue("details.totalMS", boot.speed);
-                              // }}
                             >
                               Select
                             </Button>
                           </FormItem>
                         </FormControl>
-                        <CarouselPrevious className="absolute left-[5.5rem] bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
-                        <CarouselNext className="absolute  right-[5.5rem] bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
                       </Card>
                     </CarouselItem>
                   );
                 })}
               </CarouselContent>
+              <CarouselPrevious className="z-30 self-end ml-32 bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
+              <CarouselNext className=" z-30 self-end mr-32  bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
             </Carousel>
           </div>
         </div>

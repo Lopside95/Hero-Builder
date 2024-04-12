@@ -19,7 +19,7 @@ const TextField = ({ fieldName, fieldLabel }: TextFieldInterface) => {
       render={({ field }) => (
         <>
           <FormItem className="w-full">
-            <FormLabel className="pl-1.5 text-base-txtClr">
+            <FormLabel className="pl-1.5 ">
               {" "}
               {fieldLabel}
               <FormMessage className="text-base capitalize dark:text-red-400" />

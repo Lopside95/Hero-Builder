@@ -9,6 +9,7 @@ import {
 import { Input } from "../ui/input";
 import { FinalHeroSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
+import { Textarea } from "../ui/textarea";
 
 const DetailsForm = () => {
   const { watch, control, getValues, setValue } =
@@ -17,19 +18,19 @@ const DetailsForm = () => {
   const { data: heroPics } = trpc.shop.getAllHeroPics.useQuery();
 
   return (
-    <div>
+    <div className="w-1/2">
       <FormField
         name="details.name"
         control={control}
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="">
             <FormLabel>
               Hero name
               <FormMessage className="text-red-400" />
             </FormLabel>
             <FormControl>
               <Input
-                className="bg-base-bg"
+                className="border-none"
                 {...field}
                 placeholder="Hero name *"
               />
@@ -41,35 +42,13 @@ const DetailsForm = () => {
         name="details.story"
         control={control}
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="">
             <FormLabel>
-              Hero name
+              Backstory
               <FormMessage className="text-red-400" />
             </FormLabel>
             <FormControl>
-              <Input
-                className="bg-base-bg"
-                {...field}
-                placeholder="Backstory"
-              />
-            </FormControl>
-          </FormItem>
-        )}
-      />
-      <div>
-        <img src={heroPics && heroPics[0].url} className="w-32" alt="" />
-      </div>
-      <FormField
-        name="details.img"
-        control={control}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              Profile Pic
-              <FormMessage className="text-red-400" />
-            </FormLabel>
-            <FormControl>
-              <Input className="bg-base-bg" {...field} placeholder="Pic" />
+              <Textarea {...field} className="bg-base-txtClr text-base-bg" />
             </FormControl>
           </FormItem>
         )}

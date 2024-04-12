@@ -8,10 +8,12 @@ import { prisma } from "./api/db";
 import { Boots, FinalHeroSchema, finalHeroSchema } from "@/types/hero";
 import Navbar from "@/components/Navbar";
 import BootsForm from "@/components/create/bootsForm";
-import WeaponsForm from "@/components/create/weaponForm";
+import WeaponsForm from "@/components/create/weaponsForm";
 import DetailsForm from "@/components/create/detailsForm";
 import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
+import { TabsList, Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
+import HeroPreview from "@/components/heroPreview";
 
 const Home = () => {
   const form = useForm<FinalHeroSchema>({
@@ -41,11 +43,11 @@ const Home = () => {
         story: "",
       },
 
-      gold: 85,
+      gold: 90,
     },
   });
 
-  const { data: user } = trpc.user.getUserById.useQuery();
+  const { data: user, isLoading } = trpc.user.getUserById.useQuery();
   const utils = trpc.useUtils();
 
   const { update: updateSession } = useSession();
@@ -74,8 +76,45 @@ const Home = () => {
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
-        <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-          <div className="flex  w-full gap-10 justify-evenly items-center">
+        <div className="w-full min-h-screen py-10 flex justify-center relative items-center">
+          <Tabs defaultValue="items" className="w-full">
+            <div className="flex flex-col w-3/4 items-center border border-red relative">
+              <TabsList className="w-48">
+                <TabsTrigger value="items">Items</TabsTrigger>
+                <TabsTrigger value="details">Hero Details</TabsTrigger>
+              </TabsList>
+              <TabsContent
+                value="items"
+                className="flex w-2/3 gap-10  h-full justify-evenly"
+              >
+                <BootsForm />
+                <WeaponsForm />
+              </TabsContent>
+              <TabsContent
+                value="details"
+                className="flex w-2/3     items-center"
+              >
+                <PicturesForm />
+                <DetailsForm />
+              </TabsContent>
+            </div>
+          </Tabs>
+          <div className="absolute right-20">
+            <HeroPreview />
+            <Button type="submit" className="">
+              Submit
+            </Button>
+          </div>
+        </div>
+      </form>
+    </FormProvider>
+  );
+};
+
+export default Home;
+
+{
+  /* <div className="flex  w-full gap-10 justify-evenly items-center">
             <BootsForm />
             <WeaponsForm />
             <div className="flex items-center flex-col ">
@@ -86,12 +125,5 @@ const Home = () => {
               <span>Health: 0</span>
             </div>
             <PicturesForm />
-          </div>
-          <Button type="submit">Submit</Button>
-        </div>
-      </form>
-    </FormProvider>
-  );
-};
-
-export default Home;
+          </div> */
+}

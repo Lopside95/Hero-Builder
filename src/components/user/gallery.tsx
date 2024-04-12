@@ -4,6 +4,9 @@ import Navbar from "../Navbar";
 import { Card, CardContent } from "../ui/card";
 import GalleryCard from "./galleryCard";
 import { Boots, Details, Weapon } from "@/types/hero";
+import { Separator } from "../ui/separator";
+import { Suspense } from "react";
+import Image from "next/image";
 
 // type HeroDetails = {
 //   name: string;
@@ -39,6 +42,8 @@ export interface HeroInterface {
 const Gallery = () => {
   const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
 
+  const heroData = heroes ? heroes : {};
+
   return (
     <div className="w-full pt-20 flex flex-col  items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
       <Navbar />
@@ -54,6 +59,7 @@ const Gallery = () => {
                   boots={hero.boots as Boots}
                   weapon={hero.weapon as Weapon}
                 />
+                <Separator className="" />
               </div>
             );
           })}

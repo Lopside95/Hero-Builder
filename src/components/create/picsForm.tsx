@@ -30,7 +30,7 @@ const PicturesForm = () => {
   const [api, setApi] = useState<CarouselApi>();
   const { control, setValue, watch } = useFormContext<FinalHeroSchema>();
 
-  const watchedImg = watch("details.img");
+  const image = watch("details.img");
 
   return (
     <FormField
@@ -38,7 +38,7 @@ const PicturesForm = () => {
       control={control}
       render={({ field }) => (
         // <div className=" ">
-        <div className="flex flex-col items-center gap-10">
+        <div className="flex flex-col w-full items-center gap-10">
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}
@@ -49,14 +49,12 @@ const PicturesForm = () => {
                 return (
                   <CarouselItem key={img.id} className="">
                     <Card className="flex flex-col items-center justify-center gap-5 bg-transparent w-full relative">
-                      <img src={img.url} alt="" className="w-60 rounded-full" />
+                      <img src={img.url} alt="" className="w-60 rounded-md" />
                       <FormControl key={img.id}>
                         <FormItem>
                           {/* <DialogClose asChild> */}
                           <Button
-                            variant={
-                              watchedImg === img.url ? "disabled" : "select"
-                            }
+                            variant={image === img.url ? "disabled" : "select"}
                             {...field}
                             value={img.url}
                             onClick={() => {

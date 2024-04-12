@@ -47,7 +47,7 @@ const WeaponsForm = () => {
           bonus: weapon.bonus,
           description: weapon.description,
           cost: weapon.cost,
-          url: weapon.img,
+          img: weapon.img,
         };
 
         return acc;
@@ -71,12 +71,11 @@ const WeaponsForm = () => {
             <CarouselContent className="">
               {weapons?.map((weapon) => {
                 return (
-                  <CarouselItem key={weapon.name} className="pl-5">
-                    <Card className="flex h-full flex-col items-center justify-center gap-5 py-5 w-full relative">
+                  <CarouselItem key={weapon.name} className="pl-5 ">
+                    <Card className="flex h-full flex-col  items-center justify-center gap-5 py-5 w-full">
                       <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
                       <p>{`Description: ${weapon.description}`}</p>
-                      {/* <p>{`Bonus: ${weapon.bonus}`}</p> */}
                       <p>{`Cost: ${weapon.cost}`}</p>
                       <img
                         src={weapon.img}
@@ -86,22 +85,12 @@ const WeaponsForm = () => {
                       <FormControl key={weapon.id}>
                         <FormItem>
                           <Button
-                            // variant="select"
                             className=""
-                            // variant="select"
                             variant={
                               watchedWeapon.name === weapon.name
                                 ? "disabled"
                                 : "select"
                             }
-                            // // className="bg-base-txtClr text-base-bg hover:text-base-bg"
-                            // {...field}
-                            // value={weapon.id}
-                            // onClick={() => {
-                            //   field.onChange(weapon);
-                            //   setValue("details.totalDmg", weapon.damage);
-                            //   setSelectedWeapon(weapon.id);
-                            // }}
                             {...field}
                             value={weapon.id}
                             onClick={(e) => {
@@ -120,12 +109,11 @@ const WeaponsForm = () => {
                 );
               })}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-[5.5rem] bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
+            {/* <CarouselPrevious className="absolute left-[5.5rem] bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
 
-            <CarouselNext className="absolute  right-[5.5rem] bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
-            {/* <CarouselPrevious className="absolute ml-14 bg-transparent hover:text-white text-white h-12 w-12 border-none hover:bg-transparent  " />
-  
-              <CarouselNext className="absolute mr-14 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " /> */}
+            <CarouselNext className="absolute  right-[5.5rem] bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " /> */}
+            <CarouselPrevious className="z-30 self-end ml-32 bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
+            <CarouselNext className=" z-30 self-end mr-32  bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
           </Carousel>
         </div>
       )}
