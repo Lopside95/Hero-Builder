@@ -13,7 +13,7 @@ import DetailsForm from "@/components/create/detailsForm";
 import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
 import { TabsList, Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-import HeroPreview from "@/components/heroPreview";
+import HeroPreview from "@/components/create/heroPreview";
 
 const Home = () => {
   const form = useForm<FinalHeroSchema>({
@@ -76,7 +76,31 @@ const Home = () => {
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
-        <div className="w-full min-h-screen py-10 flex justify-center relative items-center">
+        <div className="w-full min-h-screen py-10 flex gap-20 justify-evenly relative items-center">
+          <div className="flex gap-10 flex-col">
+            <div className="flex gap-10">
+              <BootsForm />
+              <WeaponsForm />
+            </div>
+            <div className="flex gap-10">
+              <PicturesForm />
+              <DetailsForm />
+            </div>
+          </div>
+          <div>
+            <HeroPreview />
+            <Button>Submit</Button>
+          </div>
+        </div>
+      </form>
+    </FormProvider>
+  );
+};
+
+export default Home;
+
+{
+  /* <div className="w-full min-h-screen py-10 flex justify-center relative items-center">
           <Tabs defaultValue="items" className="w-full">
             <div className="flex flex-col w-3/4 items-center border border-red relative">
               <TabsList className="w-48">
@@ -105,13 +129,8 @@ const Home = () => {
               Submit
             </Button>
           </div>
-        </div>
-      </form>
-    </FormProvider>
-  );
-};
-
-export default Home;
+        </div> */
+}
 
 {
   /* <div className="flex  w-full gap-10 justify-evenly items-center">

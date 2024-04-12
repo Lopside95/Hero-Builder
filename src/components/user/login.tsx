@@ -1,4 +1,9 @@
-import { useFormContext } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -8,51 +13,49 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Login, loginSchema } from "@/types/user";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 
-const UserLogin = () => {
+const LoginForm = () => {
   const { control } = useFormContext();
 
   return (
-    <div>
-      <div className="w-full ">
-        <FormField
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Email
-                <FormMessage className="text-red-400" />
-              </FormLabel>
-              <FormControl>
-                <Input
-                  className="bg-base-bg"
-                  {...field}
-                  placeholder="Hero name *"
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Password
-                <FormMessage className="text-red-400" />
-              </FormLabel>
-              <FormControl>
-                <Input className="bg-base-bg" {...field} placeholder="pword" />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </div>
+    <div className="w-80 ">
+      <FormField
+        name="email"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              Email
+              <FormMessage className="text-red-400" />
+            </FormLabel>
+            <FormControl>
+              <Input className="" {...field} placeholder="Hero name *" />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="password"
+        control={control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              Password
+              <FormMessage className="text-red-400" />
+            </FormLabel>
+            <FormControl>
+              <Input className="" {...field} placeholder="pword" />
+            </FormControl>
+          </FormItem>
+        )}
+      />
     </div>
   );
 };
 
-export default UserLogin;
+export default LoginForm;

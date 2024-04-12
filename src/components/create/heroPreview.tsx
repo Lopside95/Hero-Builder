@@ -1,5 +1,5 @@
 import { Coins } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useFormContext } from "react-hook-form";
 import { FinalHeroSchema } from "@/types/hero";
 
@@ -13,7 +13,7 @@ const HeroPreview = () => {
   const remainingGold = gold - (boots.cost + weapon.cost);
 
   return (
-    <Card className="border flex gap-6 justify-center flex-col h-[350px]">
+    <Card className="border flex gap-6 sticky justify-center flex-col h-[300px]">
       <CardTitle className="self-center flex gap-1">
         <p>{remainingGold}</p> <Coins className="text-yellow-500" />
       </CardTitle>

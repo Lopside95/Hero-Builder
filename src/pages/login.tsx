@@ -25,6 +25,7 @@ import {
   useForm,
   useFormContext,
 } from "react-hook-form";
+import LoginForm from "@/components/user/login";
 
 const LoginPage = () => {
   // const form = useForm<HeroDetails>({
@@ -103,8 +104,8 @@ const LoginPage = () => {
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
-        <div className="bg-base-bg flex flex-col items-center text-base-txtClr py-20 w-full min-h-screen">
-          <UserLogin />
+        <div className="bg-base-bg flex flex-col text-base-txtClr py-20  justify-center items-center min-h-screen">
+          <LoginForm />
           <Button>Login</Button>
         </div>
       </form>
@@ -118,15 +119,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerAuthSession(context);
 
   if (session) {
-    console.log("Session is active");
     return {
       redirect: {
-        destination: "/",
+        destination: "/profile",
         permanent: false,
       },
     };
   } else if (!session) {
-    console.log("session not active");
   }
 
   return {

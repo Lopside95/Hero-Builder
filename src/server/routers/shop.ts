@@ -21,7 +21,7 @@ export const shopRouter = createTRPCRouter({
     const allBoots = await prisma.boots.findMany();
     return allBoots;
   }),
-  getAllHeroPics: publicProcedure.query(async () => {
+  getAllHeroPics: publicProcedure.query(async ({ ctx }) => {
     return await prisma.heroImages.findMany();
   }),
   createNewBoots: publicProcedure
