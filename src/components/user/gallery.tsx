@@ -51,19 +51,27 @@ const Gallery = () => {
         <div>Loading ...</div>
       ) : (
         <div>
-          {heroes?.map((hero) => {
-            return (
-              <div key={hero.id}>
-                <GalleryCard
-                  details={hero.details as Details}
-                  boots={hero.boots as Boots}
-                  weapon={hero.weapon as Weapon}
-                />
-                <Separator className="" />
-              </div>
-            );
-          })}
+          <Image
+            src={heroes ? heroes[0].boots.img : ""}
+            width={500}
+            height={500}
+            alt=""
+          />
         </div>
+        // <div>
+        //   {heroes?.map((hero) => {
+        //     return (
+        //       <div key={hero.id}>
+        //         <GalleryCard
+        //           details={hero.details as Details}
+        //           boots={hero.boots as Boots}
+        //           weapon={hero.weapon as Weapon}
+        //         />
+        //         <Separator className="" />
+        //       </div>
+        //     );
+        //   })}
+        // </div>
       )}
     </div>
   );

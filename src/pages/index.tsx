@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useQueries, useQuery } from "react-query";
 import LoginPage from "./login";
+import { trpc } from "@/utils/trpc";
+import Image from "next/image";
 
 type IndexPics = {
   id: string;
@@ -25,6 +27,8 @@ const Home = () => {
     },
   ];
 
+  const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
+
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
       <Navbar />
@@ -41,7 +45,13 @@ const Home = () => {
         </Button>
 
         <div className="flex gap-8 py-10 ">
-          {indexPics.map((pic) => {
+          <Image
+            src="https://zq5hzutac0xrpkxh.public.blob.vercel-storage.com/bootsOfSpeed-MxNNUTYN1f4DGczAV9l9XlPOaf1BlW.jpg"
+            width={500}
+            height={500}
+            alt=""
+          />
+          {/* {indexPics.map((pic) => {
             return (
               <img
                 loading="eager"
@@ -51,7 +61,7 @@ const Home = () => {
                 className="w-52 rounded-full"
               />
             );
-          })}
+          })} */}
         </div>
       </div>
       {/* <LoginPage /> */}
