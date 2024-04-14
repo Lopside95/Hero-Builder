@@ -4,6 +4,7 @@ import { Button, ButtonProps } from "./ui/button";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
+import ProfileSelect from "./user/profileSelect";
 
 const Navbar = () => {
   const router = useRouter();
@@ -67,7 +68,7 @@ const Navbar = () => {
             Create
           </Link>
         </Button>
-        <Button
+        {/* <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/createBoots")
               ? "underline underline-offset-[6px]   "
@@ -78,7 +79,7 @@ const Navbar = () => {
           <Link tabIndex={-1} href="/createBoots">
             Create boots
           </Link>
-        </Button>
+        </Button> */}
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/signup") ? "underline underline-offset-[6px]   " : ""
@@ -89,7 +90,9 @@ const Navbar = () => {
             Sign up
           </Link>
         </Button>
-        <Button
+
+        <ProfileSelect />
+        {/* <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/profile") ? "underline underline-offset-[6px]   " : ""
           }`}
@@ -98,7 +101,7 @@ const Navbar = () => {
           <Link tabIndex={-1} href="/profile">
             Profile
           </Link>
-        </Button>
+        </Button> */}
       </span>
     </div>
   );

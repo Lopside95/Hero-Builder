@@ -26,7 +26,8 @@ import { trpc } from "@/utils/trpc";
 import Image from "next/image";
 
 const PicturesForm = () => {
-  const { data: images } = trpc.shop.getAllHeroPics.useQuery();
+  // const { data: images } = trpc.shop.getAllHeroPics.useQuery();
+  const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
 
   const [api, setApi] = useState<CarouselApi>();
   const { control, setValue, watch } = useFormContext<FinalHeroSchema>();
@@ -46,28 +47,29 @@ const PicturesForm = () => {
             className=" w-72 flex flex-col justify-center"
           >
             <CarouselContent className="">
-              {images?.map((img) => {
+              {boots?.map((img) => {
                 return (
                   <CarouselItem key={img.id} className="">
                     <Card className="flex flex-col items-center justify-center gap-5 bg-transparent w-full relative">
                       {/* <img src={img.url} alt="" className="w-60 rounded-md" /> */}
-                      <Image
+                      <img src={img.img} alt="" className="w-60 rounded-md  " />
+                      {/* <Image
                         src={img.url}
                         alt=""
                         height={400}
                         width={400}
                         className="w-60 rounded-md  "
-                      />
+                      /> */}
                       <FormControl key={img.id}>
                         <FormItem>
                           {/* <DialogClose asChild> */}
                           <Button
-                            variant={image === img.url ? "disabled" : "select"}
+                            variant={image === img.img ? "disabled" : "select"}
                             {...field}
-                            value={img.url}
+                            value={img.img}
                             onClick={() => {
                               field.onChange();
-                              setValue("details.img", img.url);
+                              setValue("details.img", img.img);
                             }}
                           >
                             Select
