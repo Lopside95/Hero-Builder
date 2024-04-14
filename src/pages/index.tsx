@@ -4,6 +4,8 @@ import { trpc } from "@/utils/trpc";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import SignupForm from "@/components/user/signup";
+import { useState } from "react";
+import LoginForm from "@/components/user/loginForm";
 
 type IndexPics = {
   id: string;
@@ -11,6 +13,8 @@ type IndexPics = {
 }[];
 
 const Home = () => {
+  const [login, setLogin] = useState<boolean>(true);
+
   const { data: heroImgs } = trpc.shop.getAllHeroPics.useQuery();
   const { data: user } = trpc.user.getUserById.useQuery();
   const vampLord = heroImgs?.find((img) =>
@@ -36,8 +40,7 @@ const Home = () => {
               Buy items and use your remaining gold to adjust the final stats of
               your hero before saving them to a gallery and building your team
             </span>
-
-            <SignupForm />
+            {login ? <LoginForm /> : <SignupForm />}
           </div>
         )}
         <div className="flex gap-8 py-10 ">

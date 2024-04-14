@@ -1,3 +1,5 @@
+import { signIn, signOut, useSession } from "next-auth/react";
+
 import {
   Select,
   SelectContent,
@@ -8,8 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useRouter } from "next/router";
 
 const ProfileSelect = () => {
+  const router = useRouter();
+
   return (
     <div>
       <Select>
@@ -19,8 +24,16 @@ const ProfileSelect = () => {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Profile</SelectLabel>
-            <SelectItemNoCheck value="gallery">Your heroes</SelectItemNoCheck>
-            <SelectItemNoCheck value="signout">Sign out</SelectItemNoCheck>
+            <SelectItemNoCheck
+              onClick={() => router.push("/profile")}
+              value="gallery"
+            >
+              Your heroes
+            </SelectItemNoCheck>
+            {/* <SelectItemNoCheck value="account">Your account</SelectItemNoCheck> */}
+            {/* <SelectItemNoCheck onClick={() => signOut()} value="signout">
+              Sign out
+            </SelectItemNoCheck> */}
           </SelectGroup>
         </SelectContent>
       </Select>
