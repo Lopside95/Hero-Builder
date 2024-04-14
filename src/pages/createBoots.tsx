@@ -50,12 +50,16 @@ const CreateBoots = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Navbar />
         <div className="bg-base-bg flex flex-col pl-80 justify-center align-middle w-full min-h-screen">
-          <TextField fieldName="name" fieldLabel="Name" />
+          <TextField fieldName="name" fieldLabel="Name" placeholder="Name" />
           <NumberField fieldName="speed" fieldLabel="Move Speed" />
           <NumberField fieldName="cost" fieldLabel="Cost" />
-          <TextField fieldName="img" fieldLabel="Image" />
-          <TextField fieldName="description" fieldLabel="description" />
-          <TextField fieldName="bonus" fieldLabel="bonus" />
+          <TextField fieldName="img" fieldLabel="Image" placeholder="Name" />
+          <TextField
+            fieldName="description"
+            fieldLabel="description"
+            placeholder="Name"
+          />
+          <TextField fieldName="bonus" fieldLabel="bonus" placeholder="Name" />
           <Button>Create</Button>
         </div>
       </form>

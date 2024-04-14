@@ -15,12 +15,18 @@ import {
 import { z } from "zod";
 
 const Profile = () => {
+  const { data: user } = trpc.user.getUserById.useQuery();
+
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
       <Navbar />
-      <div>
-        <Gallery />
-      </div>
+      {!user ? (
+        <p>You need to sign in </p>
+      ) : (
+        <div>
+          <Gallery />
+        </div>
+      )}
     </div>
   );
 };

@@ -21,9 +21,9 @@ const Gallery = () => {
     <div className="w-full pt-20 flex flex-col  items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
       <Navbar />
 
-      {heroes?.map((hero) => {
+      {heroes?.reverse().map((hero) => {
         return (
-          <div key={hero.id}>
+          <div key={hero.id} className="">
             <GalleryCard
               details={hero.details as Details}
               boots={hero.boots as Boots}

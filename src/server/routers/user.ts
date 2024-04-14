@@ -3,6 +3,9 @@ import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import bcrypt from "bcrypt";
+
+const salt = bcrypt.genSaltSync(10);
 
 export const userRouter = createTRPCRouter({
   findAll: publicProcedure.query(async ({ ctx }) => {
@@ -13,11 +16,13 @@ export const userRouter = createTRPCRouter({
   createUser: publicProcedure
     .input(userSchema)
     .mutation(async ({ input, ctx }) => {
+      const hashedPass = bcrypt.hashSync(input.password, salt);
+
       const newUser = await ctx.prisma.user.create({
         data: {
           name: input.name,
           email: input.email,
-          password: input.password,
+          password: hashedPass,
           pic: input.pic,
         },
       });

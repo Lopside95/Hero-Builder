@@ -63,7 +63,7 @@ const WeaponsForm = () => {
       name="weapon"
       control={control}
       render={({ field }) => (
-        <div className="  flex flex-col gap-10">
+        <div className=" w-1/3  flex flex-col gap-10">
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}
@@ -73,7 +73,7 @@ const WeaponsForm = () => {
               {weapons?.map((weapon) => {
                 return (
                   <CarouselItem key={weapon.name} className="pl-5 ">
-                    <Card className="flex h-full flex-col  items-center justify-center gap-5 py-5 w-full">
+                    <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full">
                       <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
                       <p>{`Description: ${weapon.description}`}</p>
@@ -81,8 +81,8 @@ const WeaponsForm = () => {
                       <Image
                         src={weapon.img}
                         alt=""
-                        height={400}
-                        width={400}
+                        height={200}
+                        width={200}
                         className="w-60 rounded-md  "
                       />
                       <FormControl key={weapon.id}>

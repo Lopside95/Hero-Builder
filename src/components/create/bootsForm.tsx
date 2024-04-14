@@ -56,66 +56,63 @@ const BootsForm = () => {
       name="boots"
       control={control}
       render={({ field }) => (
-        <div className=" ">
-          <div className="flex flex-col gap-10">
-            <Carousel
-              setApi={setApi}
-              opts={{ loop: true }}
-              className=" w-96 flex flex-col items-center justify-center"
-            >
-              <CarouselContent className="">
-                {boots?.map((boot) => {
-                  return (
-                    <CarouselItem key={boot.id} className="pl-5">
-                      <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full">
-                        <h1>{boot.name}</h1>
-                        <p>{`Move speed: ${boot.speed}`}</p>
-                        <p>{`Description: ${boot.description}`}</p>
-                        <span className="flex gap-3">
-                          <Coins className="text-yellow-500" />{" "}
-                          <p>{boot.cost}</p>
-                        </span>
+        <div className="w-1/3 flex flex-col gap-10 z-50">
+          <Carousel
+            setApi={setApi}
+            opts={{ loop: true }}
+            className=" w-96 flex flex-col items-center justify-center"
+          >
+            <CarouselContent className="">
+              {boots?.map((boot) => {
+                return (
+                  <CarouselItem key={boot.id} className="pl-5 ">
+                    <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full">
+                      <h1>{boot.name}</h1>
+                      <p>{`Move speed: ${boot.speed}`}</p>
+                      <p>{`Description: ${boot.description}`}</p>
+                      <span className="flex gap-3">
+                        <Coins className="text-yellow-500" /> <p>{boot.cost}</p>
+                      </span>
 
-                        <Image
-                          src={boot.img}
-                          alt=""
-                          height={400}
-                          width={400}
-                          className="w-60 rounded-md  "
-                        />
-                        {/* </Suspense> */}
-                        <FormControl key={boot.name}>
-                          <FormItem>
-                            <Button
-                              // variant="select"
-                              variant={
-                                watchedBoots.name === boot.name
-                                  ? "disabled"
-                                  : "select"
-                              }
-                              className=""
-                              {...field}
-                              value={boot.id}
-                              onClick={(e) => {
-                                // e.preventDefault();
-                                field.onChange(boot);
-                                setValue("boots", boot);
-                                setValue("details.speed", boot.speed);
-                              }}
-                            >
-                              Select
-                            </Button>
-                          </FormItem>
-                        </FormControl>
-                      </Card>
-                    </CarouselItem>
-                  );
-                })}
-              </CarouselContent>
-              <CarouselPrevious className="z-30 self-end ml-32 bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
-              <CarouselNext className=" z-30 self-end mr-32  bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
-            </Carousel>
-          </div>
+                      <Image
+                        src={boot.img}
+                        alt=""
+                        height={200}
+                        width={200}
+                        className="w-60 rounded-md  "
+                      />
+                      {/* </Suspense> */}
+                      <FormControl key={boot.name}>
+                        <FormItem>
+                          <Button
+                            // variant="select"
+                            variant={
+                              watchedBoots.name === boot.name
+                                ? "disabled"
+                                : "select"
+                            }
+                            className=""
+                            {...field}
+                            value={boot.id}
+                            onClick={(e) => {
+                              // e.preventDefault();
+                              field.onChange(boot);
+                              setValue("boots", boot);
+                              setValue("details.speed", boot.speed);
+                            }}
+                          >
+                            Select
+                          </Button>
+                        </FormItem>
+                      </FormControl>
+                    </Card>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious className="z-30 self-end ml-32 bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
+            <CarouselNext className=" z-30 self-end mr-32  bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
+          </Carousel>
         </div>
       )}
     />

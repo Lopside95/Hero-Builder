@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
-import LoginForm from "@/components/user/login";
 import { useSession } from "next-auth/react";
 
 type IndexPics = {

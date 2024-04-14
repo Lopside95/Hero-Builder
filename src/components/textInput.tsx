@@ -8,8 +8,9 @@ import {
 } from "./ui/form";
 import { TextFieldInterface } from "@/pages/createBoots";
 import { Input } from "./ui/input";
+import { FieldProps } from "@/pages/login";
 
-const TextField = ({ fieldName, fieldLabel }: TextFieldInterface) => {
+const TextField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
   const { control } = useFormContext();
 
   return (
@@ -25,7 +26,7 @@ const TextField = ({ fieldName, fieldLabel }: TextFieldInterface) => {
               <FormMessage className="text-base capitalize dark:text-red-400" />
             </FormLabel>
             <FormControl>
-              <Input {...field} className="w-1/4" />
+              <Input {...field} className="" placeholder={placeholder} />
             </FormControl>
           </FormItem>
         </>
