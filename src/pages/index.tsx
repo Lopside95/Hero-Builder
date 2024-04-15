@@ -8,6 +8,7 @@ import { useState } from "react";
 // import LoginForm from "@/components/user/loginForm";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import LoginForm from "@/components/user/loginForm";
 
 type IndexPics = {
   id: string;
@@ -42,7 +43,7 @@ const Home = () => {
               Buy items and use your remaining gold to adjust the final stats of
               your hero before saving them to a gallery and building your team
             </span>
-            {/* <LoginForm /> */}
+            <LoginForm />
             <span className="flex w-80 gap-2">
               Don&apos;t have an account?
               <Link href="/signup" className="text-blue-400">
