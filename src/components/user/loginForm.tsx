@@ -50,7 +50,7 @@ const LoginForm = () => {
       const res = await signIn("credentials", {
         ...data,
         callbackUrl: "/",
-        redirect: false,
+        redirect: true,
       });
 
       if (!res?.error) {

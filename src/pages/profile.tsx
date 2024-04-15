@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Gallery from "@/components/user/gallery";
+import NoSession from "@/components/user/noSession";
 import { FinalHeroSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
@@ -21,7 +22,7 @@ const Profile = () => {
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
       {/* <Navbar /> */}
       {!user ? (
-        <p>You need to sign in </p>
+        <NoSession />
       ) : (
         <div>
           <Gallery />

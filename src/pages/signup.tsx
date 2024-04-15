@@ -31,9 +31,14 @@ const SignupForm = () => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="
+      bg-base-bg flex flex-col gap-4 text-base-txtClr justify-center w-full py-32
+      "
+      >
         {/* <Navbar /> */}
-        <div className="bg-base-bg flex flex-col gap-4 text-base-txtClr w-80 py-20 justify-center items-center">
+        <div className="w-80 self-center">
           <TextField
             fieldLabel="Email"
             fieldName="email"

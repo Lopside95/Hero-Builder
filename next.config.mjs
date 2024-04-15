@@ -15,10 +15,10 @@ const nextConfig = {
       //   port: "",
       //   pathname: "*",
       // },
-      // "storage.cloud.google.com",
 
       // "zq5hzutac0xrpkxh.public.blob.vercel-storage.com",
     ],
+    domains: ["storage.cloud.google.com"],
   },
 };
 

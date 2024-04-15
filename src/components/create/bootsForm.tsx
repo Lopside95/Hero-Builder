@@ -56,7 +56,7 @@ const BootsForm = () => {
       name="boots"
       control={control}
       render={({ field }) => (
-        <div className="w-1/3 flex flex-col gap-10 z-50">
+        <div className="w-1/3 flex flex-col gap-10">
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}
@@ -99,8 +99,8 @@ const BootsForm = () => {
                             className=""
                             {...field}
                             value={boot.id}
-                            onClick={(e) => {
-                              // e.preventDefault();
+                            onClick={(event) => {
+                              event?.preventDefault();
                               field.onChange(boot);
                               setValue("boots", boot);
                               setValue("details.speed", boot.speed);

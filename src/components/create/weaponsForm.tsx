@@ -101,8 +101,8 @@ const WeaponsForm = () => {
                             }
                             {...field}
                             value={weapon.id}
-                            onClick={(e) => {
-                              e.preventDefault();
+                            onClick={(event) => {
+                              event?.preventDefault();
                               field.onChange(weapon);
                               setValue("weapon", weapon);
                               setValue("details.damage", weapon.damage);

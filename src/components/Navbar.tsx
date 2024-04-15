@@ -70,7 +70,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex border justify-evenly bg-base-bg border-none fixed z-50  mb-12 top-0 w-full  gap-32">
+    <div className="flex border justify-evenly bg-base-bg border-none fixed z-50  mb-32 top-0 w-full  gap-32">
       <span>
         <Button
           className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${

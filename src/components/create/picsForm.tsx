@@ -50,7 +50,7 @@ const PicturesForm = () => {
               {boots?.map((img) => {
                 return (
                   <CarouselItem key={img.id} className="">
-                    <Card className="flex flex-col items-center justify-center gap-5 bg-transparent w-full relative">
+                    <Card className="flex flex-col items-center justify-center gap-5 py-5 w-full relative">
                       {/* <img src={img.url} alt="" className="w-60 rounded-md" /> */}
                       <img src={img.img} alt="" className="w-60 rounded-md  " />
                       {/* <Image
@@ -67,7 +67,8 @@ const PicturesForm = () => {
                             variant={image === img.img ? "disabled" : "select"}
                             {...field}
                             value={img.img}
-                            onClick={() => {
+                            onClick={(event) => {
+                              event?.preventDefault();
                               field.onChange();
                               setValue("details.img", img.img);
                             }}
@@ -81,8 +82,11 @@ const PicturesForm = () => {
                 );
               })}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-14 -bottom-3 bg-transparent hover:text-base-txtClr text-base-txtClr  border-none hover:bg-transparent  " />
-            <CarouselNext className="absolute right-14 -bottom-3 border-none hover:bg-transparent hover:text-base-txtClr text-base-txtClr bg-transparent   " />
+            <CarouselPrevious className="z-30 self-end ml-20 bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
+            <CarouselNext className=" z-30 self-end mr-20 bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
+
+            {/* <CarouselPrevious className="absolute left-14 -bottom-3 bg-transparent hover:text-base-txtClr text-base-txtClr  border-none hover:bg-transparent  " />
+            <CarouselNext className="absolute right-14 -bottom-3 border-none hover:bg-transparent hover:text-base-txtClr text-base-txtClr bg-transparent   " /> */}
           </Carousel>
         </div>
       )}

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import SignupForm from "@/components/user/signup";
+import SignupForm from "@/components/user/signupNon";
 import { useState } from "react";
 // import LoginForm from "@/components/user/loginForm";
 import Link from "next/link";
@@ -18,8 +18,18 @@ type IndexPics = {
 const Home = () => {
   const [login, setLogin] = useState<boolean>(true);
 
+  const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
+
   const { data: heroImgs } = trpc.shop.getAllHeroPics.useQuery();
   const { data: user } = trpc.user.getUserById.useQuery();
+
+  const findHeroPic = (incl: string) => {
+    const link = heroImgs?.find((img) => img.url.includes(incl))!.url;
+    return link;
+  };
+
+  const archerPic = findHeroPic("archer");
+
   const vampLord = heroImgs?.find((img) =>
     img.url.includes("vampireLord")
   )!.url;
@@ -33,6 +43,8 @@ const Home = () => {
             <h1 className="text-6xl text-base-txtClr">
               Welcome back {user.userName}
             </h1>
+            <img src={user.pic} className="w-60 rounded-full" alt="" />
+            <p>{`You have ${heroes?.length} heroes`}</p>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center">
@@ -55,7 +67,6 @@ const Home = () => {
         )}
         <div className="flex gap-8 py-10 "></div>
       </div>
-      {/* <LoginPage /> */}
     </div>
   );
 };

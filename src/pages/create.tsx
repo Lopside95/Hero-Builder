@@ -15,7 +15,7 @@ import PicturesForm from "@/components/create/picsForm";
 import { TabsList, Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import HeroPreview from "@/components/create/heroPreview";
 
-const Home = () => {
+const Create = () => {
   const form = useForm<FinalHeroSchema>({
     resolver: zodResolver(finalHeroSchema),
     defaultValues: {
@@ -89,7 +89,9 @@ const Home = () => {
           </div>
           <div>
             <HeroPreview />
-            <Button>Submit</Button>
+            <Button className="w-full" variant="select">
+              Submit
+            </Button>
           </div>
         </div>
       </form>
@@ -97,7 +99,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Create;
 
 {
   /* <div className="w-full min-h-screen py-10 flex justify-center relative items-center">
