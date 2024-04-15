@@ -5,7 +5,7 @@ export const userSchema = z.object({
   userName: z.string(),
   email: z.string(),
   password: z.string(),
-  pic: z.string(),
+  pic: z.string().optional(),
 });
 
 export const loginSchema = z.object({

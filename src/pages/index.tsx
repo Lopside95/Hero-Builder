@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import SignupForm from "@/components/user/signup";
 import { useState } from "react";
 import LoginForm from "@/components/user/loginForm";
+import Link from "next/link";
 
 type IndexPics = {
   id: string;
@@ -23,12 +24,12 @@ const Home = () => {
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="w-3/4 flex flex-col items-center gap-5 pt-20 ">
         {user ? (
           <div>
             <h1 className="text-6xl text-base-txtClr">
-              Welcome back {user.name}
+              Welcome back {user.userName}
             </h1>
           </div>
         ) : (
@@ -36,11 +37,18 @@ const Home = () => {
             <p className="text-6xl items-center text-base-txtClr">
               Welcome to the hero builder
             </p>
-            <span className="text-3xl w-2/3 text-center py-10 text-base-txtClr">
+            <span className="text-3xl w-3/4 text-center py-10 text-base-txtClr">
               Buy items and use your remaining gold to adjust the final stats of
               your hero before saving them to a gallery and building your team
             </span>
-            {login ? <LoginForm /> : <SignupForm />}
+            <LoginForm />
+            <span className="flex w-80 gap-2">
+              Don&apos;t have an account?
+              <Link href="/signup" className="text-blue-400">
+                Sign up
+              </Link>
+            </span>
+            {/* <p>{`Don't have an account?  Sign up`}</p> */}
           </div>
         )}
         <div className="flex gap-8 py-10 ">

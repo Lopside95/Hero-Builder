@@ -38,13 +38,13 @@ const Navbar = () => {
           {/* {session.user.email} */}
           <br />
           <Button
-            className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-              activePage("/login") ? "underline underline-offset-[6px]   " : ""
-            }`}
+            className="text-md text-base-txtClr  hover:underline-offset-[6px]"
+            // className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            //   activePage("/login") ? "underline underline-offset-[6px]   " : ""
+            // }`}
             variant="link"
             onClick={() => {
               signOut();
-              router.push("/");
             }}
           >
             Sign out

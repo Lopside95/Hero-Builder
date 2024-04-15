@@ -6,6 +6,7 @@ import { SessionProvider, getSession, useSession } from "next-auth/react";
 import { authOptions, getServerAuthSession } from "@/server/auth";
 import { NextPage } from "next";
 import { Session } from "next-auth";
+import Navbar from "@/components/Navbar";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const form = useForm();
@@ -13,6 +14,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <SessionProvider>
       <FormProvider {...form}>
+        <Navbar />
         <Component {...pageProps} />
       </FormProvider>
     </SessionProvider>

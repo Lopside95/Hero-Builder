@@ -72,20 +72,20 @@ const LoginForm = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-base-bg flex flex-col text-base-txtClr py-20  justify-center items-center min-h-screen">
-          <div className="w-80">
-            <TextField
-              fieldLabel="Email"
-              fieldName="email"
-              placeholder="example@email.com"
-            />
-            <PasswordField
-              fieldLabel="Password"
-              fieldName="password"
-              placeholder="Password"
-            />
-            <Button>Login</Button>
-          </div>
+        <div className="bg-base-bg flex flex-col text-base-txtClr w-80 gap-3 justify-center items-center">
+          <TextField
+            fieldLabel="Email"
+            fieldName="email"
+            placeholder="example@email.com"
+          />
+          <PasswordField
+            fieldLabel="Password"
+            fieldName="password"
+            placeholder="Password"
+          />
+          <Button variant="select" className="w-full my-4">
+            Login
+          </Button>
         </div>
       </form>
     </FormProvider>

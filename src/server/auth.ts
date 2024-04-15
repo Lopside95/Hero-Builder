@@ -28,7 +28,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 declare module "next-auth" {
   interface User extends DefaultUser {
     id: string;
-    name: string;
+    userName: string;
     email: string;
     password: string;
   }
@@ -36,7 +36,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      name: string;
+      userName: string;
       email: string;
       password: string;
     };
@@ -48,7 +48,7 @@ declare module "next-auth/jwt" {
   interface JWT extends DefaultJWT {
     user: {
       id: string;
-      name: string;
+      userName: string;
       email: string;
       password: string;
     };
@@ -103,14 +103,12 @@ export const authOptions: NextAuthOptions = {
     },
     //eslint-disable-next-line
     async session({ session, token }) {
-      // Send properties to the client, like an access_token from a provider.
-      //For the future, session.expires can be modify here and that will change the rate of access token refreshment.
       return {
         ...session,
         user: {
           id: token.user.id,
           // name: token.user.name,
-          name: token.user.name,
+          userName: token.user.userName,
           email: token.user.email,
           password: token.user.password,
         },
@@ -125,7 +123,7 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/",
+    signIn: "/login",
     newUser: "/signup",
     error: "/",
   },
