@@ -19,7 +19,7 @@ const UserAccount = () => {
   const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: "",
+      userName: "",
       email: "",
       password: "",
       pic: "",
@@ -47,7 +47,7 @@ const UserAccount = () => {
 
         <div className="bg-base-bg flex flex-col items-center py-20 w-full min-h-screen">
           <div className="w-1/3 ">
-            <Input {...form.register("name")} placeholder="name" />
+            <Input {...form.register("userName")} placeholder="name" />
             <Input {...form.register("email")} placeholder="email" />
             <Input {...form.register("password")} placeholder="pass" />
             <Input {...form.register("pic")} placeholder="pic" />

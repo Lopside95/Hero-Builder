@@ -75,7 +75,7 @@ const Home = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="w-full min-h-screen py-10 flex gap-20 justify-evenly relative items-center">
           <div className="flex gap-10 flex-col">
             <div className="flex gap-10">

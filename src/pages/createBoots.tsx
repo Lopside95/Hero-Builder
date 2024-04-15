@@ -48,7 +48,7 @@ const CreateBoots = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="bg-base-bg flex flex-col pl-80 justify-center align-middle w-full min-h-screen">
           <TextField fieldName="name" fieldLabel="Name" placeholder="Name" />
           <NumberField fieldName="speed" fieldLabel="Move Speed" />

@@ -49,7 +49,7 @@ const LoginForm = () => {
       setError("");
       const res = await signIn("credentials", {
         ...data,
-        callbackUrl: "/login",
+        callbackUrl: "/",
         redirect: false,
       });
 
@@ -100,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (session) {
     return {
       redirect: {
-        destination: "/profile",
+        destination: "/",
         permanent: false,
       },
     };

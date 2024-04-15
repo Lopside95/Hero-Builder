@@ -19,7 +19,7 @@ const Profile = () => {
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      <Navbar />
+      {/* <Navbar /> */}
       {!user ? (
         <p>You need to sign in </p>
       ) : (

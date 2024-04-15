@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import SignupForm from "@/components/user/signup";
 import { useState } from "react";
-import LoginForm from "@/components/user/loginForm";
+// import LoginForm from "@/components/user/loginForm";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 type IndexPics = {
   id: string;
@@ -41,7 +42,7 @@ const Home = () => {
               Buy items and use your remaining gold to adjust the final stats of
               your hero before saving them to a gallery and building your team
             </span>
-            <LoginForm />
+            {/* <LoginForm /> */}
             <span className="flex w-80 gap-2">
               Don&apos;t have an account?
               <Link href="/signup" className="text-blue-400">
@@ -51,17 +52,7 @@ const Home = () => {
             {/* <p>{`Don't have an account?  Sign up`}</p> */}
           </div>
         )}
-        <div className="flex gap-8 py-10 ">
-          {/* <LoginForm /> */}
-          {/* <img src={vampLord!} alt="" className="w-80 rounded-full" /> */}
-          {/* <Image
-            src={vampLord!}
-        img    alt=""
-            className="w-80 rounded-full"
-            width={350}
-            height={350}
-          /> */}
-        </div>
+        <div className="flex gap-8 py-10 "></div>
       </div>
       {/* <LoginPage /> */}
     </div>
@@ -69,6 +60,23 @@ const Home = () => {
 };
 
 export default Home;
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const session = await getServerAuthSession(context);
+
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: "/dashboard",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: {},
+//   };
+// };
 
 {
   /* <span className="text-6xl text-base-txtClr">

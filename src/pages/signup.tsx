@@ -49,6 +49,11 @@ const SignupForm = () => {
             fieldName="password"
             placeholder="Password"
           />
+          <TextField
+            fieldLabel="Profile Pic"
+            fieldName="pic"
+            placeholder="profpic"
+          />
           <Button className="w-full my-5" variant="select">
             Submit
           </Button>

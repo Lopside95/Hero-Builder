@@ -43,7 +43,8 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Suspense fallback="lskdfns">{children}</Suspense>
+            {children}
+            {/* <Suspense fallback="lskdfns">{children}</Suspense> */}
           </ThemeProvider>
         </SessionProvider>
       </body>

@@ -141,7 +141,7 @@ export const getServerAuthSession = async (ctx: {
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
 
   if (!session) {
-    console.log("no session");
+    // console.log("no session");
     return null;
   }
 

@@ -43,13 +43,13 @@ export const heroRouter = createTRPCRouter({
       });
       return finalHero;
     }),
-  getExample: protectedProcedure.query(async ({ ctx }) => {
-    const example = await ctx.prisma.exampleHero.findMany({
-      where: {
-        userId: ctx.session.user.id,
-      },
-    });
+  // getExample: protectedProcedure.query(async ({ ctx }) => {
+  //   const example = await ctx.prisma.exampleHero.findMany({
+  //     where: {
+  //       userId: ctx.session.user.id,
+  //     },
+  //   });
 
-    return example;
-  }),
+  //   return example;
+  // }),
 });
