@@ -37,7 +37,9 @@ const Gallery = () => {
             );
           })
       ) : (
-        <h1>Your heroes here</h1>
+        <h1 className="text-3xl fixed top-52">
+          Your saved heroes will appear here
+        </h1>
       )}
     </div>
   );

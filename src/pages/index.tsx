@@ -25,8 +25,6 @@ type IndexPics = {
 }[];
 
 const Home = () => {
-  const [login, setLogin] = useState<boolean>(true);
-
   const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
 
   const { data: heroImgs } = trpc.shop.getAllHeroPics.useQuery();
@@ -129,13 +127,12 @@ const Home = () => {
               your hero before saving them to a gallery and building your team
             </span>
             <LoginForm />
-            <span className="flex w-80 gap-2">
+            <span className="flex w-80 gap-2 text-xl">
               Don&apos;t have an account?
               <Link href="/signup" className="text-blue-400">
                 Sign up
               </Link>
             </span>
-            {/* <p>{`Don't have an account?  Sign up`}</p> */}
           </div>
         )}
         <div className="flex gap-8 py-10 "></div>

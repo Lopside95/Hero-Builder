@@ -38,7 +38,6 @@ const LoginForm = () => {
   const router = useRouter();
 
   const [error, setError] = useState<string>("");
-  const [currentUser, setCurrentUser] = useState<User>();
 
   const { control } = useFormContext();
 
@@ -55,8 +54,6 @@ const LoginForm = () => {
 
       if (!res?.error) {
         console.log("sign in worked");
-
-        //eslint-disable-next-line
       } else {
         setError("Invalid email or password");
       }
@@ -83,6 +80,11 @@ const LoginForm = () => {
             fieldName="password"
             placeholder="Password"
           />
+          {/* <TextField
+            fieldLabel="Username"
+            fieldName="userName"
+            placeholder="Your username"
+          /> */}
           <Button variant="select" className="w-full my-4">
             Login
           </Button>

@@ -20,12 +20,12 @@ import { z } from "zod";
 const Profile = () => {
   const { data: user, isPending } = trpc.user.getUserById.useQuery();
   const { data: userHeroes } = trpc.user.getHeroesByUser.useQuery();
-
+  const { data: session } = useSession();
   console.log("userHeroes", userHeroes);
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      {!user ? <NoSession /> : <Gallery />}
+      {!session ? <NoSession /> : <Gallery />}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const SignupForm = () => {
   const form = useForm<User>({
@@ -33,32 +34,35 @@ const SignupForm = () => {
     <FormProvider {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="
-      flex flex-col gap-4 justify-center w-full py-32
-      "
+        className="flex gap-10 items-center justify-center w-full py-40"
       >
-        {/* <Navbar /> */}
+        <h1 className="text-2xl fixed top-20">Signup</h1>
+        <Card className="text-xl">
+          <CardContent>
+            <ul className="flex flex-col gap-3 list-disc">
+              <li>Email doesn&apos;t need to be an existing email</li>
+              <li>Passwords are encrypted but require no particular format</li>
+              <li>You&apos;ll use your email and password to log in</li>
+              <li>You will be randomly assigned a profile picture</li>
+            </ul>
+          </CardContent>
+        </Card>
         <div className="w-80 self-center flex flex-col gap-5 ">
           <TextField
-            fieldLabel="Username"
-            fieldName="userName"
-            placeholder="Username *"
-          />
-          <PasswordField
-            fieldLabel="Password"
-            fieldName="password"
-            placeholder="Password *"
-          />
-          <TextField
-            fieldLabel="Email"
+            fieldLabel="Email *"
             fieldName="email"
             placeholder="optional@email.com"
           />
-          {/* <TextField
-            fieldLabel="Profile Pic"
-            fieldName="pic"
-            placeholder="profpic"
-          /> */}
+          <TextField
+            fieldLabel="Username *"
+            fieldName="userName"
+            placeholder="Username"
+          />
+          <PasswordField
+            fieldLabel="Password *"
+            fieldName="password"
+            placeholder="Password "
+          />
           <Button className="w-full my-5" variant="select">
             Submit
           </Button>

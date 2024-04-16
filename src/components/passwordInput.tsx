@@ -10,7 +10,7 @@ import { TextFieldInterface } from "@/pages/createBoots";
 import { Input, InputProps } from "./ui/input";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { FieldProps } from "@/pages/login";
+import { FieldProps } from "./user/loginForm";
 
 const PasswordField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
   const { control } = useFormContext();
@@ -24,10 +24,10 @@ const PasswordField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
       render={({ field }) => (
         <>
           <FormItem className="w-full">
-            <FormLabel className="pl-1.5 ">
+            <FormLabel className="pl-1.5 flex gap-4 text-base-txtClr ">
               {" "}
               {fieldLabel}
-              <FormMessage className="text-base capitalize dark:text-red-400" />
+              <FormMessage className="text-md capitalize dark:text-red-400" />
             </FormLabel>
             <FormControl>
               <div className="relative">

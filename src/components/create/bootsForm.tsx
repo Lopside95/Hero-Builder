@@ -11,7 +11,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { Coins } from "lucide-react";
 import { bootsSchema } from "@/types/hero";
-import { FormControl, FormField, FormItem } from "../ui/form";
+import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import {
   Carousel,
   CarouselApi,

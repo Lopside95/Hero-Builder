@@ -70,13 +70,17 @@ const Create = () => {
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    setIsSubmitting(true);
+    if (!user) {
+      alert("You need to create an account before you can save heroes");
+    } else {
+      setIsSubmitting(true);
 
-    await createNewHero.mutateAsync(data);
+      await createNewHero.mutateAsync(data);
 
-    setTimeout(() => {
-      router.push("/profile");
-    }, 1000);
+      setTimeout(() => {
+        router.push("/profile");
+      }, 1000);
+    }
   };
 
   return (

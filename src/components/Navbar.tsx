@@ -97,7 +97,10 @@ const Navbar = () => {
         </Button> */}
         {!session && (
           <Button
-            className="text-md text-base-txtClr  hover:underline-offset-[6px]"
+            className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+              activePage("/signup") ? "underline underline-offset-[6px]   " : ""
+            }`}
+            // className="text-md text-base-txtClr  hover:underline-offset-[6px]"
             variant="link"
           >
             <Link tabIndex={-1} href="/signup">
