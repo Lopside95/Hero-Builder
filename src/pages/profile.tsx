@@ -5,6 +5,8 @@ import Gallery from "@/components/user/gallery";
 import NoSession from "@/components/user/noSession";
 import { FinalHeroSchema } from "@/types/hero";
 import { trpc } from "@/utils/trpc";
+import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
@@ -16,18 +18,21 @@ import {
 import { z } from "zod";
 
 const Profile = () => {
-  const { data: user } = trpc.user.getUserById.useQuery();
+  const { data: user, isPending } = trpc.user.getUserById.useQuery();
+
+  const { data: session, status } = useSession();
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      {/* <Navbar /> */}
-      {!user ? (
+      {!session ? <NoSession /> : <Gallery />}
+
+      {/* {user ? (
+        <Gallery />
+      ) : !user && !isPending ? (
         <NoSession />
       ) : (
-        <div>
-          <Gallery />
-        </div>
-      )}
+        <Loader2 className="animate-spin" />
+      )} */}
     </div>
   );
 };

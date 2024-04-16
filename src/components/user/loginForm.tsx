@@ -49,7 +49,7 @@ const LoginForm = () => {
       setError("");
       const res = await signIn("credentials", {
         ...data,
-        callbackUrl: "/",
+        callbackUrl: "/profile",
         redirect: true,
       });
 

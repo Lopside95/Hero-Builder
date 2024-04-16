@@ -7,6 +7,7 @@ import { Boots, Details, Weapon } from "@/types/hero";
 import { Separator } from "../ui/separator";
 import { Suspense } from "react";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 export interface HeroInterface {
   details: Details;
@@ -19,20 +20,27 @@ const Gallery = () => {
 
   return (
     <div className="w-full pt-20 flex flex-col  items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
-      <Navbar />
-
-      {heroes?.reverse().map((hero) => {
-        return (
-          <div key={hero.id} className="">
-            <GalleryCard
-              details={hero.details as Details}
-              boots={hero.boots as Boots}
-              weapon={hero.weapon as Weapon}
-            />
-            <Separator className="" />
-          </div>
-        );
-      })}
+      {/* {isLoading ? (
+        <Loader2 className="animate-spin" />
+      ) : ( */}
+      {/* <div> */}
+      {heroes
+        ?.slice(0)
+        .reverse()
+        .map((hero) => {
+          return (
+            <div key={hero.id} className="">
+              <GalleryCard
+                details={hero.details as Details}
+                boots={hero.boots as Boots}
+                weapon={hero.weapon as Weapon}
+              />
+              <Separator className="" />
+            </div>
+          );
+        })}
+      {/* </div> */}
+      {/* )} */}
     </div>
   );
 };

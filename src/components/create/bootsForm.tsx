@@ -33,22 +33,6 @@ const BootsForm = () => {
 
   const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
 
-  const bootsDictionary = boots
-    ? boots.reduce((acc, boot) => {
-        acc[boot.name] = {
-          id: boot.id,
-          name: boot.name,
-          speed: boot.speed,
-          bonus: boot.bonus,
-          description: boot.description || "",
-          cost: boot.cost,
-          img: boot.img,
-        };
-
-        return acc;
-      }, {} as Record<string | number, Boots>)
-    : {};
-
   const watchedBoots = watch("boots");
 
   return (
@@ -56,7 +40,7 @@ const BootsForm = () => {
       name="boots"
       control={control}
       render={({ field }) => (
-        <div className="w-1/3 flex flex-col gap-10">
+        <div className="w-1/3 flex flex-col pl-10 gap-10">
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}
@@ -66,10 +50,11 @@ const BootsForm = () => {
               {boots?.map((boot) => {
                 return (
                   <CarouselItem key={boot.id} className="pl-5 ">
-                    <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full">
+                    <Card className="flex flex-col text-xl items-center justify-center gap-5 py-5 w-full">
                       <h1>{boot.name}</h1>
                       <p>{`Move speed: ${boot.speed}`}</p>
-                      <p>{`Description: ${boot.description}`}</p>
+                      {/* <p>{`Description: ${boot.description}`}</p> */}
+                      <p>{boot.description}</p>
                       <span className="flex gap-3">
                         <Coins className="text-yellow-500" /> <p>{boot.cost}</p>
                       </span>

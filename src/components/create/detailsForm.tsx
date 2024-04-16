@@ -18,7 +18,7 @@ const DetailsForm = () => {
   const { data: heroPics } = trpc.shop.getAllHeroPics.useQuery();
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/4 pr-10">
       <FormField
         name="details.name"
         control={control}

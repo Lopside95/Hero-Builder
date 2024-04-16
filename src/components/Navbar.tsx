@@ -62,7 +62,7 @@ const Navbar = () => {
             variant="link"
             onClick={() => signIn()}
           >
-            Sign in
+            Log in
           </Button>
         </>
       );
@@ -95,6 +95,17 @@ const Navbar = () => {
           Login
           </Link>
         </Button> */}
+        {!session && (
+          <Button
+            className="text-md text-base-txtClr  hover:underline-offset-[6px]"
+            variant="link"
+          >
+            <Link tabIndex={-1} href="/signup">
+              Sign up
+            </Link>
+          </Button>
+        )}
+        <AuthButton />
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/create") ? "underline underline-offset-[6px]   " : ""
@@ -105,7 +116,6 @@ const Navbar = () => {
             Create
           </Link>
         </Button>
-        <AuthButton />
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/profile") ? "underline underline-offset-[6px]   " : ""

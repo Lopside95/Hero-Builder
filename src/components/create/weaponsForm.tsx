@@ -35,28 +35,10 @@ const WeaponsForm = () => {
   const { control, watch, getValues, setValue } =
     useFormContext<FinalHeroSchema>();
 
-  const [selectedWeapon, setSelectedWeapon] = useState<string | undefined>();
-
   const { data: weapons, isLoading } = trpc.shop.getAllWeapons.useQuery();
   const [api, setApi] = useState<CarouselApi>();
-  const weaponsDictionary = weapons
-    ? weapons.reduce((acc, weapon) => {
-        acc[weapon.name] = {
-          id: weapon.id,
-          name: weapon.name,
-          damage: weapon.damage,
-          bonus: weapon.bonus,
-          description: weapon.description,
-          cost: weapon.cost,
-          img: weapon.img,
-        };
-
-        return acc;
-      }, {} as Record<string | number, Weapon>)
-    : {};
 
   const watchedWeapon = watch("weapon");
-  const wVal = getValues();
 
   return (
     <FormField
@@ -73,11 +55,15 @@ const WeaponsForm = () => {
               {weapons?.map((weapon) => {
                 return (
                   <CarouselItem key={weapon.name} className="pl-5 ">
-                    <Card className="flex flex-col bg-base-bg h-full text-base-txtClr items-center justify-center gap-5 py-5 w-full">
+                    <Card className="flex flex-col text-xl  h-full items-center justify-center gap-5 py-5 w-full">
                       <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
-                      <p>{`Description: ${weapon.description}`}</p>
-                      <p>{`Cost: ${weapon.cost}`}</p>
+                      <p>{weapon.description}</p>
+                      {/* <p>{`Description: ${weapon.description}`}</p> */}
+                      <span className="flex gap-3">
+                        <Coins className="text-yellow-500" />{" "}
+                        <p>{weapon.cost}</p>
+                      </span>
                       <img
                         src={weapon.img}
                         alt=""

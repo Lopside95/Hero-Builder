@@ -9,6 +9,15 @@ import { useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import LoginForm from "@/components/user/loginForm";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type IndexPics = {
   id: string;
@@ -44,7 +53,44 @@ const Home = () => {
               Welcome back {user.userName}
             </h1>
             <img src={user.pic} className="w-60 rounded-full" alt="" />
-            <p>{`You have ${heroes?.length} heroes`}</p>
+            <Table>
+              <TableCaption></TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Damage</TableHead>
+                  <TableHead>Movespeed</TableHead>
+                  <TableHead>Avatar</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {heroes
+                  ?.slice(0)
+                  .reverse()
+                  .map((hero) => {
+                    return (
+                      <TableRow key={hero.id}>
+                        <TableCell>{hero.details.name}</TableCell>
+                        <TableCell>{hero.details.damage}</TableCell>
+                        <TableCell>{hero.details.speed}</TableCell>
+                        <TableCell>
+                          <img
+                            src={hero.details.img}
+                            alt="Hero avatar"
+                            className="w-10"
+                          />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+
+            {/* <ul>
+              {heroes?.map((hero) => {
+                return <li key={hero.id}>{hero.details.name}</li>;
+              })}
+            </ul> */}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center">

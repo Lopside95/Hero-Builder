@@ -13,16 +13,18 @@ const HeroPreview = () => {
   const remainingGold = gold - (boots.cost + weapon.cost);
 
   return (
-    <Card className="border flex gap-6 sticky justify-center flex-col h-[300px]">
+    <Card className="border flex gap-6 justify-center w-60 flex-col rounded-b-none text-xl h-[300px]">
       <CardTitle className="self-center flex gap-1">
         <p>{remainingGold}</p> <Coins className="text-yellow-500" />
       </CardTitle>
-      <CardContent className="flex flex-col gap-2">
-        <p>{boots.name}</p>
-        <p>{weapon.name}</p>
+      <CardContent className="flex flex-col gap-4">
+        <span className=" ">
+          <p className="">Damage: {weapon.damage}</p>
+          <p>{weapon.name !== "" ? weapon.name : "Choose weapon"}</p>
 
-        <p className="text-xl">Damage: {weapon.damage}</p>
-        <p className="text-xl">Move speed: {boots.speed}</p>
+          <p className="">Move speed: {boots.speed}</p>
+          <p>{boots.name !== "" ? boots.name : "Choose weapon"}</p>
+        </span>
       </CardContent>
     </Card>
   );

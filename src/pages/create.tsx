@@ -12,8 +12,13 @@ import WeaponsForm from "@/components/create/weaponsForm";
 import DetailsForm from "@/components/create/detailsForm";
 import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
-import { TabsList, Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import HeroPreview from "@/components/create/heroPreview";
+import { useRouter } from "next/router";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Popover, PopoverContent } from "@/components/ui/popover";
+import Link from "next/link";
 
 const Create = () => {
   const form = useForm<FinalHeroSchema>({
@@ -47,14 +52,16 @@ const Create = () => {
     },
   });
 
+  const router = useRouter();
   const { data: user, isLoading } = trpc.user.getUserById.useQuery();
   const utils = trpc.useUtils();
 
   const { update: updateSession } = useSession();
 
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const createNewHero = trpc.hero.createFinalHero.useMutation({
     onSuccess: async () => {
-      alert("User hero created");
       updateSession();
     },
   });
@@ -62,36 +69,57 @@ const Create = () => {
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    await createNewHero.mutateAsync(data);
-  };
+    setIsSubmitting(true);
 
-  const gold = form.watch("gold");
-  const boots = form.watch("boots");
-  const weapon = form.watch("weapon");
-  const damage = form.watch("details.damage");
-  const speed = form.watch("details.speed");
-  const adjustedGold = gold ? gold - (boots.cost + weapon.cost) : 0;
+    await createNewHero.mutateAsync(data);
+
+    setTimeout(() => {
+      router.push("/profile");
+    }, 1000);
+  };
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* <Navbar /> */}
-        <div className="w-full min-h-screen py-10 flex gap-20 justify-evenly relative items-center">
-          <div className="flex gap-10 flex-col">
-            <div className="flex gap-10">
+
+        <div className="w-full min-h-screen py-20 flex gap-20 pr-52  justify-evenly">
+          <div className="flex gap-10 w-full flex-col ">
+            {!user && (
+              <h1 className="self-center text-2xl pl-32 ">
+                You need to{" "}
+                <Link className="text-blue-400" href="/">
+                  log in
+                </Link>{" "}
+                or{" "}
+                <Link className="text-blue-400" href="signup">
+                  sign up
+                </Link>{" "}
+                before you can create heroes
+              </h1>
+            )}
+            <div className="flex w-full items-center justify-evenly ">
               <BootsForm />
               <WeaponsForm />
             </div>
-            <div className="flex gap-10">
+            <div className="flex justify-evenly items-center w-full">
               <PicturesForm />
               <DetailsForm />
             </div>
           </div>
-          <div>
+          <div className="fixed right-32  top-52">
             <HeroPreview />
-            <Button className="w-full" variant="select">
-              Submit
-            </Button>
+            {isSubmitting ? (
+              <Button className="w-full rounded-t-none" variant="select">
+                <span className="flex gap-2 items-center">
+                  Saving <Loader2 className="animate-spin h-5" />
+                </span>
+              </Button>
+            ) : (
+              <Button className="w-full rounded-t-none" variant="select">
+                Submit
+              </Button>
+            )}
           </div>
         </div>
       </form>
