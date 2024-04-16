@@ -41,14 +41,21 @@ const DetailsForm = () => {
       <FormField
         name="details.story"
         control={control}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <FormItem className="">
             <FormLabel>
               Backstory
               <FormMessage className="text-red-400" />
             </FormLabel>
             <FormControl>
-              <Textarea {...field} className="bg-base-txtClr text-base-bg" />
+              <Textarea
+                {...field}
+                // className="bg-base-txtClr  text-base-bg"
+                className={`text-${
+                  fieldState.isTouched ? "base-bg" : "muted-foreground"
+                }`}
+                placeholder=""
+              />
             </FormControl>
           </FormItem>
         )}

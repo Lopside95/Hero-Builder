@@ -9,16 +9,14 @@ const nextConfig = {
         port: "",
         pathname: "/*",
       },
-      // {
-      //   protocol: "https",
-      //   hostname: "zq5hzutac0xrpkxh.public.blob.vercel-storage.com",
-      //   port: "",
-      //   pathname: "*",
-      // },
-
-      // "zq5hzutac0xrpkxh.public.blob.vercel-storage.com",
+      {
+        protocol: "https",
+        hostname: "hero-fighter.s3.eu-north-1.amazonaws.com",
+        port: "",
+        pathname: "/*",
+      },
     ],
-    domains: ["storage.cloud.google.com"],
+    domains: ["storage.cloud.google.com", "storage.googleapis.com"],
   },
 };
 

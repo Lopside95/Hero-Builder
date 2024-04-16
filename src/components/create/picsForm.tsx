@@ -26,7 +26,9 @@ import { trpc } from "@/utils/trpc";
 import Image from "next/image";
 
 const PicturesForm = () => {
-  const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
+  // const { data: boots, isLoading } = trpc.shop.getAllBoots.useQuery();
+
+  const { data: heroImages } = trpc.shop.getAllHeroPics.useQuery();
 
   const [api, setApi] = useState<CarouselApi>();
   const { control, setValue, watch } = useFormContext<FinalHeroSchema>();
@@ -46,31 +48,31 @@ const PicturesForm = () => {
             className=" w-96 flex flex-col justify-center"
           >
             <CarouselContent className="">
-              {boots?.map((img) => {
+              {heroImages?.map((hero) => {
                 return (
-                  <CarouselItem key={img.id} className="">
+                  <CarouselItem key={hero.id} className="">
                     <Card className="flex flex-col text-xl items-center justify-center gap-5 py-5 w-full relative">
                       {/* <img src={img.url} alt="" className="w-60 rounded-md" /> */}
                       <h1>Hero avatar</h1>
-                      <img src={img.img} alt="" className="w-60 rounded-md  " />
-                      {/* <Image
-                        src={img.url}
+
+                      <Image
+                        src={hero.url}
                         alt=""
                         height={400}
                         width={400}
                         className="w-60 rounded-md  "
-                      /> */}
-                      <FormControl key={img.id}>
+                      />
+                      <FormControl key={hero.id}>
                         <FormItem>
                           {/* <DialogClose asChild> */}
                           <Button
-                            variant={image === img.img ? "disabled" : "select"}
+                            variant={image === hero.url ? "disabled" : "select"}
                             {...field}
-                            value={img.img}
+                            value={hero.url}
                             onClick={(event) => {
                               event?.preventDefault();
                               field.onChange();
-                              setValue("details.img", img.img);
+                              setValue("details.img", hero.url);
                             }}
                           >
                             Select

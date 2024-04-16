@@ -45,7 +45,8 @@ const Create = () => {
         damage: 0,
         name: "",
         img: "",
-        story: "",
+        story:
+          "We all start somewhere, but if you don’t have a story in mind we’ll just use this placeholder text for now.",
       },
 
       gold: 90,

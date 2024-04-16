@@ -59,18 +59,18 @@ const BootsForm = () => {
                         <Coins className="text-yellow-500" /> <p>{boot.cost}</p>
                       </span>
 
-                      <img
+                      {/* <img
                         src={boot.img}
                         alt=""
                         className="w-60 rounded-md  "
-                      />
-                      {/* <Image
+                      /> */}
+                      <Image
                         src={boot.img}
                         alt=""
                         height={200}
                         width={200}
                         className="w-60 rounded-md  "
-                      /> */}
+                      />
                       {/* </Suspense> */}
                       <FormControl key={boot.name}>
                         <FormItem>

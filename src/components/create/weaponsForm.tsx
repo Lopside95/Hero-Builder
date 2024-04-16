@@ -64,18 +64,18 @@ const WeaponsForm = () => {
                         <Coins className="text-yellow-500" />{" "}
                         <p>{weapon.cost}</p>
                       </span>
-                      <img
+                      {/* <img
                         src={weapon.img}
                         alt=""
                         className="w-60 rounded-md  "
-                      />
-                      {/* <Image
+                      /> */}
+                      <Image
                         src={weapon.img}
                         alt=""
                         height={200}
                         width={200}
                         className="w-60 rounded-md  "
-                      /> */}
+                      />
                       <FormControl key={weapon.id}>
                         <FormItem>
                           <Button

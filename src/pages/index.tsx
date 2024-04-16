@@ -43,6 +43,8 @@ const Home = () => {
     img.url.includes("vampireLord")
   )!.url;
 
+  const { data: boots } = trpc.shop.getAllBoots.useQuery();
+
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
       {/* <Navbar /> */}
@@ -52,7 +54,20 @@ const Home = () => {
             <h1 className="text-6xl text-base-txtClr">
               Welcome back {user.userName}
             </h1>
-            <img src={user.pic} className="w-60 rounded-full" alt="" />
+            <div className="flex items-center justify-evenly py-10">
+              <Image
+                src={vampLord || ""}
+                alt="Your pic"
+                width={200}
+                height={200}
+              />
+              <span className="text-2xl">{`${heroes?.length} Heroes`}</span>
+            </div>
+            {/* <img
+              src="https://hero-fighter.s3.eu-north-1.amazonaws.com/heroImgs/archer.jpg"
+              className="w-60 rounded-full"
+              alt="m hm"
+            /> */}
             <Table>
               <TableCaption></TableCaption>
               <TableHeader>
@@ -63,7 +78,7 @@ const Home = () => {
                   <TableHead>Avatar</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="text-xl">
                 {heroes
                   ?.slice(0)
                   .reverse()
@@ -71,13 +86,24 @@ const Home = () => {
                     return (
                       <TableRow key={hero.id}>
                         <TableCell>{hero.details.name}</TableCell>
-                        <TableCell>{hero.details.damage}</TableCell>
+                        <TableCell>
+                          {hero.details.damage}
+                          {/* <Image
+                            src={hero.boots.img}
+                            width={20}
+                            height={20}
+                            alt="boots"
+                            className="w-10"
+                          /> */}
+                        </TableCell>
                         <TableCell>{hero.details.speed}</TableCell>
                         <TableCell>
-                          <img
+                          <Image
                             src={hero.details.img}
-                            alt="Hero avatar"
-                            className="w-10"
+                            width={30}
+                            height={30}
+                            className="w-12"
+                            alt="avatars"
                           />
                         </TableCell>
                       </TableRow>
