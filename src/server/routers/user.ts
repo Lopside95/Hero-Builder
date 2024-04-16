@@ -18,12 +18,18 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const hashedPass = bcrypt.hashSync(input.password, salt);
 
+      const profilePic = async () => {
+        const picsArr = await prisma.heroImages.findMany();
+        const num = Math.floor(Math.random() * 10);
+        return picsArr[num].url;
+      };
+
       const newUser = await ctx.prisma.user.create({
         data: {
           userName: input.userName,
           email: input.email,
           password: hashedPass,
-          pic: input.pic,
+          pic: await profilePic(),
         },
       });
       return newUser;

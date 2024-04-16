@@ -2,9 +2,9 @@ import { SignalZero } from "lucide-react";
 import { z } from "zod";
 
 export const userSchema = z.object({
-  userName: z.string(),
+  userName: z.string().min(1, "Required"),
   email: z.string(),
-  password: z.string(),
+  password: z.string().min(1, "Required"),
   pic: z.string(),
 });
 

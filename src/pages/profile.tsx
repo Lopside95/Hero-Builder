@@ -19,28 +19,13 @@ import { z } from "zod";
 
 const Profile = () => {
   const { data: user, isPending } = trpc.user.getUserById.useQuery();
+  const { data: userHeroes } = trpc.user.getHeroesByUser.useQuery();
 
-  const { data: session, status } = useSession();
+  console.log("userHeroes", userHeroes);
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      {!session ? <NoSession /> : <Gallery />}
-      {/* 
-      <Image
-        className=""
-        width={200}
-        height={200}
-        alt=""
-        src="https://storage.googleapis.com/hero-items/gamePics/doombringerSword.jpg"
-      /> */}
-
-      {/* {user ? (
-        <Gallery />
-      ) : !user && !isPending ? (
-        <NoSession />
-      ) : (
-        <Loader2 className="animate-spin" />
-      )} */}
+      {!user ? <NoSession /> : <Gallery />}
     </div>
   );
 };

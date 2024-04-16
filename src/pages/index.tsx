@@ -45,6 +45,8 @@ const Home = () => {
 
   const { data: boots } = trpc.shop.getAllBoots.useQuery();
 
+  const heroArr = heroes ? heroes : [];
+
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
       {/* <Navbar /> */}
@@ -55,38 +57,35 @@ const Home = () => {
               Welcome back {user.userName}
             </h1>
             <div className="flex items-center justify-evenly py-10">
-              <Image
-                src={vampLord || ""}
-                alt="Your pic"
-                width={200}
-                height={200}
-              />
-              <span className="text-2xl">{`${heroes?.length} Heroes`}</span>
+              <Image src={user.pic} alt="Your pic" width={200} height={200} />
+              <h1 className="text-2xl">
+                {heroArr.length > 1
+                  ? heroArr.length + " heroes"
+                  : heroArr.length === 1
+                  ? "1 hero"
+                  : "No heroes"}
+              </h1>
             </div>
-            {/* <img
-              src="https://hero-fighter.s3.eu-north-1.amazonaws.com/heroImgs/archer.jpg"
-              className="w-60 rounded-full"
-              alt="m hm"
-            /> */}
+
             <Table>
               <TableCaption></TableCaption>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-base-bg">
                   <TableHead>Name</TableHead>
                   <TableHead>Damage</TableHead>
                   <TableHead>Movespeed</TableHead>
                   <TableHead>Avatar</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="text-xl">
+              <TableBody className="text-xl ">
                 {heroes
                   ?.slice(0)
                   .reverse()
                   .map((hero) => {
                     return (
-                      <TableRow key={hero.id}>
+                      <TableRow key={hero.id} className="hover:bg-base-bg">
                         <TableCell>{hero.details.name}</TableCell>
-                        <TableCell>
+                        <TableCell className="pl-7">
                           {hero.details.damage}
                           {/* <Image
                             src={hero.boots.img}
@@ -96,7 +95,9 @@ const Home = () => {
                             className="w-10"
                           /> */}
                         </TableCell>
-                        <TableCell>{hero.details.speed}</TableCell>
+                        <TableCell className="pl-9">
+                          {hero.details.speed}
+                        </TableCell>
                         <TableCell>
                           <Image
                             src={hero.details.img}

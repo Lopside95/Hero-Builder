@@ -18,7 +18,7 @@ const DetailsForm = () => {
   const { data: heroPics } = trpc.shop.getAllHeroPics.useQuery();
 
   return (
-    <div className="w-1/4 pr-10">
+    <div className="w-[22%] mr-20">
       <FormField
         name="details.name"
         control={control}
@@ -51,7 +51,7 @@ const DetailsForm = () => {
               <Textarea
                 {...field}
                 // className="bg-base-txtClr  text-base-bg"
-                className={`text-${
+                className={` h-32  text-${
                   fieldState.isTouched ? "base-bg" : "muted-foreground"
                 }`}
                 placeholder=""

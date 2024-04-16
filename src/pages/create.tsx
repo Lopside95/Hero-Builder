@@ -82,8 +82,6 @@ const Create = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {/* <Navbar /> */}
-
         <div className="w-full min-h-screen py-20 flex gap-20 pr-52  justify-evenly">
           <div className="flex gap-10 w-full flex-col ">
             {!user && (
@@ -108,7 +106,7 @@ const Create = () => {
               <DetailsForm />
             </div>
           </div>
-          <div className="fixed right-32  top-52">
+          <div className="fixed right-32 top-52">
             <HeroPreview />
             {isSubmitting ? (
               <Button className="w-full rounded-t-none" variant="select">
@@ -129,51 +127,3 @@ const Create = () => {
 };
 
 export default Create;
-
-{
-  /* <div className="w-full min-h-screen py-10 flex justify-center relative items-center">
-          <Tabs defaultValue="items" className="w-full">
-            <div className="flex flex-col w-3/4 items-center border border-red relative">
-              <TabsList className="w-48">
-                <TabsTrigger value="items">Items</TabsTrigger>
-                <TabsTrigger value="details">Hero Details</TabsTrigger>
-              </TabsList>
-              <TabsContent
-                value="items"
-                className="flex w-2/3 gap-10  h-full justify-evenly"
-              >
-                <BootsForm />
-                <WeaponsForm />
-              </TabsContent>
-              <TabsContent
-                value="details"
-                className="flex w-2/3     items-center"
-              >
-                <PicturesForm />
-                <DetailsForm />
-              </TabsContent>
-            </div>
-          </Tabs>
-          <div className="absolute right-20">
-            <HeroPreview />
-            <Button type="submit" className="">
-              Submit
-            </Button>
-          </div>
-        </div> */
-}
-
-{
-  /* <div className="flex  w-full gap-10 justify-evenly items-center">
-            <BootsForm />
-            <WeaponsForm />
-            <div className="flex items-center flex-col ">
-              <span>Gold: {adjustedGold}</span>
-              <span>Speed: {speed}</span>
-              <span>Damage: {damage}</span>
-              <DetailsForm />
-              <span>Health: 0</span>
-            </div>
-            <PicturesForm />
-          </div> */
-}

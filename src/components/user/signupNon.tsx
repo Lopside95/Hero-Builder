@@ -6,7 +6,6 @@ import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "../textInput";
-import { FieldProps } from "@/pages/login";
 import PasswordField from "../passwordInput";
 
 const SignupForm = () => {

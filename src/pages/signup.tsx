@@ -34,31 +34,31 @@ const SignupForm = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="
-      bg-base-bg flex flex-col gap-4 text-base-txtClr justify-center w-full py-32
+      flex flex-col gap-4 justify-center w-full py-32
       "
       >
         {/* <Navbar /> */}
-        <div className="w-80 self-center">
-          <TextField
-            fieldLabel="Email"
-            fieldName="email"
-            placeholder="example@email.com"
-          />
+        <div className="w-80 self-center flex flex-col gap-5 ">
           <TextField
             fieldLabel="Username"
             fieldName="userName"
-            placeholder="Username"
+            placeholder="Username *"
           />
           <PasswordField
             fieldLabel="Password"
             fieldName="password"
-            placeholder="Password"
+            placeholder="Password *"
           />
           <TextField
+            fieldLabel="Email"
+            fieldName="email"
+            placeholder="optional@email.com"
+          />
+          {/* <TextField
             fieldLabel="Profile Pic"
             fieldName="pic"
             placeholder="profpic"
-          />
+          /> */}
           <Button className="w-full my-5" variant="select">
             Submit
           </Button>

@@ -19,28 +19,26 @@ const Gallery = () => {
   const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
 
   return (
-    <div className="w-full pt-20 flex flex-col  items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
-      {/* {isLoading ? (
-        <Loader2 className="animate-spin" />
-      ) : ( */}
-      {/* <div> */}
-      {heroes
-        ?.slice(0)
-        .reverse()
-        .map((hero) => {
-          return (
-            <div key={hero.id} className="">
-              <GalleryCard
-                details={hero.details as Details}
-                boots={hero.boots as Boots}
-                weapon={hero.weapon as Weapon}
-              />
-              <Separator className="" />
-            </div>
-          );
-        })}
-      {/* </div> */}
-      {/* )} */}
+    <div className="w-full pt-20 flex flex-col items-center justify-center  min-h-screen bg-base-bg text-base-txtClr">
+      {heroes && heroes?.length > 0 ? (
+        heroes
+          .slice(0)
+          .reverse()
+          .map((hero, index, array) => {
+            return (
+              <div key={hero.id} className="">
+                <GalleryCard
+                  details={hero.details as Details}
+                  boots={hero.boots as Boots}
+                  weapon={hero.weapon as Weapon}
+                />
+                {index !== array.length - 1 && <Separator className="" />}
+              </div>
+            );
+          })
+      ) : (
+        <h1>Your heroes here</h1>
+      )}
     </div>
   );
 };

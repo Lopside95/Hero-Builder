@@ -8,15 +8,13 @@ import Image from "next/image";
 const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
   return (
     <Card className="flex text-xl flex-col items-center justify-center gap-10 p-16 w-full">
-      {/* <section className="flex-flex-col align-middle "> */}
       <h1 className="self-center text-3xl">{details.name}</h1>
       <p>{details.story}</p>
 
-      <article className="flex items-center w-full justify-center gap-20">
-        {/* <img src={details.img} className="w-80  rounded-full" alt="" /> */}
+      <article className="flex items-center w-full justify-center gap-24">
         <Image
           src={details.img}
-          className="w-80 rounded-full"
+          className="w-80 -ml-5 rounded-full"
           alt=""
           width={300}
           height={300}
