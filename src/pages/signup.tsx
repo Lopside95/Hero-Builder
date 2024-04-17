@@ -45,14 +45,14 @@ const SignupForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex gap-10 items-center justify-center w-full py-40"
       >
-        <h1 className="text-2xl fixed top-20">Signup</h1>
+        <h1 className="text-2xl fixed top-20">Sign Up</h1>
         <Card className="text-xl">
           <CardContent>
             <ul className="flex flex-col gap-3 list-disc">
+              <li>You&apos;ll use your email and password to log in</li>
               <li>Email doesn&apos;t need to be an existing email</li>
               <li>Passwords are encrypted but require no particular format</li>
-              <li>You&apos;ll use your email and password to log in</li>
-              <li>You will be randomly assigned a profile picture</li>
+              {/* <li>You will be randomly assigned a profile picture</li> */}
             </ul>
           </CardContent>
         </Card>
@@ -60,7 +60,7 @@ const SignupForm = () => {
           <TextField
             fieldLabel="Email *"
             fieldName="email"
-            placeholder="optional@email.com"
+            placeholder="example@email.com"
           />
           <TextField
             fieldLabel="Username *"

@@ -5,11 +5,21 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import ProfileSelect from "./user/profileSelect";
-import { Home } from "lucide-react";
+import { Home, User } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { trpc } from "@/utils/trpc";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogTrigger } from "./ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectTriggerNoArrow,
+  SelectValue,
+} from "./ui/select";
 
 const Navbar = () => {
   const router = useRouter();
@@ -24,13 +34,9 @@ const Navbar = () => {
     if (session) {
       return (
         <>
-          {/* {session.user.email} */}
           <br />
           <Button
-            className="text-md text-base-txtClr  hover:underline-offset-[6px]"
-            // className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            //   activePage("/login") ? "underline underline-offset-[6px]   " : ""
-            // }`}
+            className="text-md text-base-txtClr w-20 hover:underline-offset-[6px]"
             variant="link"
             onClick={() => {
               signOut();
@@ -44,10 +50,7 @@ const Navbar = () => {
       return (
         <>
           <Button
-            className="text-md text-base-txtClr  hover:underline-offset-[6px]"
-            // className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            //   activePage("/login") ? "underline underline-offset-[6px]   " : ""
-            // }`}
+            className="text-md text-base-txtClr w-20  hover:underline-offset-[6px]"
             variant="link"
             onClick={() => signIn()}
           >
@@ -59,7 +62,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex border justify-evenly bg-base-bg border-none fixed z-50  mb-40 top-0 w-full  gap-32">
+    <div className="flex border justify-evenly bg-base-bg  border-none fixed z-50 pt-2  w-full mb-40 top-0 ">
       <span>
         <Button
           className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
@@ -68,37 +71,26 @@ const Navbar = () => {
           variant="link"
         >
           <Link tabIndex={-1} href="/">
-            <Home className="w-6 pb-1" />
-            {activePage("/") && <Separator />}
+            <Home className="" />
+            {activePage("/") && <Separator className="mt-1" />}
           </Link>
         </Button>
       </span>
 
-      <span className="flex gap-5">
-        {/* <Button
-          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/login") ? "underline underline-offset-[6px]   " : ""
-          }`}
-          variant="link"
-          >
-          <Link tabIndex={-1} href="/login">
-          Login
-          </Link>
-        </Button> */}
+      <span className="flex gap-5 pl-[35rem]">
         {!session && (
           <Button
             className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
               activePage("/signup") ? "underline underline-offset-[6px]   " : ""
             }`}
-            // className="text-md text-base-txtClr  hover:underline-offset-[6px]"
             variant="link"
           >
             <Link tabIndex={-1} href="/signup">
-              Sign up
+              Signup
             </Link>
           </Button>
         )}
-        <AuthButton />
+        {!session && <AuthButton />}
         <Button
           className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
             activePage("/create") ? "underline underline-offset-[6px]   " : ""
@@ -106,86 +98,35 @@ const Navbar = () => {
           variant="link"
         >
           <Link tabIndex={-1} href="/create">
-            Create
+            New Hero
           </Link>
         </Button>
-        <Button
-          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/profile") ? "underline underline-offset-[6px]   " : ""
-          }`}
-          variant="link"
-        >
-          <Link tabIndex={-1} href="/profile">
-            Profile
-          </Link>
-        </Button>
-        {/* {
-          !session ? (
-            <Button
-              className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-                activePage("/profile")
-                  ? "underline underline-offset-[6px]   "
-                  : ""
-              }`}
-              variant="link"
-            >
-              <Link tabIndex={-1} href="/profile">
-                Profile
-              </Link>
-            </Button>
-          ) : (
-            <Avatar>
-              <AvatarImage src={user?.pic} className="w-8 h-8 pt-2" />
-            </Avatar>
-          )
-    
-        } */}
+
+        <Select>
+          <SelectTriggerNoArrow className="border-none">
+            <User className="border rounded-full bg-transparent" />
+          </SelectTriggerNoArrow>
+          <SelectContent className="bg-base-bg -ml-5 border-none">
+            <SelectGroup className="flex flex-col ">
+              <Button
+                className={`text-md text-base-txtClr  w-20 hover:underline-offset-[6px] ${
+                  activePage("/profile")
+                    ? "underline underline-offset-[6px]   "
+                    : ""
+                }`}
+                variant="link"
+              >
+                <Link tabIndex={-1} href="/profile">
+                  Profile
+                </Link>
+              </Button>
+              <AuthButton />
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </span>
     </div>
   );
 };
 
 export default Navbar;
-{
-  /* <ProfileSelect /> */
-}
-
-{
-  /* <Button
-  className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-    activePage("/createBoots")
-      ? "underline underline-offset-[6px]   "
-      : ""
-  }`}
-  variant="link"
->
-  <Link tabIndex={-1} href="/createBoots">
-    Create boots
-  </Link>
-</Button> */
-}
-{
-  /* <Button
-  className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-    activePage("/signup") ? "underline underline-offset-[6px]   " : ""
-  }`}
-  variant="link"
->
-  <Link tabIndex={-1} href="/signup">
-    Sign up
-  </Link>
-</Button> */
-}
-
-{
-  /* <Button
-  className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-    activePage("/profile") ? "underline underline-offset-[6px]   " : ""
-  }`}
-  variant="link"
->
-  <Link tabIndex={-1} href="/profile">
-    Profile
-  </Link>
-</Button> */
-}

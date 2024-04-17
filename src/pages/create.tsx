@@ -16,9 +16,21 @@ import HeroPreview from "@/components/create/heroPreview";
 import { useRouter } from "next/router";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Popover, PopoverContent } from "@/components/ui/popover";
 import Link from "next/link";
+import AlertDialog from "@/components/alertDialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { tree } from "next/dist/build/templates/app-page";
 
 const Create = () => {
   const form = useForm<FinalHeroSchema>({
@@ -57,6 +69,8 @@ const Create = () => {
   const { data: user, isLoading } = trpc.user.getUserById.useQuery();
   const utils = trpc.useUtils();
 
+  const { data: session } = useSession();
+
   const { update: updateSession } = useSession();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -69,10 +83,16 @@ const Create = () => {
 
   const [userAlert, setUserAlert] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (!session) {
+      setUserAlert(true);
+    }
+  }, []);
+
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    if (!user) {
+    if (!session) {
       setUserAlert(true);
     } else {
       setIsSubmitting(true);
@@ -99,24 +119,21 @@ const Create = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="w-full min-h-screen py-20 flex gap-20 pr-52  justify-evenly">
           <div className="flex gap-10 w-full flex-col ">
-            {!user && (
-              <h1 className="self-center text-2xl pl-32 ">
-                You need to{" "}
-                <Link className="text-blue-400" href="/">
-                  log in
-                </Link>{" "}
-                or{" "}
-                <Link className="text-blue-400" href="signup">
-                  sign up
-                </Link>{" "}
-                before you can create heroes
-              </h1>
-            )}
+            <div>
+              {userAlert && (
+                <AlertDialog
+                  isOpen={true}
+                  message="You have to be logged in to create heroes"
+                  closeMsg="I understand"
+                  closeClick={() => setUserAlert(false)}
+                />
+              )}
+            </div>
             <div className="flex w-full items-center justify-evenly ">
               <BootsForm />
               <WeaponsForm />
             </div>
-            {userAlert && <NoUserAlert />}
+            {/* {userAlert && <AlertDialog />} */}
             <div className="flex justify-evenly items-center w-full">
               <PicturesForm />
               <DetailsForm />
