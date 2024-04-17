@@ -25,15 +25,20 @@ type IndexPics = {
 }[];
 
 const Home = () => {
-  const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
+  // const { data: heroes, isLoading } = trpc.user.getHeroesByUser.useQuery();
 
   const { data: heroImgs } = trpc.shop.getAllHeroPics.useQuery();
-  const { data: user } = trpc.user.getUserById.useQuery();
+  // const { data: user } = trpc.user.getUserById.useQuery();
 
   const findHeroPic = (incl: string) => {
     const link = heroImgs?.find((img) => img.url.includes(incl))!.url;
     return link;
   };
+
+  const [currentUser, userHeroes] = trpc.useQueries((t) => [
+    t.user.getUserById(),
+    t.user.getHeroesByUser(),
+  ]);
 
   const archerPic = findHeroPic("archer");
 
@@ -41,9 +46,11 @@ const Home = () => {
     img.url.includes("vampireLord")
   )!.url;
 
+  const user = currentUser.data;
   const { data: boots } = trpc.shop.getAllBoots.useQuery();
 
-  const heroArr = heroes ? heroes : [];
+  const heroes = userHeroes.data ? userHeroes.data : [];
+  // const heroArr = heroes ? heroes : [];
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
@@ -52,16 +59,17 @@ const Home = () => {
         {user ? (
           <div>
             <h1 className="text-6xl text-base-txtClr">
-              Welcome back {user.userName}
+              Welcome {user.userName}
             </h1>
             <div className="flex items-center justify-evenly py-10">
               <Image src={user.pic} alt="Your pic" width={200} height={200} />
               <h1 className="text-2xl">
-                {heroArr.length > 1
-                  ? heroArr.length + " heroes"
-                  : heroArr.length === 1
+                {heroes.length > 1
+                  ? heroes.length + " heroes"
+                  : heroes.length === 1
                   ? "1 hero"
                   : "No heroes"}
+                {/* make so that no heroes clicks to create */}
               </h1>
             </div>
 
@@ -110,12 +118,6 @@ const Home = () => {
                   })}
               </TableBody>
             </Table>
-
-            {/* <ul>
-              {heroes?.map((hero) => {
-                return <li key={hero.id}>{hero.details.name}</li>;
-              })}
-            </ul> */}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center">

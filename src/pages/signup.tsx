@@ -23,9 +23,11 @@ const SignupForm = () => {
 
   const router = useRouter();
 
+  const utils = trpc.useUtils();
+
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: () => {
-      alert("user created");
+      utils.user.invalidate();
     },
   });
 

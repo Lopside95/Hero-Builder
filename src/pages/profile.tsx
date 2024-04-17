@@ -18,9 +18,9 @@ import {
 import { z } from "zod";
 
 const Profile = () => {
+  const utils = trpc.useUtils();
   // const { data: user, isPending } = trpc.user.getUserById.useQuery();
   // const { data: userHeroes } = trpc.user.getHeroesByUser.useQuery();
-  const utils = trpc.useUtils();
 
   const [user, userHeroes] = trpc.useQueries((t) => [
     t.user.getUserById(),
