@@ -18,10 +18,21 @@ import {
 import { z } from "zod";
 
 const Profile = () => {
-  const { data: user, isPending } = trpc.user.getUserById.useQuery();
-  const { data: userHeroes } = trpc.user.getHeroesByUser.useQuery();
+  // const { data: user, isPending } = trpc.user.getUserById.useQuery();
+  // const { data: userHeroes } = trpc.user.getHeroesByUser.useQuery();
+  const utils = trpc.useUtils();
+
+  const [user, userHeroes] = trpc.useQueries((t) => [
+    t.user.getUserById(),
+    t.user.getHeroesByUser(),
+  ]);
   const { data: session } = useSession();
-  console.log("userHeroes", userHeroes);
+  // console.log("userHeroes", userHeroes);
+
+  console.log("user", user.data);
+
+  const heroes = userHeroes.data;
+  console.log("heroes", heroes);
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">

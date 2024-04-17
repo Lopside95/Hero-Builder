@@ -8,6 +8,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useRouter } from "next/router";
 
 const SignupForm = () => {
   const form = useForm<User>({
@@ -20,6 +21,8 @@ const SignupForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: () => {
       alert("user created");
@@ -28,6 +31,10 @@ const SignupForm = () => {
 
   const onSubmit: SubmitHandler<User> = async (data: User) => {
     await createNewUser.mutateAsync(data);
+
+    setTimeout(() => {
+      router.push("/");
+    }, 500);
   };
 
   return (

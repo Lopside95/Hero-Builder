@@ -5,6 +5,11 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import ProfileSelect from "./user/profileSelect";
+import { Home } from "lucide-react";
+import { Separator } from "./ui/separator";
+import { trpc } from "@/utils/trpc";
+import { Avatar, AvatarImage } from "./ui/avatar";
+import { Dialog, DialogTrigger } from "./ui/dialog";
 
 const Navbar = () => {
   const router = useRouter();
@@ -13,24 +18,8 @@ const Navbar = () => {
 
   const { data: session } = useSession();
 
-  // const AuthButton = () => {
-  //   if (session) {
-  //     return (
-  //       <>
-  //         {session.user.email}
-  //         <br />
-  //         <Button onClick={() => signOut()}>Sign out</Button>
-  //       </>
-  //     );
-  //   } else {
-  //     return (
-  //       <>
-  //         Not signed in <br />
-  //         <Button onClick={() => signIn()}>Sign in</Button>
-  //       </>
-  //     );
-  //   }
-  // };
+  const { data: user } = trpc.user.getUserById.useQuery();
+
   const AuthButton = () => {
     if (session) {
       return (
@@ -70,7 +59,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex border justify-evenly bg-base-bg border-none fixed z-50  mb-32 top-0 w-full  gap-32">
+    <div className="flex border justify-evenly bg-base-bg border-none fixed z-50  mb-40 top-0 w-full  gap-32">
       <span>
         <Button
           className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
@@ -79,7 +68,8 @@ const Navbar = () => {
           variant="link"
         >
           <Link tabIndex={-1} href="/">
-            Home
+            <Home className="w-6 pb-1" />
+            {activePage("/") && <Separator />}
           </Link>
         </Button>
       </span>
@@ -129,6 +119,27 @@ const Navbar = () => {
             Profile
           </Link>
         </Button>
+        {/* {
+          !session ? (
+            <Button
+              className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+                activePage("/profile")
+                  ? "underline underline-offset-[6px]   "
+                  : ""
+              }`}
+              variant="link"
+            >
+              <Link tabIndex={-1} href="/profile">
+                Profile
+              </Link>
+            </Button>
+          ) : (
+            <Avatar>
+              <AvatarImage src={user?.pic} className="w-8 h-8 pt-2" />
+            </Avatar>
+          )
+    
+        } */}
       </span>
     </div>
   );

@@ -19,6 +19,7 @@ import {
 } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 export interface FieldProps {
   fieldName: string;
@@ -48,14 +49,16 @@ const LoginForm = () => {
       setError("");
       const res = await signIn("credentials", {
         ...data,
-        callbackUrl: "/profile",
-        redirect: true,
+        callbackUrl: "/",
+        redirect: false,
       });
 
       if (!res?.error) {
         console.log("sign in worked");
+        window.location.reload();
       } else {
         setError("Invalid email or password");
+        console.log(error);
       }
     } catch (error: unknown) {
       setError("Something went wrong. Please, try again");
@@ -64,12 +67,22 @@ const LoginForm = () => {
     console.log("data", data);
   };
 
+  const LoginAlert = () => {
+    return (
+      <Alert>
+        <AlertTitle>Oops</AlertTitle>
+        <AlertDescription>{error}</AlertDescription>
+      </Alert>
+    );
+  };
+
   const { data: user } = trpc.user.getUserById.useQuery();
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="bg-base-bg flex flex-col text-base-txtClr w-80 gap-3 justify-center items-center">
+          {error !== "" && <LoginAlert />}
           <TextField
             fieldLabel="Email"
             fieldName="email"
@@ -80,11 +93,6 @@ const LoginForm = () => {
             fieldName="password"
             placeholder="Password"
           />
-          {/* <TextField
-            fieldLabel="Username"
-            fieldName="userName"
-            placeholder="Your username"
-          /> */}
           <Button variant="select" className="w-full my-4">
             Login
           </Button>

@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
 import HeroPreview from "@/components/create/heroPreview";
 import { useRouter } from "next/router";
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Popover, PopoverContent } from "@/components/ui/popover";
@@ -67,11 +67,13 @@ const Create = () => {
     },
   });
 
+  const [userAlert, setUserAlert] = useState<boolean>(false);
+
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
     if (!user) {
-      alert("You need to create an account before you can save heroes");
+      setUserAlert(true);
     } else {
       setIsSubmitting(true);
 
@@ -81,6 +83,15 @@ const Create = () => {
         router.push("/profile");
       }, 1000);
     }
+  };
+
+  const NoUserAlert = () => {
+    return (
+      <Alert className="w-72 self-center absolute top-2/3 z-50">
+        <AlertTitle>Oops</AlertTitle>
+        <AlertDescription>You need to be logged in for this</AlertDescription>
+      </Alert>
+    );
   };
 
   return (
@@ -105,6 +116,7 @@ const Create = () => {
               <BootsForm />
               <WeaponsForm />
             </div>
+            {userAlert && <NoUserAlert />}
             <div className="flex justify-evenly items-center w-full">
               <PicturesForm />
               <DetailsForm />
