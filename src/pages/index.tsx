@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 type IndexPics = {
   id: string;
@@ -55,10 +56,10 @@ const Home = () => {
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
       {/* <Navbar /> */}
-      <div className="w-3/4 flex flex-col items-center gap-5 pt-20 ">
+      <div className="w-3/4 flex flex-col items-center gap-10 pt-20 ">
         {user ? (
           <div>
-            <h1 className="text-6xl text-base-txtClr">
+            <h1 className="text-6xl pl-10 text-base-txtClr">
               Welcome {user.userName}
             </h1>
             <div className="flex items-center justify-evenly py-10">
@@ -76,10 +77,12 @@ const Home = () => {
             <Table>
               <TableCaption></TableCaption>
               <TableHeader>
-                <TableRow className="hover:bg-base-bg">
+                <TableRow className="hover:bg-base-bg text-xl">
                   <TableHead>Name</TableHead>
                   <TableHead>Damage</TableHead>
                   <TableHead>Movespeed</TableHead>
+                  <TableHead>Weapon</TableHead>
+                  <TableHead>Boots</TableHead>
                   <TableHead>Avatar</TableHead>
                 </TableRow>
               </TableHeader>
@@ -105,13 +108,40 @@ const Home = () => {
                           {hero.details.speed}
                         </TableCell>
                         <TableCell>
-                          <Image
+                          <Avatar>
+                            <AvatarImage src={hero.weapon.img} />
+                          </Avatar>
+                          {/* <Image
+                            src={hero.weapon.img}
+                            width={30}
+                            height={30}
+                            className="w-12"
+                            alt="boots"
+                          /> */}
+                        </TableCell>
+                        <TableCell>
+                          <Avatar>
+                            <AvatarImage src={hero.boots.img} />
+                          </Avatar>
+                          {/* <Image
+                            src={hero.boots.img}
+                            width={80}
+                            height={80}
+                            className="w-12"
+                            alt="boots"
+                          /> */}
+                        </TableCell>
+                        <TableCell>
+                          <Avatar>
+                            <AvatarImage src={hero.details.img} />
+                          </Avatar>
+                          {/* <Image
                             src={hero.details.img}
                             width={30}
                             height={30}
                             className="w-12"
                             alt="avatars"
-                          />
+                          /> */}
                         </TableCell>
                       </TableRow>
                     );
@@ -125,8 +155,8 @@ const Home = () => {
               Welcome to the hero builder
             </p>
             <span className="text-3xl w-3/4 text-center py-10 text-base-txtClr">
-              Buy items and use your remaining gold to adjust the final stats of
-              your hero before saving them to a gallery and building your team
+              Buy items, give your hero a backstory and save them to your
+              gallery
             </span>
             <LoginForm />
             <span className="flex w-80 gap-2 text-xl">

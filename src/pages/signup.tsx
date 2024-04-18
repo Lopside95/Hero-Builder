@@ -9,6 +9,7 @@ import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const SignupForm = () => {
   const form = useForm<User>({
@@ -17,6 +18,7 @@ const SignupForm = () => {
       userName: "",
       email: "",
       password: "",
+      repeatPassword: "",
       pic: "",
     },
   });
@@ -24,6 +26,7 @@ const SignupForm = () => {
   const router = useRouter();
 
   const utils = trpc.useUtils();
+  const { data: session } = useSession();
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: () => {
@@ -52,7 +55,6 @@ const SignupForm = () => {
               <li>You&apos;ll use your email and password to log in</li>
               <li>Email doesn&apos;t need to be an existing email</li>
               <li>Passwords are encrypted but require no particular format</li>
-              {/* <li>You will be randomly assigned a profile picture</li> */}
             </ul>
           </CardContent>
         </Card>
@@ -71,6 +73,11 @@ const SignupForm = () => {
             fieldLabel="Password *"
             fieldName="password"
             placeholder="Password "
+          />
+          <PasswordField
+            fieldLabel="Repeat password *"
+            fieldName="repeatPassword"
+            placeholder="Repeat password "
           />
           <Button className="w-full my-5" variant="select">
             Submit

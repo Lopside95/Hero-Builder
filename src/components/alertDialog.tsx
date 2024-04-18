@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogContentNoX,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -29,10 +30,12 @@ const AlertDialog = ({
   return (
     <Dialog defaultOpen={isOpen}>
       {/* <DialogTrigger></DialogTrigger> */}
-      <DialogContent className="">
+      <DialogContentNoX className=" flex flex-col items-center border-none w-80">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{message}</DialogDescription>
+          <DialogDescription className="text-base-txtClr">
+            {message}
+          </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
@@ -41,7 +44,7 @@ const AlertDialog = ({
             </Button>
           </DialogClose>
         </DialogFooter>
-      </DialogContent>
+      </DialogContentNoX>
     </Dialog>
   );
 };

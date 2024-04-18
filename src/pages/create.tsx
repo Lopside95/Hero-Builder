@@ -20,17 +20,6 @@ import { useEffect, useState } from "react";
 import { Popover, PopoverContent } from "@/components/ui/popover";
 import Link from "next/link";
 import AlertDialog from "@/components/alertDialog";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { tree } from "next/dist/build/templates/app-page";
 
 const Create = () => {
   const form = useForm<FinalHeroSchema>({
@@ -58,7 +47,7 @@ const Create = () => {
         name: "",
         img: "",
         story:
-          "We all start somewhere, but if you don’t have a story in mind we’ll just use this placeholder text for now.",
+          "We all start somewhere but, if you don’t have a story in mind, we’ll just use this placeholder text for now. ",
       },
 
       gold: 90,
@@ -105,15 +94,6 @@ const Create = () => {
     }
   };
 
-  const NoUserAlert = () => {
-    return (
-      <Alert className="w-72 self-center absolute top-2/3 z-50">
-        <AlertTitle>Oops</AlertTitle>
-        <AlertDescription>You need to be logged in for this</AlertDescription>
-      </Alert>
-    );
-  };
-
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -123,18 +103,17 @@ const Create = () => {
               {userAlert && (
                 <AlertDialog
                   isOpen={true}
-                  message="You have to be logged in to create heroes"
-                  closeMsg="I understand"
+                  message="You need be logged in to create heroes"
+                  closeMsg="Got it"
                   closeClick={() => setUserAlert(false)}
                 />
               )}
             </div>
-            <div className="flex w-full items-center justify-evenly ">
+            <div className="flex w-full items-center justify-evenly pr-32">
               <BootsForm />
               <WeaponsForm />
             </div>
-            {/* {userAlert && <AlertDialog />} */}
-            <div className="flex justify-evenly items-center w-full">
+            <div className="flex pl-14 justify-evenly items-center w-full">
               <PicturesForm />
               <DetailsForm />
             </div>

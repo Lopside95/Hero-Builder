@@ -45,7 +45,7 @@ const WeaponsForm = () => {
       name="weapon"
       control={control}
       render={({ field }) => (
-        <div className=" w-1/3  flex flex-col gap-10">
+        <div className=" w-[300px]  flex flex-col gap-10">
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}

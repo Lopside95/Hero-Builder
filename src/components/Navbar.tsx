@@ -14,11 +14,7 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
   SelectTriggerNoArrow,
-  SelectValue,
 } from "./ui/select";
 
 const Navbar = () => {
@@ -77,7 +73,7 @@ const Navbar = () => {
         </Button>
       </span>
 
-      <span className="flex gap-5 pl-[35rem]">
+      <span className="flex gap-3 pl-[35rem]">
         {!session && (
           <Button
             className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
@@ -86,7 +82,7 @@ const Navbar = () => {
             variant="link"
           >
             <Link tabIndex={-1} href="/signup">
-              Signup
+              Sign up
             </Link>
           </Button>
         )}
@@ -103,15 +99,15 @@ const Navbar = () => {
         </Button>
 
         <Select>
-          <SelectTriggerNoArrow className="border-none">
+          <SelectTriggerNoArrow className="border-none hover:border-none bg-transparent">
             <User className="border rounded-full bg-transparent" />
           </SelectTriggerNoArrow>
-          <SelectContent className="bg-base-bg -ml-5 border-none">
-            <SelectGroup className="flex flex-col ">
+          <SelectContent className="bg-transparent-ml-5 border-none">
+            <SelectGroup className="flex flex-col">
               <Button
-                className={`text-md text-base-txtClr  w-20 hover:underline-offset-[6px] ${
+                className={`text-md text-base-txtClr w-20 -mb-4  hover:underline-offset-[6px] ${
                   activePage("/profile")
-                    ? "underline underline-offset-[6px]   "
+                    ? "underline underline-offset-[6px]"
                     : ""
                 }`}
                 variant="link"
