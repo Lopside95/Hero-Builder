@@ -9,6 +9,8 @@ generator client {
 
 model User {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  updatedAt DateTime    @updatedAt
+  createdAt DateTime    @default(now())
   userName  String
   email     String      @unique
   password  String
@@ -37,13 +39,15 @@ model Weapon {
 }
 
 model FinalHero {
-  id      String      @id @default(auto()) @map("_id") @db.ObjectId
-  details DetailsType
-  boots   BootsType
-  weapon  WeaponType
-  gold    Int
-  userId  String      @db.ObjectId
-  user    User        @relation(fields: [userId], references: [id])
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  updatedAt DateTime    @updatedAt
+  createdAt DateTime    @default(now())
+  details   DetailsType
+  boots     BootsType
+  weapon    WeaponType
+  gold      Int
+  userId    String      @db.ObjectId
+  user      User        @relation(fields: [userId], references: [id])
 }
 
 model HeroImages {
