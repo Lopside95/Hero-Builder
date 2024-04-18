@@ -28,7 +28,6 @@ const PicturesForm = () => {
       name="details.img"
       control={control}
       render={({ field }) => (
-        // <div className=" ">
         <div className="flex flex-col w-[300px] items-center gap-10">
           <Carousel
             setApi={setApi}
