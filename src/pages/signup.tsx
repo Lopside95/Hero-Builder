@@ -30,7 +30,7 @@ const SignupForm = () => {
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
-      await utils.user.invalidate();
+      // await utils.user.invalidate();
       updateSession();
     },
   });

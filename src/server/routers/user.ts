@@ -28,7 +28,7 @@ export const userRouter = createTRPCRouter({
         userName: input.userName,
         email: input.email,
         password: hashedPass,
-        pic: "pic",
+        pic: "https://storage.googleapis.com/hero-items/heroImgs/death.jpg",
         // pic: await profilePic(),
       };
 
