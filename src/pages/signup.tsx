@@ -8,6 +8,7 @@ import PasswordField from "@/components/passwordInput";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { TRPCError } from "@trpc/server";
 
 const SignupForm = () => {
   const form = useForm<User>({
@@ -29,19 +30,22 @@ const SignupForm = () => {
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
-      await utils.user.findAll.invalidate();
+      await utils.user.invalidate();
       updateSession();
     },
   });
 
   const onSubmit: SubmitHandler<User> = async (data: User) => {
-    await createNewUser.mutateAsync(data);
+    try {
+      await createNewUser.mutateAsync(data);
 
-    setTimeout(() => {
-      router.push("/");
-    }, 500);
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
+    } catch (error: unknown) {
+      console.error(error);
+    }
   };
-
   return (
     <FormProvider {...form}>
       <form

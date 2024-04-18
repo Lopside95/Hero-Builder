@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 const salt = bcrypt.genSaltSync(10);
 
 export const userRouter = createTRPCRouter({
-  findAll: publicProcedure.query(async ({ ctx }) => {
+  getAllUsers: publicProcedure.query(async ({ ctx }) => {
     const allUsers = await prisma.user.findMany();
     return allUsers;
   }),
@@ -17,22 +17,43 @@ export const userRouter = createTRPCRouter({
     .input(userSchema)
     .mutation(async ({ input, ctx }) => {
       const hashedPass = bcrypt.hashSync(input.password, salt);
+      // const profilePic = async () => {
+      //   const picsArr = await prisma.heroImages.findMany();
+      //   const num = Math.floor(Math.random() * 10);
+      //   return picsArr[num].url;
+      // };
 
-      const profilePic = async () => {
-        const picsArr = await prisma.heroImages.findMany();
-        const num = Math.floor(Math.random() * 10);
-        return picsArr[num].url;
+      // going to try deploy without pic 14:19 18/04
+      const newUserPayload = {
+        userName: input.userName,
+        email: input.email,
+        password: hashedPass,
+        pic: "pic",
+        // pic: await profilePic(),
       };
 
-      const newUser = await ctx.prisma.user.create({
-        data: {
-          userName: input.userName,
-          email: input.email,
-          password: hashedPass,
-          pic: await profilePic(),
-        },
-      });
-      return newUser;
+      // const newUser = await ctx.prisma.user.create({
+      //   data: {
+      //     userName: input.userName,
+      //     email: input.email,
+      //     password: hashedPass,
+      //     pic: await profilePic(),
+      //   },
+      // });
+
+      try {
+        await ctx.prisma.user.create({
+          data: newUserPayload,
+        });
+      } catch (error: unknown) {
+        if (error instanceof TRPCError) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+
+            message: error.message,
+          });
+        }
+      }
     }),
 
   updateUser: protectedProcedure
@@ -78,29 +99,29 @@ export const userRouter = createTRPCRouter({
     return finalHeroes;
   }),
 
-  getUserByEmail: publicProcedure
-    .input(z.object({ email: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      if (!input.email) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Invalid email",
-        });
-      }
+  // getUserByEmail: publicProcedure
+  //   .input(z.object({ email: z.string() }))
+  //   .mutation(async ({ ctx, input }) => {
+  //     if (!input.email) {
+  //       throw new TRPCError({
+  //         code: "BAD_REQUEST",
+  //         message: "Invalid email",
+  //       });
+  //     }
 
-      const existingUser = await ctx.prisma.user.findUnique({
-        where: {
-          email: input.email,
-        },
-      });
+  //     const existingUser = await ctx.prisma.user.findUnique({
+  //       where: {
+  //         email: input.email,
+  //       },
+  //     });
 
-      if (existingUser) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "User already exists",
-        });
-      }
+  //     if (existingUser) {
+  //       throw new TRPCError({
+  //         code: "BAD_REQUEST",
+  //         message: "User already exists",
+  //       });
+  //     }
 
-      return true;
-    }),
+  //     return true;
+  //   }),
 });
