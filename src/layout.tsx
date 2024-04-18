@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import { Suspense } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 import { getServerSession } from "next-auth";
 import SessionProvider from "../src/components/SessionProvider";
-import { trpc } from "./utils/trpc";
 
 interface Props {
   children: React.ReactNode;
-  // overflowHidden?: boolean;
 }
 
 const inter = Inter({ subsets: ["latin"] });
@@ -44,43 +41,9 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             {children}
-            {/* <Suspense fallback="lskdfns">{children}</Suspense> */}
           </ThemeProvider>
         </SessionProvider>
       </body>
     </html>
   );
 }
-
-{
-  /* <div
-  className={`flex h-full min-h-screen w-full flex-col  bg-gradient-to-tr from-gray-200 via-slate-200
-      to-white
-     dark:bg-gradient-radial
-     dark:from-zinc-900
-     dark:via-gray-950 dark:to-neutral-950
-     ${overflowHidden ? "" : ""}`}
-></div>; */
-}
-
-// import { ThemeProvider } from "@/components/theme-provider"
-
-// export default function RootLayout({ children }: Props) {
-//   return (
-//     <>
-//       <html lang="en" suppressHydrationWarning>
-//         <head />
-//         <body>
-//           <ThemeProvider
-//             attribute="class"
-// defaultTheme="system"
-// enableSystem
-// disableTransitionOnChange
-//           >
-//             {children}
-//           </ThemeProvider>
-//         </body>
-//       </html>
-//     </>
-//   )
-// }

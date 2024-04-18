@@ -1,13 +1,7 @@
 import { trpc } from "@/utils/trpc";
-import Navbar from "../Navbar";
-
-import { Card, CardContent } from "../ui/card";
 import GalleryCard from "./galleryCard";
 import { Boots, Details, Weapon } from "@/types/hero";
 import { Separator } from "../ui/separator";
-import { Suspense } from "react";
-import Image from "next/image";
-import { Loader2 } from "lucide-react";
 
 export interface HeroInterface {
   details: Details;

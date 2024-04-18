@@ -1,13 +1,11 @@
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { User, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
@@ -26,11 +24,13 @@ const SignupForm = () => {
   const router = useRouter();
 
   const utils = trpc.useUtils();
-  const { data: session } = useSession();
+
+  const { update: updateSession } = useSession();
 
   const createNewUser = trpc.user.createUser.useMutation({
-    onSuccess: () => {
-      utils.user.invalidate();
+    onSuccess: async () => {
+      await utils.user.findAll.invalidate();
+      updateSession();
     },
   });
 

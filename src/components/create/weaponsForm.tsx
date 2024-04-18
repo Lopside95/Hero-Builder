@@ -1,16 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
-
-// import { HeroInterface } from "@/pages/items"
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Boots, FinalHeroSchema, Weapon } from "@/types/hero";
-// import { finalItemsSchema } from "@/types/hero";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Suspense, useEffect, useRef, useState } from "react";
-
+import { useFormContext } from "react-hook-form";
+import { FinalHeroSchema, Weapon } from "@/types/hero";
+import { useState } from "react";
 import { Coins } from "lucide-react";
-import { bootsSchema } from "@/types/hero";
 import { FormControl, FormField, FormItem } from "../ui/form";
 import {
   Carousel,
@@ -59,16 +50,10 @@ const WeaponsForm = () => {
                       <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
                       <p>{weapon.description}</p>
-                      {/* <p>{`Description: ${weapon.description}`}</p> */}
                       <span className="flex gap-3">
                         <Coins className="text-yellow-500" />{" "}
                         <p>{weapon.cost}</p>
                       </span>
-                      {/* <img
-                        src={weapon.img}
-                        alt=""
-                        className="w-60 rounded-md  "
-                      /> */}
                       <Image
                         src={weapon.img}
                         alt=""
@@ -103,9 +88,6 @@ const WeaponsForm = () => {
                 );
               })}
             </CarouselContent>
-            {/* <CarouselPrevious className="absolute left-[5.5rem] bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
-
-            <CarouselNext className="absolute  right-[5.5rem] bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " /> */}
             <CarouselPrevious className="z-30 self-end ml-32 bottom-1.5 bg-transparent hover:text-white text-white  border-none hover:bg-transparent  " />
             <CarouselNext className=" z-30 self-end mr-32  bottom-1.5 border-none hover:bg-transparent hover:text-white bg-transparent text-white  " />
           </Carousel>

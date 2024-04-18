@@ -1,12 +1,8 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { User, userSchema } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
-import { prisma } from "./api/db";
-import { Boots, FinalHeroSchema, finalHeroSchema } from "@/types/hero";
-import Navbar from "@/components/Navbar";
+import { FinalHeroSchema, finalHeroSchema } from "@/types/hero";
 import BootsForm from "@/components/create/bootsForm";
 import WeaponsForm from "@/components/create/weaponsForm";
 import DetailsForm from "@/components/create/detailsForm";
@@ -14,11 +10,8 @@ import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
 import HeroPreview from "@/components/create/heroPreview";
 import { useRouter } from "next/router";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Popover, PopoverContent } from "@/components/ui/popover";
-import Link from "next/link";
 import AlertDialog from "@/components/alertDialog";
 
 const Create = () => {
@@ -47,7 +40,7 @@ const Create = () => {
         name: "",
         img: "",
         story:
-          "We all start somewhere but, if you don’t have a story in mind, we’ll just use this placeholder text for now. ",
+          "We all start somewhere but, if you don’t have a story in mind, we’ll just use this placeholder text for now.",
       },
 
       gold: 90,
@@ -55,7 +48,6 @@ const Create = () => {
   });
 
   const router = useRouter();
-  const { data: user, isLoading } = trpc.user.getUserById.useQuery();
   const utils = trpc.useUtils();
 
   const { data: session } = useSession();
@@ -66,6 +58,7 @@ const Create = () => {
 
   const createNewHero = trpc.hero.createFinalHero.useMutation({
     onSuccess: async () => {
+      utils.user.getHeroesByUser.invalidate();
       updateSession();
     },
   });

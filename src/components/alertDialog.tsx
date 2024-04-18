@@ -3,13 +3,11 @@ import { Button } from "./ui/button";
 import {
   Dialog,
   DialogClose,
-  DialogContent,
   DialogContentNoX,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 
 interface AlertInfo {
@@ -29,7 +27,6 @@ const AlertDialog = ({
 }: AlertInfo) => {
   return (
     <Dialog defaultOpen={isOpen}>
-      {/* <DialogTrigger></DialogTrigger> */}
       <DialogContentNoX className=" flex flex-col items-center border-none w-80">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

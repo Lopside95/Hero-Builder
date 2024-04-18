@@ -1,8 +1,6 @@
-import { z } from "zod";
-import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
-import { userSchema } from "@/types/user";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { prisma } from "@/pages/api/db";
-import { bootsSchema, finalHeroSchema } from "@/types/hero";
+import { finalHeroSchema } from "@/types/hero";
 
 export const heroRouter = createTRPCRouter({
   createFinalHero: protectedProcedure
@@ -43,13 +41,4 @@ export const heroRouter = createTRPCRouter({
       });
       return finalHero;
     }),
-  // getExample: protectedProcedure.query(async ({ ctx }) => {
-  //   const example = await ctx.prisma.exampleHero.findMany({
-  //     where: {
-  //       userId: ctx.session.user.id,
-  //     },
-  //   });
-
-  //   return example;
-  // }),
 });

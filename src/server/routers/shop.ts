@@ -1,8 +1,6 @@
-import { z } from "zod";
 import { publicProcedure, createTRPCRouter } from "../trpc";
-import { userSchema } from "@/types/user";
 import { prisma } from "@/pages/api/db";
-import { bootsSchema, finalHeroSchema } from "@/types/hero";
+import { bootsSchema } from "@/types/hero";
 
 export const shopRouter = createTRPCRouter({
   getAllWeapons: publicProcedure.query(async () => {

@@ -1,10 +1,7 @@
-import { signIn, signOut, useSession } from "next-auth/react";
-
 import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
   SelectItemNoCheck,
   SelectLabel,
   SelectTrigger,
@@ -30,10 +27,6 @@ const ProfileSelect = () => {
             >
               Your heroes
             </SelectItemNoCheck>
-            {/* <SelectItemNoCheck value="account">Your account</SelectItemNoCheck> */}
-            {/* <SelectItemNoCheck onClick={() => signOut()} value="signout">
-              Sign out
-            </SelectItemNoCheck> */}
           </SelectGroup>
         </SelectContent>
       </Select>

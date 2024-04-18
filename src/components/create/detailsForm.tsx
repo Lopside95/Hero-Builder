@@ -8,15 +8,11 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { FinalHeroSchema } from "@/types/hero";
-import { trpc } from "@/utils/trpc";
 import { Textarea } from "../ui/textarea";
 import { Card, CardContent } from "../ui/card";
 
 const DetailsForm = () => {
-  const { watch, control, getValues, setValue } =
-    useFormContext<FinalHeroSchema>();
-
-  const { data: heroPics } = trpc.shop.getAllHeroPics.useQuery();
+  const { control } = useFormContext<FinalHeroSchema>();
 
   return (
     <div className="w-[388px] mr-14">
@@ -28,14 +24,14 @@ const DetailsForm = () => {
             render={({ field }) => (
               <FormItem className="">
                 <FormLabel>
-                  Hero name
+                  Hero name *
                   <FormMessage className="text-red-400" />
                 </FormLabel>
                 <FormControl>
                   <Input
                     className="border-none"
                     {...field}
-                    placeholder="Hero name *"
+                    placeholder="Hero name"
                   />
                 </FormControl>
               </FormItem>
@@ -53,7 +49,6 @@ const DetailsForm = () => {
                 <FormControl>
                   <Textarea
                     {...field}
-                    // className="bg-base-txtClr  text-base-bg"
                     className={` h-32  text-${
                       fieldState.isTouched ? "base-bg" : "muted-foreground"
                     }`}

@@ -1,15 +1,9 @@
 import Link from "next/link";
-import { Button, ButtonProps } from "./ui/button";
-
-import { useState } from "react";
+import { Button } from "./ui/button";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
-import ProfileSelect from "./user/profileSelect";
 import { Home, User } from "lucide-react";
 import { Separator } from "./ui/separator";
-import { trpc } from "@/utils/trpc";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { Dialog, DialogTrigger } from "./ui/dialog";
 import {
   Select,
   SelectContent,
@@ -23,8 +17,6 @@ const Navbar = () => {
   const activePage = (path: string) => router.pathname === path;
 
   const { data: session } = useSession();
-
-  const { data: user } = trpc.user.getUserById.useQuery();
 
   const AuthButton = () => {
     if (session) {
@@ -99,13 +91,13 @@ const Navbar = () => {
         </Button>
 
         <Select>
-          <SelectTriggerNoArrow className="border-none hover:border-none bg-transparent">
+          <SelectTriggerNoArrow className=" focus:outline-none focus:ring-none focus:border-none border-none hover:border-none bg-transparent">
             <User className="border rounded-full bg-transparent" />
           </SelectTriggerNoArrow>
           <SelectContent className="bg-transparent-ml-5 border-none">
             <SelectGroup className="flex flex-col">
               <Button
-                className={`text-md text-base-txtClr w-20 -mb-4  hover:underline-offset-[6px] ${
+                className={`text-md text-base-txtClr w-20   hover:underline-offset-[6px] ${
                   activePage("/profile")
                     ? "underline underline-offset-[6px]"
                     : ""

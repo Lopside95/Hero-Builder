@@ -6,7 +6,6 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { TextFieldInterface } from "@/pages/createBoots";
 import { Input } from "./ui/input";
 import { FieldProps } from "./user/loginForm";
 

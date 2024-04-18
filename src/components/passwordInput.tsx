@@ -6,8 +6,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { TextFieldInterface } from "@/pages/createBoots";
-import { Input, InputProps } from "./ui/input";
+import { Input } from "./ui/input";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { FieldProps } from "./user/loginForm";

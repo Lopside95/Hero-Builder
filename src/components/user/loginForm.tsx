@@ -1,22 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { getServerAuthSession } from "@/server/auth";
-import { Login, User, loginSchema, userSchema } from "@/types/user";
-import { trpc } from "@/utils/trpc";
+import { Login, loginSchema } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
@@ -36,13 +25,7 @@ const LoginForm = () => {
     },
   });
 
-  const router = useRouter();
-
   const [error, setError] = useState<string>("");
-
-  const { control } = useFormContext();
-
-  const allUsers = trpc.user.findAll.useQuery();
 
   const onSubmit: SubmitHandler<Login> = async (data: Login) => {
     try {
@@ -54,7 +37,6 @@ const LoginForm = () => {
       });
 
       if (!res?.error) {
-        console.log("sign in worked");
         window.location.reload();
       } else {
         setError("Invalid email or password");
@@ -63,8 +45,6 @@ const LoginForm = () => {
     } catch (error: unknown) {
       setError("Something went wrong. Please, try again");
     }
-
-    console.log("data", data);
   };
 
   const LoginAlert = () => {
@@ -75,8 +55,6 @@ const LoginForm = () => {
       </Alert>
     );
   };
-
-  const { data: user } = trpc.user.getUserById.useQuery();
 
   return (
     <FormProvider {...form}>

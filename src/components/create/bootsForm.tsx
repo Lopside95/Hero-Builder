@@ -1,17 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-
-// import { HeroInterface } from "@/pages/items"
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { Boots, FinalHeroSchema, Weapon } from "@/types/hero";
-// import { finalItemsSchema } from "@/types/hero";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Suspense, useEffect, useRef, useState } from "react";
-
+import { useFormContext } from "react-hook-form";
+import { FinalHeroSchema, Weapon } from "@/types/hero";
+import { useState } from "react";
 import { Coins } from "lucide-react";
-import { bootsSchema } from "@/types/hero";
-import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import { FormControl, FormField, FormItem } from "../ui/form";
 import {
   Carousel,
   CarouselApi,
@@ -53,17 +44,11 @@ const BootsForm = () => {
                     <Card className="flex flex-col text-xl items-center justify-center gap-5 py-5 w-full">
                       <h1>{boot.name}</h1>
                       <p>{`Move speed: ${boot.speed}`}</p>
-                      {/* <p>{`Description: ${boot.description}`}</p> */}
                       <p>{boot.description}</p>
                       <span className="flex gap-3">
                         <Coins className="text-yellow-500" /> <p>{boot.cost}</p>
                       </span>
 
-                      {/* <img
-                        src={boot.img}
-                        alt=""
-                        className="w-60 rounded-md  "
-                      /> */}
                       <Image
                         src={boot.img}
                         alt=""
@@ -71,11 +56,9 @@ const BootsForm = () => {
                         width={200}
                         className="w-60 rounded-md  "
                       />
-                      {/* </Suspense> */}
                       <FormControl key={boot.name}>
                         <FormItem>
                           <Button
-                            // variant="select"
                             variant={
                               watchedBoots.name === boot.name
                                 ? "disabled"

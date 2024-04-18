@@ -1,54 +1,45 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { Card } from "../ui/card";
-import { Suspense } from "react";
 import { HeroInterface } from "./gallery";
 import Image from "next/image";
 
 const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
   return (
     <Card className="flex text-xl flex-col items-center justify-center gap-10 p-16 w-full">
-      <h1 className="self-center text-3xl">{details.name}</h1>
-      <p>{details.story}</p>
-
-      <article className="flex items-center w-full justify-center gap-24">
+      <section className="flex -ml-10 items-center w-full gap-10 justify-center">
+        <article className="flex flex-col w-2/3 gap-10 ">
+          <h1 className=" text-center text-5xl">{details.name}</h1>
+          <p className="w-full">{details.story}</p>
+        </article>
+        <ul className="flex gap-3 flex-col">
+          <li>Damage: {details.damage}</li>
+          <li>Move speed: {details.speed}</li>
+          <li>{boots.name}</li>
+          <li>{weapon.name}</li>
+        </ul>
+      </section>
+      <article className="flex gap-10">
         <Image
           src={details.img}
-          className="w-80 -ml-5 rounded-full"
+          className="w-80 -ml-5 rounded-md"
           alt=""
           width={300}
           height={300}
         />
-
-        <div className="flex gap-3 flex-col">
-          <h3>Damage: {details.damage}</h3>
-          <h3>Move speed: {details.speed}</h3>
-          <h3>{boots.name}</h3>
-          <h3>{weapon.name}</h3>
-        </div>
+        <Image
+          src={boots.img}
+          className="w-80 rounded-md"
+          alt=""
+          width={300}
+          height={300}
+        />
+        <Image
+          src={weapon.img}
+          className="w-80 rounded-md"
+          alt=""
+          width={300}
+          height={300}
+        />
       </article>
-      <article className="flex gap-10">
-        <div className=" flex flex-col items-center gap-3 ">
-          <Image
-            src={boots.img}
-            className="w-80 rounded-full"
-            alt=""
-            width={300}
-            height={300}
-          />
-        </div>
-        <div className="flex flex-col items-center gap-3">
-          <Image
-            src={weapon.img}
-            className="w-80 rounded-full"
-            alt=""
-            width={300}
-            height={300}
-          />
-        </div>
-      </article>
-      <div></div>
-      {/* </section> */}
     </Card>
   );
 };

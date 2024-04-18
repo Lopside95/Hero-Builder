@@ -1,5 +1,4 @@
-import z, { TypeOf } from "zod";
-import { userSchema } from "./user";
+import z from "zod";
 
 export const detailsSchema = z.object({
   name: z.string().min(2, "You need a name").max(25),
