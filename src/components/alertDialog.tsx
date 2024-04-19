@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { Session } from "next-auth";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -15,7 +15,9 @@ interface AlertInfo {
   message?: string;
   closeMsg?: string;
   isOpen?: boolean;
+  userAlert: boolean;
   closeClick: Function;
+  session: Session | null;
 }
 
 const AlertDialog = ({
@@ -24,10 +26,12 @@ const AlertDialog = ({
   closeMsg,
   isOpen,
   closeClick,
+  userAlert,
+  session,
 }: AlertInfo) => {
   return (
     <Dialog defaultOpen={isOpen}>
-      <DialogContentNoX className=" flex flex-col items-center border-none w-80">
+      <DialogContentNoX className="flex flex-col items-center border-none w-80 ">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription className="text-base-txtClr">

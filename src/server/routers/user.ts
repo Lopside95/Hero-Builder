@@ -59,6 +59,14 @@ export const userRouter = createTRPCRouter({
   updateUser: protectedProcedure
     .input(userSchema)
     .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session?.user.id,
+        },
+      });
+
+      const samePass = bcrypt.compareSync(input.password, user!?.password);
+
       const updatedUser = await ctx.prisma.user.update({
         where: {
           id: ctx.session.user.id,

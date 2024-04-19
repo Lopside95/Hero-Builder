@@ -5,6 +5,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { SessionProvider, getSession, useSession } from "next-auth/react";
 
 import Navbar from "@/components/Navbar";
+import { Suspense } from "react";
+import Loading from "@/components/loading";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const form = useForm();
@@ -12,8 +14,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <SessionProvider>
       <FormProvider {...form}>
+        {/* <Suspense fallback={<Loading />}> */}
         <Navbar />
         <Component {...pageProps} />
+        {/* </Suspense> */}
       </FormProvider>
     </SessionProvider>
   );

@@ -13,6 +13,9 @@ import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import AlertDialog from "@/components/alertDialog";
+import Image from "next/image";
+
+// TODO: Add skeleton and/or suspense boundary
 
 const Create = () => {
   const form = useForm<FinalHeroSchema>({
@@ -50,11 +53,19 @@ const Create = () => {
   const router = useRouter();
   const utils = trpc.useUtils();
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
-  const { update: updateSession } = useSession();
+  const [boots, weapon, images] = trpc.useQueries((t) => [
+    t.shop.getAllBoots(),
+    t.shop.getAllWeapons(),
+    t.shop.getAllHeroPics(),
+  ]);
+
+  const { data: session, update: updateSession } = useSession();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const { data: isLoading } = trpc.user.getUserById.useQuery();
 
   const createNewHero = trpc.hero.createFinalHero.useMutation({
     onSuccess: async () => {
@@ -68,8 +79,10 @@ const Create = () => {
   useEffect(() => {
     if (!session) {
       setUserAlert(true);
+    } else {
+      setUserAlert(false);
     }
-  }, []);
+  }, [session]);
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
@@ -87,6 +100,8 @@ const Create = () => {
     }
   };
 
+  const bootsImg = boots.data ? boots.data : "";
+
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -95,10 +110,12 @@ const Create = () => {
             <div>
               {userAlert && (
                 <AlertDialog
-                  isOpen={true}
+                  isOpen={userAlert && true}
                   message="You need be logged in to create heroes"
                   closeMsg="Got it"
                   closeClick={() => setUserAlert(false)}
+                  userAlert={userAlert}
+                  session={session}
                 />
               )}
             </div>
