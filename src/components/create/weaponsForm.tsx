@@ -55,6 +55,7 @@ const WeaponsForm = () => {
                         <p>{weapon.cost}</p>
                       </span>
                       <Image
+                        priority
                         src={weapon.img}
                         alt=""
                         height={200}

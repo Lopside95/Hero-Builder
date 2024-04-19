@@ -15,9 +15,7 @@ interface AlertInfo {
   message?: string;
   closeMsg?: string;
   isOpen?: boolean;
-  userAlert: boolean;
   closeClick: Function;
-  session: Session | null;
 }
 
 const AlertDialog = ({
@@ -26,8 +24,6 @@ const AlertDialog = ({
   closeMsg,
   isOpen,
   closeClick,
-  userAlert,
-  session,
 }: AlertInfo) => {
   return (
     <Dialog defaultOpen={isOpen}>

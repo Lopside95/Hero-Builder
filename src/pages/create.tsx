@@ -53,19 +53,11 @@ const Create = () => {
   const router = useRouter();
   const utils = trpc.useUtils();
 
-  // const { data: session } = useSession();
-
-  const [boots, weapon, images] = trpc.useQueries((t) => [
-    t.shop.getAllBoots(),
-    t.shop.getAllWeapons(),
-    t.shop.getAllHeroPics(),
-  ]);
-
   const { data: session, update: updateSession } = useSession();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const { data: isLoading } = trpc.user.getUserById.useQuery();
+  const { data: isLoading, isSuccess } = trpc.user.getUserById.useQuery();
 
   const createNewHero = trpc.hero.createFinalHero.useMutation({
     onSuccess: async () => {
@@ -77,12 +69,12 @@ const Create = () => {
   const [userAlert, setUserAlert] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!session) {
+    if (!isLoading && !session) {
       setUserAlert(true);
     } else {
       setUserAlert(false);
     }
-  }, [session]);
+  }, [isLoading, session]);
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
@@ -100,8 +92,6 @@ const Create = () => {
     }
   };
 
-  const bootsImg = boots.data ? boots.data : "";
-
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -114,8 +104,6 @@ const Create = () => {
                   message="You need be logged in to create heroes"
                   closeMsg="Got it"
                   closeClick={() => setUserAlert(false)}
-                  userAlert={userAlert}
-                  session={session}
                 />
               )}
             </div>

@@ -42,6 +42,7 @@ const PicturesForm = () => {
                       <h1>Hero avatar</h1>
 
                       <Image
+                        priority
                         src={hero.url}
                         alt=""
                         height={400}

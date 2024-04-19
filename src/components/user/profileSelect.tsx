@@ -24,9 +24,7 @@ const ProfileSelect = () => {
             <SelectItemNoCheck
               onClick={() => router.push("/profile")}
               value="gallery"
-            >
-              Your heroes
-            </SelectItemNoCheck>
+            ></SelectItemNoCheck>
           </SelectGroup>
         </SelectContent>
       </Select>

@@ -5,10 +5,6 @@ import { trpc } from "@/utils/trpc";
 import { useSession } from "next-auth/react";
 
 const Profile = () => {
-  const [currentUser, userHeroes] = trpc.useQueries((t) => [
-    t.user.getUserById(),
-    t.user.getHeroesByUser(),
-  ]);
   const { data: session } = useSession();
 
   return (

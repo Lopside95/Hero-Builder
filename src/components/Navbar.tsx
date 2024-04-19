@@ -28,6 +28,7 @@ const Navbar = () => {
             variant="link"
             onClick={() => {
               signOut();
+              router.push("/");
             }}
           >
             Sign out

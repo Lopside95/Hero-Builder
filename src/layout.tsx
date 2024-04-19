@@ -23,6 +23,10 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession();
 
+  if (session) {
+    console.log("Hmm");
+  }
+
   return (
     <html lang="en">
       <body

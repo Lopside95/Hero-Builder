@@ -50,7 +50,7 @@ const BootsForm = () => {
                       </span>
 
                       <Image
-                        // placeholder="empty"
+                        priority
                         src={boot.img}
                         alt=""
                         height={200}

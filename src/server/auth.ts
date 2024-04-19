@@ -9,8 +9,6 @@ import {
 import { type DefaultJWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import bcrypt from "bcrypt";
-
 declare module "next-auth" {
   interface User extends DefaultUser {
     id: string;
@@ -59,17 +57,7 @@ export const authOptions: NextAuthOptions = {
 
           if (!user) return null;
 
-          const validPass = bcrypt.compareSync(
-            validUser.password,
-            user.password
-          );
-
-          // const isValidPassword = bcrypt.compareSync(
-          //   validUser.password,
-          //   user.password
-          // );
-
-          // if (!isValidPassword) return null;
+          // TODO: issue with compareSync and checking passwords
 
           return user;
         } catch (error) {
