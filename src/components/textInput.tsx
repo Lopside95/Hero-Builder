@@ -9,7 +9,12 @@ import {
 import { Input } from "./ui/input";
 import { FieldProps } from "./user/loginForm";
 
-const TextField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
+const TextField = ({
+  fieldName,
+  fieldLabel,
+  placeholder,
+  autoComplete,
+}: FieldProps) => {
   const { control } = useFormContext();
 
   return (
@@ -25,7 +30,12 @@ const TextField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
               <FormMessage className="text-md capitalize dark:text-red-400/55" />
             </FormLabel>
             <FormControl>
-              <Input {...field} className="" placeholder={placeholder} />
+              <Input
+                {...field}
+                className=""
+                placeholder={placeholder}
+                autoComplete={autoComplete}
+              />
             </FormControl>
           </FormItem>
         </>

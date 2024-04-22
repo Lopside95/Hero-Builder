@@ -4,17 +4,24 @@ import { Login, loginSchema } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import {
+  HTMLInputAutoCompleteAttribute,
+  InputHTMLAttributes,
+  useState,
+} from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import bcrypt from "bcrypt";
+import { Input } from "../ui/input";
 
 export interface FieldProps {
   fieldName: string;
   fieldLabel: string;
   placeholder: string;
+  autoComplete?: HTMLInputAutoCompleteAttribute;
+  // autoComplete?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 const LoginForm = () => {
@@ -66,6 +73,7 @@ const LoginForm = () => {
             fieldLabel="Email"
             fieldName="email"
             placeholder="example@email.com"
+            autoComplete="email"
           />
           <PasswordField
             fieldLabel="Password"

@@ -17,8 +17,8 @@ export const userSchema = z
   });
 
 export const loginSchema = z.object({
-  email: z.string().min(1, "Need email"),
-  password: z.string().min(1, "need password"),
+  email: z.string().min(1, "Required"),
+  password: z.string().min(1, "Required"),
 });
 export type User = z.infer<typeof userSchema>;
 
