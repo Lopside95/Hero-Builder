@@ -20,8 +20,6 @@ export interface FieldProps {
   fieldName: string;
   fieldLabel: string;
   placeholder: string;
-  autoComplete?: HTMLInputAutoCompleteAttribute;
-  // autoComplete?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 const LoginForm = () => {
@@ -73,7 +71,6 @@ const LoginForm = () => {
             fieldLabel="Email"
             fieldName="email"
             placeholder="example@email.com"
-            autoComplete="email"
           />
           <PasswordField
             fieldLabel="Password"
