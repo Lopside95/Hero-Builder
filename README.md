@@ -3,6 +3,7 @@ The Hero Builder:
 2. Following this, you can select items and personalise your hero with a name and backstory.
 3. By creating a hero, you save them to your account*. The info is stored on MongoDB and you can log back in whenever and view your heroes. 
 4. The database is managed with tRPC and Prisma.
+5. The site uses components from https://ui.shadcn.com/
 
 
 *Accounts can be made with any random jumble of letters so long as they follow the 'random@jumble.com' email format (although I'd recommend using something easy to remember - I've been using james@email.com). Passwords are encrypted with bcrypt and salt rounds but have no requirements in terms length and/or use of special or capitalised characters.
