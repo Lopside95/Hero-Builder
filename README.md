@@ -1,3 +1,4 @@
+Deployed site: https://herobuilder.vercel.app/
 The Hero Builder:
 1. Users can create a profile through forms managed with Zod and React Hook Form.
 2. Following this, you can select items and personalise your hero with a name and backstory.
