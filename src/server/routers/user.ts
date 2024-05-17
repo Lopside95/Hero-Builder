@@ -4,6 +4,7 @@ import { userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { Prisma } from "@prisma/client";
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -17,6 +18,9 @@ export const userRouter = createTRPCRouter({
     .input(userSchema)
     .mutation(async ({ input, ctx }) => {
       const hashedPass = bcrypt.hashSync(input.password, salt);
+
+      // automatically assigns users a profile picture when they sign up
+      // Potential for being able to upload/ choose a new profile pic after sign up if they want to
       const profilePic = async () => {
         const picsArr = await prisma.heroImages.findMany();
         const num = Math.floor(Math.random() * 10);
@@ -27,18 +31,8 @@ export const userRouter = createTRPCRouter({
         userName: input.userName,
         email: input.email,
         password: hashedPass,
-        // pic: "https://storage.googleapis.com/hero-items/heroImgs/death.jpg",
         pic: await profilePic(),
       };
-
-      // const newUser = await ctx.prisma.user.create({
-      //   data: {
-      //     userName: input.userName,
-      //     email: input.email,
-      //     password: hashedPass,
-      //     pic: await profilePic(),
-      //   },
-      // });
 
       try {
         await ctx.prisma.user.create({
@@ -64,7 +58,7 @@ export const userRouter = createTRPCRouter({
         },
       });
 
-      const samePass = bcrypt.compareSync(input.password, user!?.password);
+      const samePass = bcrypt.compareSync(input.password, user!?.password); // Having issues with this functionality
 
       const updatedUser = await ctx.prisma.user.update({
         where: {
@@ -105,4 +99,34 @@ export const userRouter = createTRPCRouter({
     });
     return finalHeroes;
   }),
+  // deleteAccount is a WIP
+  deleteAccount: protectedProcedure
+    .input(userSchema)
+    .mutation(async ({ ctx }) => {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "You need to have an account to delete it",
+        });
+      } else {
+        try {
+          await ctx.prisma.user.delete({
+            where: {
+              id: user.id,
+            },
+          });
+        } catch (error) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Something went wrong",
+          });
+        }
+      }
+    }),
 });

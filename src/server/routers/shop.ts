@@ -22,7 +22,7 @@ export const shopRouter = createTRPCRouter({
   getAllHeroPics: publicProcedure.query(async ({ ctx }) => {
     return await prisma.heroImages.findMany();
   }),
-  createNewBoots: publicProcedure
+  createNewBoots: publicProcedure // This is for possible future use, where users can create their own boots/weapons etc.
     .input(bootsSchema)
     .mutation(async ({ input, ctx }) => {
       const newBoots = await prisma.boots.create({

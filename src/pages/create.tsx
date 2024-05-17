@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import AlertDialog from "@/components/alertDialog";
 import Image from "next/image";
 
-// TODO: Add skeleton and/or suspense boundary
+// TODO: Add skeleton and/or suspense
 
 const Create = () => {
   const form = useForm<FinalHeroSchema>({
@@ -75,6 +75,8 @@ const Create = () => {
       setUserAlert(false);
     }
   }, [isLoading, session]);
+  // useEffect not a long-term solution but conditionally makes sure that, on load, users know they have to be logged in to save heroes
+  // additionally, it resets the the condition so that the alert also shows when users try to save the hero when they aren't logged
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema

@@ -1,5 +1,7 @@
 import z from "zod";
 
+// zod schemas for heroes
+
 export const detailsSchema = z.object({
   name: z.string().min(2, "You need a name").max(25),
   speed: z.number(),

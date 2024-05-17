@@ -19,13 +19,6 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession();
 
-  // useEffect(() => {
-  //   if (session) {
-  //     // console.log("Hmm");
-  //     alert("SESSIIOn");
-  //   }
-  // });
-
   return (
     <html lang="en">
       <body className={inter.className}>

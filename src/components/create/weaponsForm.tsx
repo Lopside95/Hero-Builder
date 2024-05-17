@@ -71,6 +71,8 @@ const WeaponsForm = () => {
                                 ? "disabled"
                                 : "select"
                             }
+                            // button condition greys out the button of the currently selected item to make it clear
+                            // to users which item they have selected as they click through the carousel
                             {...field}
                             value={weapon.id}
                             onClick={(event) => {

@@ -9,6 +9,9 @@ import {
 import { type DefaultJWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+
+// Handles login and session
+
 declare module "next-auth" {
   interface User extends DefaultUser {
     id: string;

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+// zod schema for users
+
 export const userSchema = z
   .object({
     userName: z.string().min(1, "Required"),

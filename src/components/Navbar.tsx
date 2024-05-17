@@ -14,7 +14,7 @@ import {
 const Navbar = () => {
   const router = useRouter();
 
-  const activePage = (path: string) => router.pathname === path;
+  const activePage = (path: string) => router.pathname === path; // Used to conditionally signify current page
 
   const { data: session } = useSession();
 

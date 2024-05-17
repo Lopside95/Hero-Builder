@@ -54,6 +54,10 @@ const DetailsForm = () => {
                     }`}
                     placeholder=""
                   />
+                  {/* 
+                    fieldState.isTouched keeps default text looking like placeholder but, if interacted with, it renders as normal text
+                    showing that it doesn't actually need to be added to actually changed, unlike the 'name' which requires user input
+                    */}
                 </FormControl>
               </FormItem>
             )}
