@@ -12,9 +12,8 @@ import {
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import bcrypt from "bcrypt";
-import { Input } from "../ui/input";
+import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
+import { Input } from "../../components/ui/input";
 
 export interface FieldProps {
   fieldName: string;

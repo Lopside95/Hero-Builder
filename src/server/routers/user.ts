@@ -16,6 +16,11 @@ const salt = bcrypt.genSaltSync(10);
 // if (!validPass) return null;
 // console.log("FAILED PASS CHECK");
 
+type PassCheck = {
+  validUser: string;
+  userPass: string;
+};
+
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(async ({ ctx }) => {
     const allUsers = await prisma.user.findMany();
@@ -107,6 +112,7 @@ export const userRouter = createTRPCRouter({
     });
     return finalHeroes;
   }),
+
   // deleteAccount is a WIP
   deleteAccount: protectedProcedure
     .input(userSchema)

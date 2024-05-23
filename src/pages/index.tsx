@@ -1,7 +1,7 @@
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
 import Link from "next/link";
-import LoginForm from "@/components/user/loginForm";
+import LoginForm from "@/pages/api/loginForm";
 import {
   Table,
   TableBody,

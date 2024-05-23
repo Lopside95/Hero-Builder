@@ -10,7 +10,6 @@ import { type DefaultJWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
-
 // Handles login and session
 
 declare module "next-auth" {
@@ -66,8 +65,8 @@ export const authOptions: NextAuthOptions = {
             user.password
           );
 
-          // if (!validPass) return null;
-          // console.log("FAILED PASS CHECK");
+          if (!validPass) return null;
+          console.log("FAILED PASS CHECK");
 
           // TODO: issue with compareSync and checking passwords
 

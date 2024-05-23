@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { FieldProps } from "./user/loginForm";
+import { FieldProps } from "../pages/api/loginForm";
 
 const TextField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
   const { control } = useFormContext();
