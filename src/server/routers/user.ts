@@ -8,19 +8,6 @@ import { Prisma } from "@prisma/client";
 
 const salt = bcrypt.genSaltSync(10);
 
-// const validPass = bcrypt.compareSync(
-//   validUser.password,
-//   user.password
-// );
-
-// if (!validPass) return null;
-// console.log("FAILED PASS CHECK");
-
-type PassCheck = {
-  validUser: string;
-  userPass: string;
-};
-
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(async ({ ctx }) => {
     const allUsers = await prisma.user.findMany();
@@ -116,7 +103,7 @@ export const userRouter = createTRPCRouter({
   // deleteAccount is a WIP
   deleteAccount: protectedProcedure
     .input(userSchema)
-    .mutation(async ({ ctx }) => {
+    .mutation(async ({ ctx, input }) => {
       const user = await prisma.user.findUnique({
         where: {
           id: ctx.session.user.id,
@@ -128,19 +115,40 @@ export const userRouter = createTRPCRouter({
           code: "UNAUTHORIZED",
           message: "You need to have an account to delete it",
         });
-      } else {
-        try {
+      }
+      const validPass = bcrypt.compareSync(input.password, user.password);
+
+      try {
+        if (validPass) {
           await ctx.prisma.user.delete({
             where: {
               id: user.id,
             },
           });
-        } catch (error) {
+        }
+      } catch (error) {
+        if (error instanceof TRPCError) {
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
-            message: "Something went wrong",
+            message: error.message,
           });
         }
       }
+
+      // if (validPass) {
+      //   try {
+      //     await ctx.prisma.user.delete({
+      //       where: {
+      //         id: user.id,
+      //       },
+      //     });
+      //   } catch (error) {
+      // if (error instanceof TRPCError) {
+      //   throw new TRPCError({
+      //     code: "INTERNAL_SERVER_ERROR",
+      //     message: error.message,
+      //   })
+      // }
+      //   }
     }),
 });

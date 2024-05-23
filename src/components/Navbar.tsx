@@ -111,7 +111,7 @@ const Navbar = () => {
           <SelectContent className="bg-transparent-ml-5 border-none">
             <SelectGroup className="flex flex-col">
               <Button
-                className={`text-md text-base-txtClr w-20   hover:underline-offset-[6px] ${
+                className={`text-md text-base-txtClr w-20  hover:underline-offset-[6px] ${
                   activePage("/profile")
                     ? "underline underline-offset-[6px]"
                     : ""

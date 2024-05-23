@@ -68,8 +68,6 @@ export const authOptions: NextAuthOptions = {
           if (!validPass) return null;
           console.log("FAILED PASS CHECK");
 
-          // TODO: issue with compareSync and checking passwords
-
           return user;
         } catch (error) {
           console.error(error);

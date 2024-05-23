@@ -18,10 +18,16 @@ export const userSchema = z
     path: ["repeatPassword"],
   });
 
+export const deleteUserSchema = z.object({
+  password: z.string().min(1, "Required"),
+});
+
 export const loginSchema = z.object({
   email: z.string().min(1, "Required"),
   password: z.string().min(1, "Required"),
 });
+
+export type DeleteUser = z.infer<typeof deleteUserSchema>;
 export type User = z.infer<typeof userSchema>;
 
 export type Login = z.infer<typeof loginSchema>;
