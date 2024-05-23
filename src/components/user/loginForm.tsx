@@ -77,7 +77,7 @@ const LoginForm = () => {
             fieldName="password"
             placeholder="Password"
           />
-          <Button variant="select" className="w-full my-4">
+          <Button className="w-full my-4" variant="select">
             Login
           </Button>
         </div>

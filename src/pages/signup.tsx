@@ -48,8 +48,8 @@ const SignupForm = () => {
   return (
     <FormProvider {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className="flex gap-10 items-center justify-center w-full py-40"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <h1 className="text-2xl fixed top-20">Sign Up</h1>
         <Card className="text-xl">

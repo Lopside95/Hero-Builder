@@ -33,19 +33,19 @@ const WeaponsForm = () => {
 
   return (
     <FormField
-      name="weapon"
       control={control}
+      name="weapon"
       render={({ field }) => (
         <div className=" w-[300px]  flex flex-col gap-10">
           <Carousel
-            setApi={setApi}
-            opts={{ loop: true }}
             className="w-96 flex flex-col items-center justify-center"
+            opts={{ loop: true }}
+            setApi={setApi}
           >
             <CarouselContent className="">
               {weapons?.map((weapon) => {
                 return (
-                  <CarouselItem key={weapon.name} className="pl-5 ">
+                  <CarouselItem className="pl-5 " key={weapon.name}>
                     <Card className="flex flex-col text-xl  h-full items-center justify-center gap-5 py-5 w-full">
                       <h3>{weapon.name}</h3>
                       <p>{`Damage: ${weapon.damage}`}</p>
@@ -55,12 +55,12 @@ const WeaponsForm = () => {
                         <p>{weapon.cost}</p>
                       </span>
                       <Image
+                        alt=""
+                        className="w-60 rounded-md  "
+                        height={200}
                         priority
                         src={weapon.img}
-                        alt=""
-                        height={200}
                         width={200}
-                        className="w-60 rounded-md  "
                       />
                       <FormControl key={weapon.id}>
                         <FormItem>
@@ -74,13 +74,13 @@ const WeaponsForm = () => {
                             // button condition greys out the button of the currently selected item to make it clear
                             // to users which item they have selected as they click through the carousel
                             {...field}
-                            value={weapon.id}
                             onClick={(event) => {
                               event?.preventDefault();
                               field.onChange(weapon);
                               setValue("weapon", weapon);
                               setValue("details.damage", weapon.damage);
                             }}
+                            value={weapon.id}
                           >
                             Select
                           </Button>

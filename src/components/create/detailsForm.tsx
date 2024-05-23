@@ -19,8 +19,8 @@ const DetailsForm = () => {
       <Card>
         <CardContent>
           <FormField
-            name="details.name"
             control={control}
+            name="details.name"
             render={({ field }) => (
               <FormItem className="">
                 <FormLabel>
@@ -38,8 +38,8 @@ const DetailsForm = () => {
             )}
           />
           <FormField
-            name="details.story"
             control={control}
+            name="details.story"
             render={({ field, fieldState }) => (
               <FormItem className="">
                 <FormLabel>

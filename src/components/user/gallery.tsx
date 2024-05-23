@@ -50,10 +50,10 @@ const Gallery = () => {
           .reverse()
           .map((hero, index, array) => {
             return (
-              <div key={hero.id} className="">
+              <div className="" key={hero.id}>
                 <GalleryCard
-                  details={hero.details as Details}
                   boots={hero.boots as Boots}
+                  details={hero.details as Details}
                   weapon={hero.weapon as Weapon}
                 />
                 {index !== array.length - 1 && <Separator className="" />}

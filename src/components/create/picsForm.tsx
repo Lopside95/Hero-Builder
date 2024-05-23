@@ -25,41 +25,41 @@ const PicturesForm = () => {
 
   return (
     <FormField
-      name="details.img"
       control={control}
+      name="details.img"
       render={({ field }) => (
         <div className="flex flex-col w-[300px] items-center gap-10">
           <Carousel
-            setApi={setApi}
-            opts={{ loop: true }}
             className=" w-96 flex flex-col justify-center"
+            opts={{ loop: true }}
+            setApi={setApi}
           >
             <CarouselContent className="">
               {heroImages?.map((hero) => {
                 return (
-                  <CarouselItem key={hero.id} className="">
+                  <CarouselItem className="" key={hero.id}>
                     <Card className="flex flex-col text-xl items-center justify-center gap-5 py-5 w-full relative">
                       <h1>Hero avatar</h1>
 
                       <Image
+                        alt=""
+                        className="w-60 rounded-md  "
+                        height={400}
                         priority
                         src={hero.url}
-                        alt=""
-                        height={400}
                         width={400}
-                        className="w-60 rounded-md  "
                       />
                       <FormControl key={hero.id}>
                         <FormItem>
                           <Button
                             variant={image === hero.url ? "disabled" : "select"}
                             {...field}
-                            value={hero.url}
                             onClick={(event) => {
                               event?.preventDefault();
                               field.onChange();
                               setValue("details.img", hero.url);
                             }}
+                            value={hero.url}
                           >
                             Select
                           </Button>

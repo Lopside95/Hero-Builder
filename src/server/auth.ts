@@ -9,6 +9,7 @@ import {
 import { type DefaultJWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcrypt";
 
 // Handles login and session
 
@@ -60,6 +61,14 @@ export const authOptions: NextAuthOptions = {
 
           if (!user) return null;
 
+          const validPass = bcrypt.compareSync(
+            validUser.password,
+            user.password
+          );
+
+          // if (!validPass) return null;
+          // console.log("FAILED PASS CHECK");
+
           // TODO: issue with compareSync and checking passwords
 
           return user;
@@ -77,7 +86,7 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, trigger }) {
       return {
         ...session,
         user: {

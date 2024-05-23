@@ -18,8 +18,8 @@ const PasswordField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
 
   return (
     <FormField
-      name={fieldName}
       control={control}
+      name={fieldName}
       render={({ field }) => (
         <>
           <FormItem className="w-full">
@@ -32,9 +32,9 @@ const PasswordField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
               <div className="relative">
                 <Input
                   {...field}
-                  type={showPassword ? "" : "password"}
                   className=""
                   placeholder={placeholder}
+                  type={showPassword ? "" : "password"}
                 />
 
                 {showPassword ? (

@@ -30,7 +30,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`flex h-full min-h-screen w-full flex-col  bg-gradient-to-tr from-gray-200 via-slate-200
+        className={`flex h-full min-h-screen w-full flex-col bg-gradient-to-tr from-gray-200 via-slate-200
       to-white
      dark:bg-gradient-radial
      dark:from-zinc-900

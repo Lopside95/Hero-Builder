@@ -8,6 +8,14 @@ import { Prisma } from "@prisma/client";
 
 const salt = bcrypt.genSaltSync(10);
 
+// const validPass = bcrypt.compareSync(
+//   validUser.password,
+//   user.password
+// );
+
+// if (!validPass) return null;
+// console.log("FAILED PASS CHECK");
+
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(async ({ ctx }) => {
     const allUsers = await prisma.user.findMany();

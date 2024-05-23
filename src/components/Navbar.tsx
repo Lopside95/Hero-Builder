@@ -10,13 +10,29 @@ import {
   SelectGroup,
   SelectTriggerNoArrow,
 } from "./ui/select";
+import { trpc } from "@/utils/trpc";
 
 const Navbar = () => {
   const router = useRouter();
 
+  const { isLoading } = trpc.user.getUserById.useQuery();
+
   const activePage = (path: string) => router.pathname === path; // Used to conditionally signify current page
 
   const { data: session } = useSession();
+
+  const handlesSignOut = async () => {
+    await signOut();
+    router.push("/");
+  };
+
+  const handleSignIn = async () => {
+    await signIn();
+
+    if (!isLoading) {
+      router.push("/");
+    }
+  };
 
   const AuthButton = () => {
     if (session) {
@@ -25,11 +41,8 @@ const Navbar = () => {
           <br />
           <Button
             className="text-md text-base-txtClr w-20 hover:underline-offset-[6px]"
+            onClick={handlesSignOut}
             variant="link"
-            onClick={() => {
-              signOut();
-              router.push("/");
-            }}
           >
             Sign out
           </Button>
@@ -40,8 +53,8 @@ const Navbar = () => {
         <>
           <Button
             className="text-md text-base-txtClr w-20  hover:underline-offset-[6px]"
-            variant="link"
             onClick={() => signIn()}
+            variant="link"
           >
             Log in
           </Button>
@@ -59,7 +72,7 @@ const Navbar = () => {
           }`}
           variant="link"
         >
-          <Link tabIndex={-1} href="/">
+          <Link href="/" tabIndex={-1}>
             <Home className="" />
             {activePage("/") && <Separator className="mt-1" />}
           </Link>
@@ -74,7 +87,7 @@ const Navbar = () => {
             }`}
             variant="link"
           >
-            <Link tabIndex={-1} href="/signup">
+            <Link href="/signup" tabIndex={-1}>
               Sign up
             </Link>
           </Button>
@@ -86,7 +99,7 @@ const Navbar = () => {
           }`}
           variant="link"
         >
-          <Link tabIndex={-1} href="/create">
+          <Link href="/create" tabIndex={-1}>
             New Hero
           </Link>
         </Button>
@@ -105,7 +118,7 @@ const Navbar = () => {
                 }`}
                 variant="link"
               >
-                <Link tabIndex={-1} href="/profile">
+                <Link href="/profile" tabIndex={-1}>
                   Profile
                 </Link>
               </Button>

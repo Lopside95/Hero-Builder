@@ -102,10 +102,10 @@ const Create = () => {
             <div>
               {userAlert && (
                 <AlertDialog
+                  closeClick={() => setUserAlert(false)}
+                  closeMsg="Got it"
                   isOpen={userAlert && true}
                   message="You need be logged in to create heroes"
-                  closeMsg="Got it"
-                  closeClick={() => setUserAlert(false)}
                 />
               )}
             </div>
@@ -120,7 +120,17 @@ const Create = () => {
           </div>
           <div className="fixed right-32 top-52">
             <HeroPreview />
-            {isSubmitting ? (
+            <Button className="w-full rounded-t-none" variant="select">
+              {isSubmitting ? (
+                <span className="flex gap-2 items-center">
+                  {" "}
+                  Saving <Loader2 className="animate-spin h-5" />{" "}
+                </span>
+              ) : (
+                <span className="flex gap-2 items-center">Submit</span>
+              )}
+            </Button>
+            {/* {isSubmitting ? (
               <Button className="w-full rounded-t-none" variant="select">
                 <span className="flex gap-2 items-center">
                   Saving <Loader2 className="animate-spin h-5" />
@@ -130,7 +140,7 @@ const Create = () => {
               <Button className="w-full rounded-t-none" variant="select">
                 Submit
               </Button>
-            )}
+            )} */}
           </div>
         </div>
       </form>

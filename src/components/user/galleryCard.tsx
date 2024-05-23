@@ -19,25 +19,25 @@ const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
       </section>
       <article className="flex gap-10">
         <Image
-          src={details.img}
+          alt=""
           className="w-80 -ml-5 rounded-md"
-          alt=""
-          width={300}
           height={300}
+          src={details.img}
+          width={300}
         />
         <Image
+          alt=""
+          className="w-80 rounded-md"
+          height={300}
           src={boots.img}
-          className="w-80 rounded-md"
-          alt=""
           width={300}
-          height={300}
         />
         <Image
-          src={weapon.img}
-          className="w-80 rounded-md"
           alt=""
-          width={300}
+          className="w-80 rounded-md"
           height={300}
+          src={weapon.img}
+          width={300}
         />
       </article>
     </Card>

@@ -14,8 +14,8 @@ const TextField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
 
   return (
     <FormField
-      name={fieldName}
       control={control}
+      name={fieldName}
       render={({ field }) => (
         <>
           <FormItem className="w-full">

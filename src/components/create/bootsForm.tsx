@@ -28,19 +28,19 @@ const BootsForm = () => {
 
   return (
     <FormField
-      name="boots"
       control={control}
+      name="boots"
       render={({ field }) => (
         <div className="w-[300px] flex flex-col  gap-10">
           <Carousel
-            setApi={setApi}
-            opts={{ loop: true }}
             className=" w-96 flex flex-col items-center justify-center"
+            opts={{ loop: true }}
+            setApi={setApi}
           >
             <CarouselContent className="">
               {boots?.map((boot) => {
                 return (
-                  <CarouselItem key={boot.id} className="pl-5 ">
+                  <CarouselItem className="pl-5 " key={boot.id}>
                     <Card className="flex flex-col text-xl items-center justify-center gap-5 py-5 w-full">
                       <h1>{boot.name}</h1>
                       <p>{`Move speed: ${boot.speed}`}</p>
@@ -50,12 +50,12 @@ const BootsForm = () => {
                       </span>
 
                       <Image
+                        alt=""
+                        className="w-60 rounded-md  "
+                        height={200}
                         priority
                         src={boot.img}
-                        alt=""
-                        height={200}
                         width={200}
-                        className="w-60 rounded-md  "
                       />
                       <FormControl key={boot.name}>
                         <FormItem>
@@ -67,15 +67,14 @@ const BootsForm = () => {
                             }
                             // button condition greys out the button of the currently selected item to make it clear
                             // to users which item they have selected as they click through the carousel
-                            className=""
                             {...field}
-                            value={boot.id}
                             onClick={(event) => {
                               event?.preventDefault();
                               field.onChange(boot);
                               setValue("boots", boot);
                               setValue("details.speed", boot.speed);
                             }}
+                            value={boot.id}
                           >
                             Select
                           </Button>

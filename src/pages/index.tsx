@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Loader2 } from "lucide-react";
 
 const Home = () => {
   const [currentUser, userHeroes] = trpc.useQueries((t) => [
@@ -19,19 +20,21 @@ const Home = () => {
     t.user.getHeroesByUser(),
   ]);
 
+  const { isLoading } = trpc.user.getHeroesByUser.useQuery();
+
   const user = currentUser.data;
   const heroes = userHeroes.data ? userHeroes.data : [];
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
       <div className="w-3/4 flex flex-col items-center gap-10 pt-20 ">
-        {user ? (
+        {user && !isLoading ? (
           <div>
             <h1 className="text-6xl pl-10 text-base-txtClr">
               Welcome {user.userName}
             </h1>
             <div className="flex items-center justify-evenly py-10">
-              <Image src={user.pic} alt="Your pic" width={200} height={200} />
+              <Image alt="Your pic" height={200} src={user.pic} width={200} />
               <h1 className="text-2xl">
                 {heroes.length > 1
                   ? heroes.length + " heroes"
@@ -58,7 +61,7 @@ const Home = () => {
                   .reverse()
                   .map((hero) => {
                     return (
-                      <TableRow key={hero.id} className="hover:bg-base-bg">
+                      <TableRow className="hover:bg-base-bg" key={hero.id}>
                         <TableCell>{hero.details.name}</TableCell>
                         <TableCell className="pl-7">
                           {hero.details.damage}
@@ -87,7 +90,7 @@ const Home = () => {
               </TableBody>
             </Table>
           </div>
-        ) : (
+        ) : !user && !isLoading ? (
           <div className="flex flex-col items-center justify-center">
             <p className="text-6xl items-center text-base-txtClr">
               Welcome to the hero builder
@@ -99,11 +102,13 @@ const Home = () => {
             <LoginForm />
             <span className="flex w-80 gap-2 text-xl">
               Don&apos;t have an account?
-              <Link href="/signup" className="text-blue-400">
+              <Link className="text-blue-400" href="/signup">
                 Sign up
               </Link>
             </span>
           </div>
+        ) : (
+          <Loader2 className="animate-spin" />
         )}
         <div className="flex gap-8 py-10 "></div>
       </div>
