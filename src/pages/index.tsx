@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { User } from "@/types/user";
 
 const Home = () => {
   const [currentUser, userHeroes] = trpc.useQueries((t) => [
@@ -20,10 +22,32 @@ const Home = () => {
     t.user.getHeroesByUser(),
   ]);
 
-  const { isLoading } = trpc.user.getHeroesByUser.useQuery();
+  const { isLoading } = trpc.user.getUserById.useQuery();
 
   const user = currentUser.data;
   const heroes = userHeroes.data ? userHeroes.data : [];
+
+  const quickUser = trpc.user.createUser.useMutation({
+    onSuccess: async () => {
+      console.log("New use created");
+    },
+  });
+
+  const handleQuick = () => {
+    const quickData: User = {
+      userName: "Lopside",
+      email: "james@email.com",
+      password: "pass",
+      repeatPassword: "pass",
+      pic: "",
+    };
+
+    try {
+      quickUser.mutateAsync(quickData);
+    } catch (error) {
+      console.error("Quick user Error", error);
+    }
+  };
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
@@ -46,6 +70,9 @@ const Home = () => {
                 Sign up
               </Link>
             </span>
+            <div className="pt-10">
+              <Button onClick={() => handleQuick()}>Quick Signup</Button>
+            </div>
           </div>
         ) : (
           <div>

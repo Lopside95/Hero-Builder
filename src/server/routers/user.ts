@@ -1,12 +1,33 @@
 import { prisma } from "@/pages/api/db";
 import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
-import { userSchema } from "@/types/user";
+import { deleteUserSchema, userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const salt = bcrypt.genSaltSync(10);
+
+// }
+
+export const getUser = async (userId: string, prisma: PrismaClient) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+  return user;
+};
+
+export const getHeroesByUser = async (userId: string, prisma: PrismaClient) => {
+  const heroes = await prisma.finalHero.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+
+  return heroes;
+};
 
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(async ({ ctx }) => {
@@ -99,16 +120,34 @@ export const userRouter = createTRPCRouter({
     });
     return finalHeroes;
   }),
+  deleteUserHeroes: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      // const userHeroes = getHeroesByUser(ctx.session.user.id, prisma)
 
+      const deletedHeroes = await prisma.finalHero.deleteMany({
+        where: {
+          userId: ctx.session.user.id,
+        },
+      });
+
+      return deletedHeroes;
+    }),
   // deleteAccount is a WIP
   deleteAccount: protectedProcedure
-    .input(userSchema)
+    .input(deleteUserSchema)
     .mutation(async ({ ctx, input }) => {
-      const user = await prisma.user.findUnique({
+      const user = await ctx.prisma.user.findUnique({
         where: {
           id: ctx.session.user.id,
         },
       });
+
+      // const heroesToDelete = getHeroesByUser(ctx.session.user.id, prisma);
 
       if (!user) {
         throw new TRPCError({
@@ -116,24 +155,91 @@ export const userRouter = createTRPCRouter({
           message: "You need to have an account to delete it",
         });
       }
+
+      const heroesToDelete = await prisma.finalHero.deleteMany({
+        where: {
+          userId: user.id,
+        },
+      });
+
       const validPass = bcrypt.compareSync(input.password, user.password);
 
-      try {
-        if (validPass) {
-          await ctx.prisma.user.delete({
-            where: {
-              id: user.id,
-            },
-          });
-        }
-      } catch (error) {
-        if (error instanceof TRPCError) {
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: error.message,
-          });
-        }
+      const deletedUser = await prisma.user.delete({
+        where: { id: user.id },
+      });
+
+      if (!validPass) {
+        console.log("wrong pasword");
       }
+
+      try {
+        await prisma.finalHero.deleteMany({
+          where: {
+            userId: user.id,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        await prisma.user.delete({
+          where: { id: user.id },
+        });
+      }
+
+      // if (validPass) {
+      //   try {
+      //     await prisma.finalHero.deleteMany({
+      //       where: {
+      //         userId: user.id,
+      //       },
+      //     });
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+
+      //   if ((await heroesToDelete).length === 0) {
+      //     return deletedUser;
+      //   } else {
+      //     console.log("there are still heroes");
+      //   }
+      // } else {
+      //   console.log("password is wrong");
+      // }
+      // const deleteHeroes = await prisma.finalHero.deleteMany({
+      //   where: {
+      //     userId: user.id,
+      //   },
+      // });
+
+      // const deletePayload = {
+      //   userToDelete: deletedUser,
+      //   heroes: deleteHeroes,
+      // };
+
+      // if (validPass) {
+      //   return deletedUser;
+      // } else if (!validPass) {
+      //   alert("you fucked up");
+      // }
+
+      // try {
+      //   if (validPass) {
+      //     await ctx.prisma.user.delete({
+      //       where: {
+      //         id: user.id,
+      //       },
+      //     });
+      //   } else {
+      //     console.log("wrong password");
+      //   }
+      // } catch (error) {
+      //   if (error instanceof TRPCError) {
+      //     throw new TRPCError({
+      //       code: "INTERNAL_SERVER_ERROR",
+      //       message: error.message,
+      //     });
+      //   }
+      // }
 
       // if (validPass) {
       //   try {

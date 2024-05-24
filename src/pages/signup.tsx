@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { User, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -9,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { TRPCError } from "@trpc/server";
+import { User, userSchema } from "@/types/user";
 
 const SignupForm = () => {
   const form = useForm<User>({
