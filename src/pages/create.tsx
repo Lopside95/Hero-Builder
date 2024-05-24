@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import AlertDialog from "@/components/alertDialog";
-import Image from "next/image";
 
 // TODO: Add skeleton and/or suspense
 
@@ -130,17 +129,6 @@ const Create = () => {
                 <span className="flex gap-2 items-center">Submit</span>
               )}
             </Button>
-            {/* {isSubmitting ? (
-              <Button className="w-full rounded-t-none" variant="select">
-                <span className="flex gap-2 items-center">
-                  Saving <Loader2 className="animate-spin h-5" />
-                </span>
-              </Button>
-            ) : (
-              <Button className="w-full rounded-t-none" variant="select">
-                Submit
-              </Button>
-            )} */}
           </div>
         </div>
       </form>

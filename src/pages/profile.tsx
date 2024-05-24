@@ -26,34 +26,8 @@ const Profile = () => {
   const router = useRouter();
   const utils = trpc.useUtils();
 
-  // const { control } = useFormContext<DeleteUser>();
-
-  // const deleteUser = trpc.user.deleteAccount.useMutation({
-  //   onSuccess: async () => {
-  //     alert("SUCCESS");
-  //     await utils.user.invalidate();
-  //     update();
-  //   },
-  // });
-
-  // const handleDelete = async (data: UserSchema) => {
-  //   if (!user) {
-  //     console.log("not logged in");
-  //   }
-
-  //   try {
-  //     await deleteUser.mutateAsync(data);
-  //     router.push("/");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // console.log("user", user);
-
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      {/* <Button onClick={() => handleDelete(user)}>Delete</Button> */}
       <DeleteUser />
       <Gallery />
     </div>

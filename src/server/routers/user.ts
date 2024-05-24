@@ -156,17 +156,17 @@ export const userRouter = createTRPCRouter({
         });
       }
 
-      const heroesToDelete = await prisma.finalHero.deleteMany({
-        where: {
-          userId: user.id,
-        },
-      });
+      // const heroesToDelete = await prisma.finalHero.deleteMany({
+      //   where: {
+      //     userId: user.id,
+      //   },
+      // });
+
+      //       const deletedUser = await prisma.user.delete({
+      //         where: { id: user.id },
+      //       });
 
       const validPass = bcrypt.compareSync(input.password, user.password);
-
-      const deletedUser = await prisma.user.delete({
-        where: { id: user.id },
-      });
 
       if (!validPass) {
         console.log("wrong pasword");

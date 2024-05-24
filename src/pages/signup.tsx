@@ -26,11 +26,11 @@ const SignupForm = () => {
 
   const utils = trpc.useUtils();
 
-  const { update: updateSession } = useSession();
+  const { update: update } = useSession();
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
-      updateSession();
+      update();
     },
   });
 
