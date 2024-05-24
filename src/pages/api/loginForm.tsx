@@ -13,6 +13,8 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
+import { Router } from "express";
+import { useRouter } from "next/router";
 
 export interface FieldProps {
   fieldName: string;
@@ -29,6 +31,8 @@ const LoginForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const [error, setError] = useState<string>("");
 
   const onSubmit: SubmitHandler<Login> = async (data: Login) => {
@@ -41,7 +45,7 @@ const LoginForm = () => {
       });
 
       if (!res?.error) {
-        window.location.reload();
+        router.push("/overview");
       } else {
         setError("Invalid email or password");
         console.log(error);

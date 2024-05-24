@@ -77,6 +77,16 @@ const Navbar = () => {
             {activePage("/") && <Separator className="mt-1" />}
           </Link>
         </Button>
+        <Button
+          className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
+            activePage("/overview") ? "underline underline-offset-[6px]   " : ""
+          }`}
+          variant="link"
+        >
+          <Link href="/overview" tabIndex={-1}>
+            Overview
+          </Link>
+        </Button>
       </span>
 
       <span className="flex gap-3 pl-[35rem]">
@@ -106,7 +116,11 @@ const Navbar = () => {
 
         <Select>
           <SelectTriggerNoArrow className=" focus:outline-none focus:ring-none focus:border-none border-none hover:border-none bg-transparent">
-            <User className="border rounded-full bg-transparent" />
+            <User
+              className={`border rounded-full bg-transparent ${
+                session && `fill-green-800`
+              }`}
+            />
           </SelectTriggerNoArrow>
           <SelectContent className="bg-transparent-ml-5 border-none">
             <SelectGroup className="flex flex-col">
