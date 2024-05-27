@@ -27,8 +27,8 @@ const Profile = () => {
   const utils = trpc.useUtils();
 
   return (
-    <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      <DeleteUser />
+    <div className="w-full min-h-screen pt-20 flex flex-col items-center">
+      {user && <DeleteUser />}
       <Gallery />
     </div>
   );

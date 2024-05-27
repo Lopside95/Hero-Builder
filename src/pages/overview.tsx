@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import HeroTable from "@/components/user/heroTable";
 import { trpc } from "@/utils/trpc";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 
 const Overview = () => {
@@ -31,9 +32,7 @@ const Overview = () => {
     <div className="pt-20">
       {user ? (
         <>
-          <h1 className="text-6xl pl-10 text-base-txtClr">
-            Welcome {user?.userName}
-          </h1>
+          <h1 className="text-6xl pl-10">Welcome {user?.userName}</h1>
           <div className="flex items-center justify-evenly py-10">
             <Image
               alt="Your pic"
@@ -46,7 +45,7 @@ const Overview = () => {
           <HeroTable />
         </>
       ) : (
-        <Loading />
+        <Loader2 className="animate-spin" />
       )}
     </div>
   );

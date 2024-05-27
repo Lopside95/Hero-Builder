@@ -55,7 +55,7 @@ const config = {
 
         base: {
           txtClr: "#e6e2da",
-          bg: "#111112",
+          bg: "#111113",
           cardBg: "#0b162e",
           main2: "#141414",
           lightBg: "#F5F5DC",

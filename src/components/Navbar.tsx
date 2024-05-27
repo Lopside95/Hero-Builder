@@ -38,7 +38,6 @@ const Navbar = () => {
     if (session) {
       return (
         <>
-          <br />
           <Button
             className="text-md text-base-txtClr w-20 hover:underline-offset-[6px]"
             onClick={handlesSignOut}
@@ -113,6 +112,18 @@ const Navbar = () => {
             New Hero
           </Link>
         </Button>
+        <Button
+          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+            activePage("/localCreate")
+              ? "underline underline-offset-[6px]   "
+              : ""
+          }`}
+          variant="link"
+        >
+          <Link href="/localCreate" tabIndex={-1}>
+            New Local
+          </Link>
+        </Button>
 
         <Select>
           <SelectTriggerNoArrow className=" focus:outline-none focus:ring-none focus:border-none border-none hover:border-none bg-transparent">
@@ -134,6 +145,18 @@ const Navbar = () => {
               >
                 <Link href="/profile" tabIndex={-1}>
                   Profile
+                </Link>
+              </Button>
+              <Button
+                className={`text-md text-base-txtClr w-20  hover:underline-offset-[6px] ${
+                  activePage("/localProfile")
+                    ? "underline underline-offset-[6px]"
+                    : ""
+                }`}
+                variant="link"
+              >
+                <Link href="/localProfile" tabIndex={-1}>
+                  Local Profile
                 </Link>
               </Button>
               <AuthButton />

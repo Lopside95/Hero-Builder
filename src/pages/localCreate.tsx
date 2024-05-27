@@ -13,10 +13,12 @@ import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import AlertDialog from "@/components/alertDialog";
+import { LocalHero } from "@prisma/client";
+import { HeroInterface } from "@/components/user/gallery";
 
 // TODO: Add skeleton and/or suspense
 
-const Create = () => {
+const CreateLocal = () => {
   const form = useForm<FinalHeroSchema>({
     resolver: zodResolver(finalHeroSchema),
     defaultValues: {
@@ -56,41 +58,41 @@ const Create = () => {
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const { data: isLoading, isSuccess } = trpc.user.getUserById.useQuery();
+  const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>([]);
 
-  const createNewHero = trpc.hero.createFinalHero.useMutation({
-    onSuccess: async () => {
-      utils.user.getHeroesByUser.invalidate();
-      updateSession();
-    },
-  });
+  useEffect(() => {
+    const sessionHeroes = sessionStorage.getItem("heroes");
 
-  const [userAlert, setUserAlert] = useState<boolean>(false);
+    if (sessionHeroes) {
+      setLocalHeroes(JSON.parse(sessionHeroes));
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (!isLoading && !session) {
-  //     setUserAlert(true);
-  //   } else {
-  //     setUserAlert(false);
-  //   }
-  // }, [isLoading, session]);
-  // useEffect not a long-term solution but conditionally makes sure that, on load, users know they have to be logged in to save heroes
-  // additionally, it resets the the condition so that the alert also shows when users try to save the hero when they aren't logged
+  useEffect(() => {
+    sessionStorage.setItem("heroes", JSON.stringify(localHeroes));
+
+    console.log(localHeroes.length);
+  }, [localHeroes]);
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
-    if (!session) {
-      setUserAlert(true);
-    } else {
-      setIsSubmitting(true);
+    setIsSubmitting(true);
 
-      await createNewHero.mutateAsync(data);
+    const newHero: FinalHeroSchema = {
+      boots: data.boots,
+      weapon: data.weapon,
+      details: data.details,
+      gold: data.gold,
+    };
 
-      setTimeout(() => {
-        router.push("/profile");
-      }, 1000);
-    }
+    setLocalHeroes((prevHeroes) => [...prevHeroes, newHero]);
+
+    setIsSubmitting(false);
+
+    // setTimeout(() => {
+    //   router.push("/profile");
+    // }, 1000);
   };
 
   return (
@@ -98,16 +100,6 @@ const Create = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="w-full min-h-screen py-20 flex gap-20 pr-52  justify-evenly">
           <div className="flex gap-10 w-full flex-col ">
-            {/* <div>
-              {userAlert && (
-                <AlertDialog
-                  closeClick={() => setUserAlert(false)}
-                  closeMsg="Got it"
-                  isOpen={userAlert && true}
-                  message="You need be logged in to create heroes"
-                />
-              )}
-            </div> */}
             <div className="flex w-full items-center justify-evenly pr-32">
               <BootsForm />
               <WeaponsForm />
@@ -136,7 +128,7 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreateLocal;
 // import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 // import { zodResolver } from "@hookform/resolvers/zod";
 // import { Button } from "@/components/ui/button";

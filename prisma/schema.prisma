@@ -52,6 +52,16 @@ model FinalHero {
   @@index([userId])
 }
 
+model LocalHero {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  updatedAt DateTime    @updatedAt
+  createdAt DateTime    @default(now())
+  details   DetailsType
+  boots     BootsType
+  weapon    WeaponType
+  gold      Int
+}
+
 model HeroImages {
   id  String @id @default(auto()) @map("_id") @db.ObjectId
   url String
