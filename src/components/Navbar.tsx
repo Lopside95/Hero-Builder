@@ -76,16 +76,20 @@ const Navbar = () => {
             {activePage("/") && <Separator className="mt-1" />}
           </Link>
         </Button>
-        <Button
-          className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
-            activePage("/overview") ? "underline underline-offset-[6px]   " : ""
-          }`}
-          variant="link"
-        >
-          <Link href="/overview" tabIndex={-1}>
-            Overview
-          </Link>
-        </Button>
+        {session && (
+          <Button
+            className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
+              activePage("/overview")
+                ? "underline underline-offset-[6px]   "
+                : ""
+            }`}
+            variant="link"
+          >
+            <Link href="/overview" tabIndex={-1}>
+              Overview
+            </Link>
+          </Button>
+        )}
       </span>
 
       <span className="flex gap-3 pl-[35rem]">
@@ -102,28 +106,32 @@ const Navbar = () => {
           </Button>
         )}
         {!session && <AuthButton />}
-        <Button
-          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/create") ? "underline underline-offset-[6px]   " : ""
-          }`}
-          variant="link"
-        >
-          <Link href="/create" tabIndex={-1}>
-            New Hero
-          </Link>
-        </Button>
-        <Button
-          className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
-            activePage("/localCreate")
-              ? "underline underline-offset-[6px]   "
-              : ""
-          }`}
-          variant="link"
-        >
-          <Link href="/localCreate" tabIndex={-1}>
-            New Local
-          </Link>
-        </Button>
+
+        {session ? (
+          <Button
+            className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+              activePage("/create") ? "underline underline-offset-[6px]   " : ""
+            }`}
+            variant="link"
+          >
+            <Link href="/create" tabIndex={-1}>
+              New hero
+            </Link>
+          </Button>
+        ) : (
+          <Button
+            className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
+              activePage("/localCreate")
+                ? "underline underline-offset-[6px]   "
+                : ""
+            }`}
+            variant="link"
+          >
+            <Link href="/localCreate" tabIndex={-1}>
+              New local hero
+            </Link>
+          </Button>
+        )}
 
         <Select>
           <SelectTriggerNoArrow className=" focus:outline-none focus:ring-none focus:border-none border-none hover:border-none bg-transparent">
@@ -135,30 +143,33 @@ const Navbar = () => {
           </SelectTriggerNoArrow>
           <SelectContent className="bg-transparent-ml-5 border-none">
             <SelectGroup className="flex flex-col">
-              <Button
-                className={`text-md text-base-txtClr w-20  hover:underline-offset-[6px] ${
-                  activePage("/profile")
-                    ? "underline underline-offset-[6px]"
-                    : ""
-                }`}
-                variant="link"
-              >
-                <Link href="/profile" tabIndex={-1}>
-                  Profile
-                </Link>
-              </Button>
-              <Button
-                className={`text-md text-base-txtClr w-20  hover:underline-offset-[6px] ${
-                  activePage("/localProfile")
-                    ? "underline underline-offset-[6px]"
-                    : ""
-                }`}
-                variant="link"
-              >
-                <Link href="/localProfile" tabIndex={-1}>
-                  Local Profile
-                </Link>
-              </Button>
+              {session ? (
+                <Button
+                  className={`text-md text-base-txtClr w-20  hover:underline-offset-[6px] ${
+                    activePage("/profile")
+                      ? "underline underline-offset-[6px]"
+                      : ""
+                  }`}
+                  variant="link"
+                >
+                  <Link href="/profile" tabIndex={-1}>
+                    Profile
+                  </Link>
+                </Button>
+              ) : (
+                <Button
+                  className={`text-md text-base-txtClr w-20  hover:underline-offset-[6px] ${
+                    activePage("/localProfile")
+                      ? "underline underline-offset-[6px]"
+                      : ""
+                  }`}
+                  variant="link"
+                >
+                  <Link href="/localProfile" tabIndex={-1}>
+                    Local Profile
+                  </Link>
+                </Button>
+              )}
               <AuthButton />
             </SelectGroup>
           </SelectContent>

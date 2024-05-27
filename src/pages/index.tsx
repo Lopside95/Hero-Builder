@@ -33,8 +33,6 @@ const Home = () => {
     );
   }
 
-  const { isLoading } = trpc.user.getUserById.useQuery();
-
   const user = currentUser.data;
   const heroes = userHeroes.data ? userHeroes.data : [];
 
@@ -63,24 +61,50 @@ const Home = () => {
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
       <div className="w-3/4 flex flex-col items-center gap-10 pt-20 ">
-        <div className="flex flex-col items-center justify-center">
+        <section className="flex flex-col items-center justify-center">
           <p className="text-6xl items-center text-base-txtClr">
             {user ? `Welcome ${user.userName}` : `Welcome to the hero builder`}
           </p>
           <span className="text-3xl w-3/4 text-center py-10 text-base-txtClr">
             Buy items, give your hero a backstory and save them to your gallery
           </span>
-          <LoginForm />
-          <span className="flex w-80 gap-2 text-xl">
-            Don&apos;t have an account?
-            <Link className="text-blue-400" href="/signup">
-              Sign up
-            </Link>
-          </span>
+          <article className="flex gap-10 items-center">
+            <span className="flex flex-col w-2/3 text-xl gap-3">
+              <span className="flex gap-1 self-center">
+                <Link className="text-blue-400" href="/signup">
+                  Sign up
+                </Link>
+                or{" "}
+                <Link
+                  className="underline underline-offset-4"
+                  href="/localCreate"
+                >
+                  continue
+                </Link>
+                without an account
+              </span>
+              <p> Creating an account will save your heroes in the database.</p>
+              <p>
+                {" "}
+                Continuing without an account will save them in local storage.
+              </p>
+              <p>
+                {" "}
+                You can delete your account as well as locally stored heroes.
+              </p>
+            </span>
+            <LoginForm />
+            {/* <span className="flex w-80 gap-2 text-xl">
+              Want an account?
+              <Link className="text-blue-400" href="/signup">
+                Sign up
+              </Link>
+            </span> */}
+          </article>
           <div className="pt-10">
             <Button onClick={() => handleQuick()}>Quick Signup</Button>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

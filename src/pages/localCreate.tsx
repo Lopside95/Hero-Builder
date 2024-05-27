@@ -1,3 +1,5 @@
+"use client";
+
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -58,18 +60,25 @@ const CreateLocal = () => {
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>([]);
-
-  useEffect(() => {
-    const sessionHeroes = sessionStorage.getItem("heroes");
-
-    if (sessionHeroes) {
-      setLocalHeroes(JSON.parse(sessionHeroes));
+  const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>(() => {
+    if (typeof window !== "undefined") {
+      const sessionHeroes = localStorage.getItem("heroes");
+      return sessionHeroes ? JSON.parse(sessionHeroes) : [];
     }
-  }, []);
+    return [];
+  });
 
   useEffect(() => {
-    sessionStorage.setItem("heroes", JSON.stringify(localHeroes));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("heroes", JSON.stringify(localHeroes));
+    }
+    // if (sessionHeroes) {
+    //   setLocalHeroes(JSON.parse(sessionHeroes));
+    // }
+  }, [localHeroes]);
+
+  useEffect(() => {
+    localStorage.setItem("heroes", JSON.stringify(localHeroes));
 
     console.log(localHeroes.length);
   }, [localHeroes]);

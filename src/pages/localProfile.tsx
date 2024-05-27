@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
@@ -28,26 +30,30 @@ const LocalProfile = () => {
   const { data: session, update } = useSession();
 
   const { data: user, isLoading } = trpc.user.getUserById.useQuery();
+  const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>([]);
   const router = useRouter();
   const utils = trpc.useUtils();
 
-  const sessionHeroes = sessionStorage.getItem("heroes");
+  const sessionHeroes =
+    typeof window !== "undefined" ? localStorage.getItem("heroes") : [];
   useEffect(() => {
-    if (sessionHeroes) {
-      setLocalHeroes(JSON.parse(sessionHeroes));
+    if (sessionHeroes && sessionHeroes.length > 0) {
+      setLocalHeroes(JSON.parse(sessionHeroes as string));
     }
   }, []);
 
-  const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>([]);
-  useEffect(() => {
-    sessionStorage.setItem("heroes", JSON.stringify(localHeroes));
-
-    console.log(localHeroes.length);
-  }, [localHeroes]);
+  const handleDelete = () => {
+    try {
+      localStorage.removeItem("heroes");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      window.location.reload();
+    }
+  };
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
-      {/* <LocalGallery /> */}
       {localHeroes && localHeroes?.length > 0 ? (
         localHeroes
           .slice(0)
@@ -70,16 +76,7 @@ const LocalProfile = () => {
         </h1>
       )}
 
-      {/* <GalleryCard  
-      details={localHeroes.details as Details}
-      weapon={weapon}
-      boots={boots}
-
-/> */}
-      <Button onClick={() => console.log(localHeroes[0])}>Log</Button>
-      <Button onClick={() => setLocalHeroes(JSON.parse(sessionHeroes))}>
-        setHeroes
-      </Button>
+      <Button onClick={handleDelete}>Delete locally stored heroes</Button>
     </div>
   );
 };

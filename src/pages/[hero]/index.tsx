@@ -1,11 +1,7 @@
 import GalleryCard from "@/components/user/galleryCard";
 
 const HeroProfile = () => {
-  return (
-    <>
-      <GalleryCard />
-    </>
-  );
+  return <></>;
 };
 
 export default HeroProfile;

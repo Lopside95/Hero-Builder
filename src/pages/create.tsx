@@ -56,8 +56,6 @@ const Create = () => {
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const { data: isLoading, isSuccess } = trpc.user.getUserById.useQuery();
-
   const createNewHero = trpc.hero.createFinalHero.useMutation({
     onSuccess: async () => {
       utils.user.getHeroesByUser.invalidate();
@@ -66,16 +64,6 @@ const Create = () => {
   });
 
   const [userAlert, setUserAlert] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   if (!isLoading && !session) {
-  //     setUserAlert(true);
-  //   } else {
-  //     setUserAlert(false);
-  //   }
-  // }, [isLoading, session]);
-  // useEffect not a long-term solution but conditionally makes sure that, on load, users know they have to be logged in to save heroes
-  // additionally, it resets the the condition so that the alert also shows when users try to save the hero when they aren't logged
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
@@ -98,16 +86,6 @@ const Create = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="w-full min-h-screen py-20 flex gap-20 pr-52  justify-evenly">
           <div className="flex gap-10 w-full flex-col ">
-            {/* <div>
-              {userAlert && (
-                <AlertDialog
-                  closeClick={() => setUserAlert(false)}
-                  closeMsg="Got it"
-                  isOpen={userAlert && true}
-                  message="You need be logged in to create heroes"
-                />
-              )}
-            </div> */}
             <div className="flex w-full items-center justify-evenly pr-32">
               <BootsForm />
               <WeaponsForm />
