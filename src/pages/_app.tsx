@@ -3,8 +3,8 @@ import "../styles/globals.css";
 import { trpc } from "@/utils/trpc";
 import { FormProvider, useForm } from "react-hook-form";
 import { SessionProvider } from "next-auth/react";
-
 import Navbar from "@/components/Navbar";
+import { Suspense } from "react";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const form = useForm();

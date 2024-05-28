@@ -10,9 +10,21 @@ export const shopRouter = createTRPCRouter({
   getAllItems: publicProcedure.query(async () => {
     const allBoots = await prisma.boots.findMany();
     const allWeapons = await prisma.weapon.findMany();
+    // const allImages = await prisma.heroImages.findMany();
     return {
       boots: allBoots,
       weapons: allWeapons,
+      // images: allImages,
+    };
+  }),
+  getFirstItems: publicProcedure.query(async () => {
+    const firstBoots = await prisma.boots.findFirst();
+    const firstWeapons = await prisma.weapon.findFirst();
+    const firstImages = await prisma.heroImages.findFirst();
+    return {
+      boots: firstBoots,
+      weapons: firstWeapons,
+      images: firstImages,
     };
   }),
   getAllBoots: publicProcedure.query(async ({ ctx }) => {
