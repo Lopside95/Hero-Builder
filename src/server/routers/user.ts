@@ -1,6 +1,6 @@
 import { prisma } from "@/pages/api/db";
 import { publicProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
-import { deleteUserSchema, userSchema } from "@/types/user";
+import { deleteUserSchema, updateUserSchema, userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import bcrypt from "bcrypt";
@@ -71,7 +71,7 @@ export const userRouter = createTRPCRouter({
     }),
 
   updateUser: protectedProcedure
-    .input(userSchema)
+    .input(updateUserSchema)
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: {
@@ -86,7 +86,7 @@ export const userRouter = createTRPCRouter({
         });
       }
 
-      const samePass = bcrypt.compareSync(input.password, user!?.password);
+      // const samePass = bcrypt.compareSync(input.password, user!?.password);
 
       const updatedUser = await ctx.prisma.user.update({
         where: {
@@ -99,7 +99,6 @@ export const userRouter = createTRPCRouter({
           pic: input.pic,
         },
       });
-
       return updatedUser;
     }),
   getUserById: protectedProcedure.query(async ({ ctx }) => {

@@ -27,6 +27,16 @@ export const userSchema = z
     path: ["repeatPassword"],
   });
 
+export const updateUserSchema = z.object({
+  userName: z.string().optional(),
+  email: z
+    .string()
+    .email({ message: "Invalid email format" })
+    .transform((val) => val.toLowerCase())
+    .optional(),
+  password: passwordRegex,
+});
+
 export const deleteUserSchema = z.object({
   password: z.string().min(1, "Required"),
 });
@@ -37,6 +47,7 @@ export const loginSchema = z.object({
 });
 
 export type DeleteUserSchema = z.infer<typeof deleteUserSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type User = z.infer<typeof userSchema>;
 
 export type Login = z.infer<typeof loginSchema>;

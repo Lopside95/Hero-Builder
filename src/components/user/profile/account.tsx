@@ -13,18 +13,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import HeroTable from "@/components/user/profile/heroTable";
-import { User, userSchema } from "@/types/user";
+import { UpdateUser, User, updateUserSchema, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { FormProvider, useForm } from "react-hook-form";
+import { useState } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 const Account = () => {
   const { data: user } = trpc.user.getUserById.useQuery();
 
-  const form = useForm<User>({
-    resolver: zodResolver(userSchema),
+  const utils = trpc.useUtils();
+  const { update: updateSession } = useSession();
+
+  const form = useForm<UpdateUser>({
+    resolver: zodResolver(updateUserSchema),
     defaultValues: {
       userName: user?.userName,
       email: user?.email,
@@ -32,14 +37,30 @@ const Account = () => {
     },
   });
 
+  const [isUpdating, setIsUpdating] = useState<boolean>();
+
+  const updateAccount = trpc.user.updateUser.useMutation({
+    onSuccess: async () => {
+      utils.user.invalidate();
+      updateSession();
+    },
+  });
+
+  const onSubmit: SubmitHandler<UpdateUser> = async (data: UpdateUser) => {
+    setIsUpdating(true);
+    await updateAccount.mutateAsync(data);
+    setIsUpdating(false);
+  };
+
   return (
     <FormProvider {...form}>
-      <form className="pt-20 bg-slate-600 w-full">
-        <section className="flex items-center justify-evenly py-10">
-          <article className="flex gap-5 flex-col">
-            <h1 className="text-6xl pl-10">Account</h1>
+      <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
+        <section className="flex items-center w-full justify-evenly py-10">
+          <article className="flex gap-5 w-72 flex-col">
+            {/* <h1 className="text-6xl pl-10">Account</h1> */}
 
             <TextField
+              // className="w-80"
               fieldLabel="Username"
               fieldName="userName"
               placeholder=""
@@ -48,20 +69,16 @@ const Account = () => {
             <PasswordField
               fieldLabel="Password"
               fieldName="password"
-              placeholder=""
+              placeholder="Password"
             />
-            <Button>Update</Button>
+            <Button type="submit">
+              {Boolean(isUpdating) && (
+                <Loader2 className="mr-2 h-5 w-5 animate-spin sm:h-4 sm:w-4  " />
+              )}
+              {Boolean(isUpdating) ? "Saving changes" : "Update"}
+            </Button>
           </article>
-          {/* <h1 className="text-6xl pl-10"> {user?.userName}</h1> */}
-          {/* <Image
-            alt="Your pic"
-            height={150}
-            loading="lazy"
-            src={user!.pic}
-            width={150}
-          /> */}
         </section>
-        {/* <HeroTable /> */}
       </form>
     </FormProvider>
   );

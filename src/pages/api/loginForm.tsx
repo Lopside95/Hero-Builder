@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
 import {
+  CSSProperties,
+  HTMLAttributes,
   HTMLInputAutoCompleteAttribute,
   InputHTMLAttributes,
   useState,
@@ -20,8 +22,8 @@ export interface FieldProps {
   fieldName: string;
   fieldLabel: string;
   placeholder?: string;
+  className?: string | undefined;
 }
-
 const LoginForm = () => {
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),

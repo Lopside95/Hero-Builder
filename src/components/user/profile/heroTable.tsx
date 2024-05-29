@@ -16,16 +16,7 @@ const HeroTable = () => {
   const heroArr = heroes ? heroes : [];
 
   return (
-    <div className="max-h-[350px] overflow-auto">
-      {/* <div>
-        <h1 className="text-2xl">
-          {heroArr.length > 1
-            ? heroArr.length + " heroes"
-            : heroArr.length === 1
-            ? "1 hero"
-            : "No heroes"}
-        </h1>
-      </div> */}
+    <div className="max-h-[300px] overflow-auto">
       <Table>
         <TableCaption></TableCaption>
         <TableHeader>
@@ -33,9 +24,9 @@ const HeroTable = () => {
             <TableHead>Name</TableHead>
             <TableHead>Damage</TableHead>
             <TableHead>Movespeed</TableHead>
+            {/* <TableHead>Avatar</TableHead>
             <TableHead>Weapon</TableHead>
-            <TableHead>Boots</TableHead>
-            <TableHead>Avatar</TableHead>
+            <TableHead>Boots</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody className="text-xl ">
@@ -51,12 +42,12 @@ const HeroTable = () => {
                   <TableCell className="pl-9">{hero.details.speed}</TableCell>
                   <TableCell>
                     <Avatar>
-                      <AvatarImage src={hero.weapon.img} />
+                      <AvatarImage src={hero.boots.img} />
                     </Avatar>
                   </TableCell>
                   <TableCell>
                     <Avatar>
-                      <AvatarImage src={hero.boots.img} />
+                      <AvatarImage src={hero.weapon.img} />
                     </Avatar>
                   </TableCell>
                   <TableCell>
