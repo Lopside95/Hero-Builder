@@ -2,6 +2,15 @@ import { z } from "zod";
 
 // zod schema for users
 
+export const passwordRegex = z
+  .string()
+  .regex(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{5,}$/,
+    "Invalid password"
+  )
+  .min(5, "Must be at least 5 characters")
+  .optional();
+
 export const userSchema = z
   .object({
     userName: z.string().min(1, "Required"),
@@ -9,8 +18,8 @@ export const userSchema = z
       .string()
       .email({ message: "Invalid email format" })
       .transform((val) => val.toLowerCase()),
-    password: z.string().min(1, "Required"),
-    repeatPassword: z.string().min(1, "Required"),
+    password: passwordRegex,
+    repeatPassword: passwordRegex,
     pic: z.string(),
   })
   .refine((data) => data.password === data.repeatPassword, {

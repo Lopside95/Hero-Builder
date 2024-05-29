@@ -76,18 +76,27 @@ const Home = () => {
                 </Link>
                 or{" "}
                 <Link
-                  className="underline underline-offset-4"
-                  href="/localCreate"
+                  className="text-green-300 underline-offset-4"
+                  href={user ? "" : "/localCreate"}
                 >
                   continue
                 </Link>
                 without an account
               </span>
-              <p> Creating an account will save your heroes in the database.</p>
-              <p>
+              <span className="flex">
+                {" "}
+                Creating an account will save your heroes in the{" "}
+                <p className="text-blue-300 pl-1"> database</p>.
+              </span>
+              <span className="flex">
+                {" "}
+                Continuing without an account will save them in{" "}
+                <p className="text-green-300 pl-1"> local storage</p>.
+              </span>
+              {/* <p>
                 {" "}
                 Continuing without an account will save them in local storage.
-              </p>
+              </p> */}
               <p>
                 {" "}
                 You can delete your account as well as locally stored heroes.

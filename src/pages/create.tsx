@@ -125,7 +125,7 @@ const Create = () => {
           <div className="fixed right-32 top-52">
             {isFetched && (
               <div>
-                <HeroPreview isFetched={isFetched} />
+                <HeroPreview />
                 <Button className="w-full rounded-t-none" variant="select">
                   {isSubmitting ? (
                     <span className="flex gap-2 items-center">

@@ -1,5 +1,5 @@
 import { trpc } from "@/utils/trpc";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../../ui/avatar";
 import {
   Table,
   TableBody,
@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "../../ui/table";
 
 const HeroTable = () => {
   const { data: heroes } = trpc.user.getHeroesByUser.useQuery();
@@ -16,8 +16,8 @@ const HeroTable = () => {
   const heroArr = heroes ? heroes : [];
 
   return (
-    <>
-      <div>
+    <div className="max-h-[350px] overflow-auto">
+      {/* <div>
         <h1 className="text-2xl">
           {heroArr.length > 1
             ? heroArr.length + " heroes"
@@ -25,7 +25,7 @@ const HeroTable = () => {
             ? "1 hero"
             : "No heroes"}
         </h1>
-      </div>
+      </div> */}
       <Table>
         <TableCaption></TableCaption>
         <TableHeader>
@@ -39,6 +39,7 @@ const HeroTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody className="text-xl ">
+          {/* Orders heroes from latest to oldest */}
           {heroArr
             ?.slice(0)
             .reverse()
@@ -68,7 +69,7 @@ const HeroTable = () => {
             })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 

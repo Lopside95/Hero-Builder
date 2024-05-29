@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 export interface FieldProps {
   fieldName: string;
   fieldLabel: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
 const LoginForm = () => {
@@ -27,7 +27,7 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "james@email.com",
-      password: "pass1",
+      password: "Pass1*",
     },
   });
 
@@ -45,7 +45,7 @@ const LoginForm = () => {
       });
 
       if (!res?.error) {
-        router.push("/overview");
+        router.push("/profile");
       } else {
         setError("Invalid email or password");
         console.log(error);

@@ -5,7 +5,7 @@ import { FinalHeroSchema } from "@/types/hero";
 import { LoadingProps } from "@/pages/create";
 import { ShopSkeleton } from "../shopSkeleton";
 
-const HeroPreview = ({ isFetched }: LoadingProps) => {
+const HeroPreview = () => {
   const { watch } = useFormContext<FinalHeroSchema>();
 
   const boots = watch("boots");

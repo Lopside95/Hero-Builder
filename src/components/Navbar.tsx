@@ -76,7 +76,7 @@ const Navbar = () => {
             {activePage("/") && <Separator className="mt-1" />}
           </Link>
         </Button>
-        {session && (
+        {/* {session && (
           <Button
             className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
               activePage("/overview")
@@ -89,7 +89,7 @@ const Navbar = () => {
               Overview
             </Link>
           </Button>
-        )}
+        )} */}
       </span>
 
       <span className="flex gap-3 pl-[35rem]">

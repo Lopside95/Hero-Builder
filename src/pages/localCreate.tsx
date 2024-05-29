@@ -16,7 +16,7 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import AlertDialog from "@/components/alertDialog";
 import { LocalHero } from "@prisma/client";
-import { HeroInterface } from "@/components/user/gallery";
+import { HeroInterface } from "@/components/user/profile/gallery";
 
 // TODO: Add skeleton and/or suspense
 
@@ -58,6 +58,8 @@ const CreateLocal = () => {
 
   const { data: session, update: updateSession } = useSession();
 
+  const { data: heroImages, isFetched } = trpc.shop.getAllItems.useQuery();
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>(() => {
@@ -80,7 +82,7 @@ const CreateLocal = () => {
   useEffect(() => {
     localStorage.setItem("heroes", JSON.stringify(localHeroes));
 
-    console.log(localHeroes.length);
+    // console.log(localHeroes.length);
   }, [localHeroes]);
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
@@ -110,26 +112,30 @@ const CreateLocal = () => {
         <div className="w-full min-h-screen py-20 flex gap-20 pr-52  justify-evenly">
           <div className="flex gap-10 w-full flex-col ">
             <div className="flex w-full items-center justify-evenly pr-32">
-              <BootsForm />
-              <WeaponsForm />
+              <BootsForm isFetched={isFetched} />
+              <WeaponsForm isFetched={isFetched} />
             </div>
             <div className="flex pl-14 justify-evenly items-center w-full">
-              <PicturesForm />
-              <DetailsForm />
+              <PicturesForm isFetched={isFetched} />
+              <DetailsForm isFetched={isFetched} />
             </div>
           </div>
           <div className="fixed right-32 top-52">
-            <HeroPreview />
-            <Button className="w-full rounded-t-none" variant="select">
-              {isSubmitting ? (
-                <span className="flex gap-2 items-center">
-                  {" "}
-                  Saving <Loader2 className="animate-spin h-5" />{" "}
-                </span>
-              ) : (
-                <span className="flex gap-2 items-center">Submit</span>
-              )}
-            </Button>
+            {isFetched && (
+              <div>
+                <HeroPreview />
+                <Button className="w-full rounded-t-none" variant="select">
+                  {isSubmitting ? (
+                    <span className="flex gap-2 items-center">
+                      {" "}
+                      Saving <Loader2 className="animate-spin h-5" />{" "}
+                    </span>
+                  ) : (
+                    <span className="flex gap-2 items-center">Submit</span>
+                  )}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </form>

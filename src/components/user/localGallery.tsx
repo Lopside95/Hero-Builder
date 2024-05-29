@@ -1,5 +1,5 @@
 import { trpc } from "@/utils/trpc";
-import GalleryCard from "./galleryCard";
+import GalleryCard from "./profile/galleryCard";
 import { Boots, Details, Weapon } from "@/types/hero";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";

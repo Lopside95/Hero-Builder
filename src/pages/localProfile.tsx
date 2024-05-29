@@ -11,9 +11,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import DeleteUser from "@/components/user/deleteUser";
-import Gallery from "@/components/user/gallery";
-import GalleryCard from "@/components/user/galleryCard";
+import DeleteUser from "@/components/user/profile/deleteUser";
+import Gallery from "@/components/user/profile/gallery";
+import GalleryCard from "@/components/user/profile/galleryCard";
 import LocalGallery, { HeroInterface } from "@/components/user/localGallery";
 import NoProfile from "@/components/user/noProfile";
 import NoSession from "@/components/user/noSession";

@@ -24,13 +24,11 @@ const SignupForm = () => {
 
   const router = useRouter();
 
-  const utils = trpc.useUtils();
-
-  const { update: update } = useSession();
+  const { update: updateSession } = useSession();
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
-      update();
+      updateSession();
     },
   });
 
@@ -54,10 +52,14 @@ const SignupForm = () => {
         <h1 className="text-2xl fixed top-20">Sign Up</h1>
         <Card className="text-xl">
           <CardContent>
-            <ul className="flex flex-col gap-3 list-disc">
+            <ul className="flex flex-col gap-3 list-disc w-[30rem]">
               <li>You&apos;ll use your email and password to log in</li>
               <li>Email doesn&apos;t need to be an existing email</li>
-              <li>Passwords are encrypted but require no particular format</li>
+              <li>
+                Passwords must include an uppercase letter, a number, a special
+                character and must be at least 5 characters long. Passwords are
+                encrypted.
+              </li>
             </ul>
           </CardContent>
         </Card>
