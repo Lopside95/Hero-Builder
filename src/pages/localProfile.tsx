@@ -54,6 +54,7 @@ const LocalProfile = () => {
 
   return (
     <div className="w-full min-h-screen bg-base-bg text-base-txtClr pt-20 flex flex-col items-center">
+      <Button onClick={handleDelete}>Delete locally stored heroes</Button>
       {localHeroes && localHeroes?.length > 0 ? (
         localHeroes
           .slice(0)
@@ -75,8 +76,6 @@ const LocalProfile = () => {
           Your saved heroes will appear here
         </h1>
       )}
-
-      <Button onClick={handleDelete}>Delete locally stored heroes</Button>
     </div>
   );
 };

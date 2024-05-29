@@ -35,7 +35,7 @@ const DeleteUser = () => {
   const { update: updateSession } = useSession();
 
   const utils = trpc.useUtils();
-
+  const router = useRouter();
   const form = useForm<DeleteUserSchema>({
     resolver: zodResolver(deleteUserSchema),
     defaultValues: {
@@ -47,10 +47,8 @@ const DeleteUser = () => {
 
   const deleteUser = trpc.user.deleteAccount.useMutation({
     onSuccess: async () => {
-      alert("SUCCESS");
       await utils.user.invalidate();
-      await updateSession();
-      window.location.reload();
+      await signOut({ callbackUrl: "/" });
     },
   });
 
@@ -71,7 +69,7 @@ const DeleteUser = () => {
       <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
         <Dialog>
           <DialogTrigger
-            className={`${cn(buttonVariants({ variant: "select" }))} w-full `}
+            className={`${cn(buttonVariants({ variant: "default" }))} w-full `}
           >
             Delete account
           </DialogTrigger>
@@ -83,21 +81,14 @@ const DeleteUser = () => {
             </DialogHeader>
             <DialogClose asChild>
               <Button onClick={form.handleSubmit(onSubmit)} type="submit">
-                Delete account{Boolean(isDeleting) && "Deleting account"}
                 {Boolean(isDeleting) && (
                   <Loader2 className="mr-2 h-5 w-5 animate-spin sm:h-4 sm:w-4 " />
                 )}
+                {Boolean(isDeleting) ? "Deleting account" : "Delete account"}
               </Button>
             </DialogClose>
           </DialogContent>
         </Dialog>
-
-        {/* <TextField
-          fieldLabel="Password"
-          fieldName="password"
-          placeholder="Password"
-        />
-        <Button variant="select">Delete</Button> */}
       </form>
     </FormProvider>
   );

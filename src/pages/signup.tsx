@@ -84,9 +84,7 @@ const SignupForm = () => {
             fieldName="repeatPassword"
             placeholder="Repeat password "
           />
-          <Button className="w-full my-5" variant="select">
-            Submit
-          </Button>
+          <Button className="w-full my-5">Submit</Button>
         </div>
       </form>
     </FormProvider>

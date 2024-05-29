@@ -29,14 +29,14 @@ const GalleryCard = ({ details, boots, weapon }: HeroInterface) => {
           alt=""
           className="w-80 rounded-md"
           height={300}
-          src={boots.img}
+          src={weapon.img}
           width={300}
         />
         <Image
           alt=""
           className="w-80 rounded-md"
           height={300}
-          src={weapon.img}
+          src={boots.img}
           width={300}
         />
       </article>

@@ -21,26 +21,15 @@ const Navbar = () => {
 
   const { data: session } = useSession();
 
-  const handlesSignOut = async () => {
-    await signOut();
-    router.push("/");
-  };
-
-  const handleSignIn = async () => {
-    await signIn();
-
-    if (!isLoading) {
-      router.push("/");
-    }
-  };
-
   const AuthButton = () => {
     if (session) {
       return (
         <>
           <Button
             className="text-md text-base-txtClr w-20 hover:underline-offset-[6px]"
-            onClick={handlesSignOut}
+            onClick={() => {
+              signOut({ callbackUrl: "/" });
+            }}
             variant="link"
           >
             Sign out
@@ -137,7 +126,7 @@ const Navbar = () => {
           <SelectTriggerNoArrow className=" focus:outline-none focus:ring-none focus:border-none border-none hover:border-none bg-transparent">
             <User
               className={`border rounded-full bg-transparent ${
-                session && `fill-green-800`
+                session ? `fill-blue-400` : `fill-green-400`
               }`}
             />
           </SelectTriggerNoArrow>

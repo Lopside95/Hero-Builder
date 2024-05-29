@@ -42,7 +42,7 @@ const HeroTable = () => {
                   <TableCell className="pl-9">{hero.details.speed}</TableCell>
                   <TableCell>
                     <Avatar>
-                      <AvatarImage src={hero.boots.img} />
+                      <AvatarImage src={hero.details.img} />
                     </Avatar>
                   </TableCell>
                   <TableCell>
@@ -52,7 +52,7 @@ const HeroTable = () => {
                   </TableCell>
                   <TableCell>
                     <Avatar>
-                      <AvatarImage src={hero.details.img} />
+                      <AvatarImage src={hero.boots.img} />
                     </Avatar>
                   </TableCell>
                 </TableRow>

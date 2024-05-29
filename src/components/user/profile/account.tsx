@@ -3,22 +3,11 @@ import PasswordField from "@/components/passwordInput";
 import TextField from "@/components/textInput";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import HeroTable from "@/components/user/profile/heroTable";
 import { UpdateUser, User, updateUserSchema, userSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -55,12 +44,9 @@ const Account = () => {
   return (
     <FormProvider {...form}>
       <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
-        <section className="flex items-center w-full justify-evenly py-10">
+        <section className="flex items-center w-full justify-evenly pt-10 pb-5">
           <article className="flex gap-5 w-72 flex-col">
-            {/* <h1 className="text-6xl pl-10">Account</h1> */}
-
             <TextField
-              // className="w-80"
               fieldLabel="Username"
               fieldName="userName"
               placeholder=""

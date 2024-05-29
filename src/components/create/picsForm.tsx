@@ -60,7 +60,7 @@ const PicturesForm = ({ isFetched }: LoadingProps) => {
                             <FormItem>
                               <Button
                                 variant={
-                                  image === hero.url ? "disabled" : "select"
+                                  image === hero.url ? "disabled" : "default"
                                 }
                                 {...field}
                                 onClick={(event) => {

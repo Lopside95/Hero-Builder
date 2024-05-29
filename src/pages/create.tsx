@@ -126,7 +126,17 @@ const Create = () => {
             {isFetched && (
               <div>
                 <HeroPreview />
-                <Button className="w-full rounded-t-none" variant="select">
+
+                <Button className="w-full rounded-t-none">
+                  {Boolean(isSubmitting) && (
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin sm:h-4 sm:w-4  " />
+                  )}
+                  {Boolean(isSubmitting) ? "Saving hero" : "Submit"}
+                </Button>
+                {/* <Button className="w-full rounded-t-none">
+                  {Boolean(isSubmitting)}
+                </Button> */}
+                {/* <Button className="w-full rounded-t-none">
                   {isSubmitting ? (
                     <span className="flex gap-2 items-center">
                       {" "}
@@ -135,7 +145,7 @@ const Create = () => {
                   ) : (
                     <span className="flex gap-2 items-center">Submit</span>
                   )}
-                </Button>
+                </Button> */}
               </div>
             )}
           </div>
