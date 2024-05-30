@@ -1,5 +1,9 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:react/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "eslint:recommended"
+  ],
   "plugins": ["react"],
   "rules": {
     "react/jsx-sort-props": [
@@ -13,6 +17,7 @@
         "reservedFirst": false
       }
     ],
+    "no-unused-vars": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off"
     // "unused-imports/no-unused-imports": "warn",

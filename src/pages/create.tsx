@@ -76,26 +76,6 @@ const Create = () => {
     },
   });
 
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  // useEffect(() => {
-  //   if (isFetched) {
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //     }, 1000);
-  //   }
-  // }, [isFetched]);
-
-  // if (!isFetched) {
-  //   console.log(isFetched);
-  //   return (
-  //     <div className="w-[300px] flex flex-col gap-10">
-  //       {/* <Skeleton className="w-[300px] h-[300px]" /> */}
-  //       <Loader2 className="animate-spin fixed top-52 right-52 " />
-  //     </div>
-  //   );
-  // }
-
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
     data: FinalHeroSchema
   ) => {
@@ -133,19 +113,6 @@ const Create = () => {
                   )}
                   {Boolean(isSubmitting) ? "Saving hero" : "Submit"}
                 </Button>
-                {/* <Button className="w-full rounded-t-none">
-                  {Boolean(isSubmitting)}
-                </Button> */}
-                {/* <Button className="w-full rounded-t-none">
-                  {isSubmitting ? (
-                    <span className="flex gap-2 items-center">
-                      {" "}
-                      Saving <Loader2 className="animate-spin h-5" />{" "}
-                    </span>
-                  ) : (
-                    <span className="flex gap-2 items-center">Submit</span>
-                  )}
-                </Button> */}
               </div>
             )}
           </div>
