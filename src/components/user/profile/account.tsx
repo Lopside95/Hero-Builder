@@ -1,9 +1,7 @@
-import Loading from "@/components/loading";
 import PasswordField from "@/components/passwordInput";
 import TextField from "@/components/textInput";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { UpdateUser, User, updateUserSchema, userSchema } from "@/types/user";
+import { UpdateUser, updateUserSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";

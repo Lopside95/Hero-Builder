@@ -10,12 +10,9 @@ import {
   SelectGroup,
   SelectTriggerNoArrow,
 } from "./ui/select";
-import { trpc } from "@/utils/trpc";
 
 const Navbar = () => {
   const router = useRouter();
-
-  const { isLoading } = trpc.user.getUserById.useQuery();
 
   const activePage = (path: string) => router.pathname === path; // Used to conditionally signify current page
 
@@ -65,20 +62,6 @@ const Navbar = () => {
             {activePage("/") && <Separator className="mt-1" />}
           </Link>
         </Button>
-        {/* {session && (
-          <Button
-            className={`text-md text-base-txtClr -ml-2 hover:underline-offset-[6px] ${
-              activePage("/overview")
-                ? "underline underline-offset-[6px]   "
-                : ""
-            }`}
-            variant="link"
-          >
-            <Link href="/overview" tabIndex={-1}>
-              Overview
-            </Link>
-          </Button>
-        )} */}
       </span>
 
       <span className="flex gap-3 pl-[35rem]">

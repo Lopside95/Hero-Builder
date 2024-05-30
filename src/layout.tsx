@@ -4,6 +4,7 @@ import "../globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { getServerSession } from "next-auth";
 import SessionProvider from "../src/components/SessionProvider";
+import React from "react";
 
 interface Props {
   children: React.ReactNode;

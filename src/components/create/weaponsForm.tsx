@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FinalHeroSchema, Weapon } from "@/types/hero";
+import { FinalHeroSchema } from "@/types/hero";
 import { useState } from "react";
 import { Coins } from "lucide-react";
 import { FormControl, FormField, FormItem } from "../ui/form";
@@ -15,7 +15,6 @@ import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
-import { Skeleton } from "../ui/skeleton";
 import { ShopSkeleton } from "../shopSkeleton";
 import { LoadingProps } from "@/pages/create";
 export type WeaponProps = {
@@ -26,8 +25,7 @@ export type WeaponProps = {
   url: string;
 };
 const WeaponsForm = ({ isFetched }: LoadingProps) => {
-  const { control, watch, getValues, setValue } =
-    useFormContext<FinalHeroSchema>();
+  const { control, watch, setValue } = useFormContext<FinalHeroSchema>();
 
   const { data: weapons } = trpc.shop.getAllWeapons.useQuery();
   const [api, setApi] = useState<CarouselApi>();

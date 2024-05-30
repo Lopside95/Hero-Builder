@@ -1,5 +1,4 @@
 "use client";
-
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -8,14 +7,11 @@ import { FinalHeroSchema, finalHeroSchema } from "@/types/hero";
 import BootsForm from "@/components/create/bootsForm";
 import WeaponsForm from "@/components/create/weaponsForm";
 import DetailsForm from "@/components/create/detailsForm";
-import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
 import HeroPreview from "@/components/create/heroPreview";
 import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import AlertDialog from "@/components/alertDialog";
-import { LocalHero } from "@prisma/client";
 import { HeroInterface } from "@/components/user/profile/gallery";
 
 // TODO: Add skeleton and/or suspense
@@ -54,11 +50,8 @@ const LocalCreate = () => {
   });
 
   const router = useRouter();
-  const utils = trpc.useUtils();
 
-  const { data: session, update: updateSession } = useSession();
-
-  const { data: heroImages, isFetched } = trpc.shop.getAllItems.useQuery();
+  const { isFetched } = trpc.shop.getAllItems.useQuery();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -119,16 +112,6 @@ const LocalCreate = () => {
                   )}
                   {Boolean(isSubmitting) ? "Saving hero" : "Submit"}
                 </Button>
-                {/* <Button className="w-full rounded-t-none">
-                  {isSubmitting ? (
-                    <span className="flex gap-2 items-center">
-                      {" "}
-                      Saving <Loader2 className="animate-spin h-5" />{" "}
-                    </span>
-                  ) : (
-                    <span className="flex gap-2 items-center">Submit</span>
-                  )}
-                </Button> */}
               </div>
             )}
           </div>

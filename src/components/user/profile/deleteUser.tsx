@@ -1,28 +1,14 @@
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { Button, buttonVariants } from "../../ui/button";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../../ui/form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DeleteUserSchema, deleteUserSchema, userSchema } from "@/types/user";
-import TextField from "../../textInput";
+import { DeleteUserSchema, deleteUserSchema } from "@/types/user";
 import { trpc } from "@/utils/trpc";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -32,10 +18,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const DeleteUser = () => {
-  const { update: updateSession } = useSession();
-
   const utils = trpc.useUtils();
-  const router = useRouter();
   const form = useForm<DeleteUserSchema>({
     resolver: zodResolver(deleteUserSchema),
     defaultValues: {

@@ -1,4 +1,3 @@
-import { Session } from "next-auth";
 import { Button } from "./ui/button";
 import {
   Dialog,

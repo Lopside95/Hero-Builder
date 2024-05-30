@@ -14,7 +14,6 @@ import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
-import { Skeleton } from "../ui/skeleton";
 import { ShopSkeleton } from "../shopSkeleton";
 import { LoadingProps } from "@/pages/create";
 

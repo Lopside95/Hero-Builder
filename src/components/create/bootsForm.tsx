@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { FinalHeroSchema, Weapon } from "@/types/hero";
+import { FinalHeroSchema } from "@/types/hero";
 import { useState } from "react";
-import { Coins, Loader2 } from "lucide-react";
+import { Coins } from "lucide-react";
 import { FormControl, FormField, FormItem } from "../ui/form";
 import {
   Carousel,
@@ -15,21 +15,15 @@ import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { trpc } from "@/utils/trpc";
 import Image from "next/image";
-import { Skeleton } from "../ui/skeleton";
 import { ShopSkeleton } from "../shopSkeleton";
 import { LoadingProps } from "@/pages/create";
 
 const BootsForm = ({ isFetched }: LoadingProps) => {
   const [api, setApi] = useState<CarouselApi>();
 
-  const { watch, control, getValues, setValue } =
-    useFormContext<FinalHeroSchema>();
+  const { watch, control, setValue } = useFormContext<FinalHeroSchema>();
 
   const { data: boots } = trpc.shop.getAllBoots.useQuery();
-  // const [currentUser, userHeroes] = trpc.useQueries((t) => [
-  //   t.user.getUserById(),
-  //   t.user.getHeroesByUser(),
-  // ]);
 
   const watchedBoots = watch("boots");
 

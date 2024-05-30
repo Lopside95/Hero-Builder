@@ -1,29 +1,15 @@
 import { trpc } from "@/utils/trpc";
-import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "@/pages/api/loginForm";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types/user";
 import { useRouter } from "next/router";
 
 const Home = () => {
-  const [currentUser, userHeroes] = trpc.useQueries((t) => [
-    t.user.getUserById(),
-    t.user.getHeroesByUser(),
-  ]);
-
   const router = useRouter();
+
+  const { data: user } = trpc.user.getUserById.useQuery();
 
   if (router.isFallback) {
     return (
@@ -32,9 +18,6 @@ const Home = () => {
       </div>
     );
   }
-
-  const user = currentUser.data;
-  const heroes = userHeroes.data ? userHeroes.data : [];
 
   const quickUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
@@ -93,22 +76,12 @@ const Home = () => {
                 Continuing without an account will save them in{" "}
                 <p className="text-green-300 pl-1"> local storage</p>.
               </span>
-              {/* <p>
-                {" "}
-                Continuing without an account will save them in local storage.
-              </p> */}
               <p>
                 {" "}
                 You can delete your account as well as locally stored heroes.
               </p>
             </span>
             <LoginForm />
-            {/* <span className="flex w-80 gap-2 text-xl">
-              Want an account?
-              <Link className="text-blue-400" href="/signup">
-                Sign up
-              </Link>
-            </span> */}
           </article>
           <div className="pt-10">
             <Button onClick={() => handleQuick()}>Quick Signup</Button>

@@ -7,7 +7,6 @@ import PasswordField from "@/components/passwordInput";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { TRPCError } from "@trpc/server";
 import { User, userSchema } from "@/types/user";
 
 const SignupForm = () => {

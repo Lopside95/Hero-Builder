@@ -4,11 +4,9 @@ import { deleteUserSchema, updateUserSchema, userSchema } from "@/types/user";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const salt = bcrypt.genSaltSync(10);
-
-// }
 
 export const getUser = async (userId: string, prisma: PrismaClient) => {
   const user = await prisma.user.findUnique({
@@ -30,7 +28,7 @@ export const getHeroesByUser = async (userId: string, prisma: PrismaClient) => {
 };
 
 export const userRouter = createTRPCRouter({
-  getAllUsers: publicProcedure.query(async ({ ctx }) => {
+  getAllUsers: publicProcedure.query(async () => {
     const allUsers = await prisma.user.findMany();
     return allUsers;
   }),
@@ -96,7 +94,7 @@ export const userRouter = createTRPCRouter({
           userName: input.userName,
           email: input.email,
           password: input.password,
-          pic: input.pic,
+          // pic: input.pic,
         },
       });
       return updatedUser;
@@ -132,9 +130,7 @@ export const userRouter = createTRPCRouter({
         userId: z.string(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
-      // const userHeroes = getHeroesByUser(ctx.session.user.id, prisma)
-
+    .mutation(async ({ ctx }) => {
       const deletedHeroes = await prisma.finalHero.deleteMany({
         where: {
           userId: ctx.session.user.id,
@@ -179,8 +175,4 @@ export const userRouter = createTRPCRouter({
         });
       }
     }),
-  // updateUser: protectedProcedure.input(userSchema).mutation(async ({ctx, input}) => {
-  //   const user = getUser(ctx.session.user.id, prisma)
-
-  // })
 });

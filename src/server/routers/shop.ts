@@ -10,11 +10,9 @@ export const shopRouter = createTRPCRouter({
   getAllItems: publicProcedure.query(async () => {
     const allBoots = await prisma.boots.findMany();
     const allWeapons = await prisma.weapon.findMany();
-    // const allImages = await prisma.heroImages.findMany();
     return {
       boots: allBoots,
       weapons: allWeapons,
-      // images: allImages,
     };
   }),
   getFirstItems: publicProcedure.query(async () => {
@@ -27,16 +25,16 @@ export const shopRouter = createTRPCRouter({
       images: firstImages,
     };
   }),
-  getAllBoots: publicProcedure.query(async ({ ctx }) => {
+  getAllBoots: publicProcedure.query(async () => {
     const allBoots = await prisma.boots.findMany();
     return allBoots;
   }),
-  getAllHeroPics: publicProcedure.query(async ({ ctx }) => {
+  getAllHeroPics: publicProcedure.query(async () => {
     return await prisma.heroImages.findMany();
   }),
   createNewBoots: publicProcedure // This is for possible future use, where users can create their own boots/weapons etc.
     .input(bootsSchema)
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       const newBoots = await prisma.boots.create({
         data: {
           name: input.name,

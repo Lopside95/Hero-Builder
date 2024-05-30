@@ -1,38 +1,14 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import DeleteUser from "@/components/user/profile/deleteUser";
-import Gallery from "@/components/user/profile/gallery";
+import { HeroInterface } from "@/components/user/profile/gallery";
 import GalleryCard from "@/components/user/profile/galleryCard";
-import LocalGallery, { HeroInterface } from "@/components/user/localGallery";
-import NoProfile from "@/components/user/noProfile";
-import NoSession from "@/components/user/noSession";
 import { Boots, Details, Weapon } from "@/types/hero";
-import { trpc } from "@/utils/trpc";
-import { Loader2 } from "lucide-react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
 
 const LocalProfile = () => {
-  const { data: session, update } = useSession();
-
-  const { data: user, isLoading } = trpc.user.getUserById.useQuery();
   const [localHeroes, setLocalHeroes] = useState<HeroInterface[]>([]);
-  const router = useRouter();
-  const utils = trpc.useUtils();
 
   const sessionHeroes =
     typeof window !== "undefined" ? localStorage.getItem("heroes") : [];

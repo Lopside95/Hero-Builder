@@ -10,12 +10,8 @@ import { useSession } from "next-auth/react";
 import PicturesForm from "@/components/create/picsForm";
 import HeroPreview from "@/components/create/heroPreview";
 import { useRouter } from "next/router";
-import { Loader, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import AlertDialog from "@/components/alertDialog";
-import { Skeleton } from "@/components/ui/skeleton";
-
-// TODO: Add skeleton and/or suspense
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export interface LoadingProps {
   isFetched: boolean;
@@ -59,13 +55,7 @@ const Create = () => {
 
   const { update: updateSession } = useSession();
 
-  // const {
-  //   data: isLoading,
-  //   isFetching,
-  //   isPending,
-  // } = trpc.shop.getFirstItems.useQuery();
-
-  const { data: heroImages, isFetched } = trpc.shop.getAllItems.useQuery();
+  const { isFetched } = trpc.shop.getAllItems.useQuery();
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 

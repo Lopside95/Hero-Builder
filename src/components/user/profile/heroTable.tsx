@@ -24,9 +24,6 @@ const HeroTable = () => {
             <TableHead>Name</TableHead>
             <TableHead>Damage</TableHead>
             <TableHead>Movespeed</TableHead>
-            {/* <TableHead>Avatar</TableHead>
-            <TableHead>Weapon</TableHead>
-            <TableHead>Boots</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody className="text-xl ">

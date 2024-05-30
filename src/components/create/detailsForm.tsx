@@ -10,14 +10,11 @@ import { Input } from "../ui/input";
 import { FinalHeroSchema } from "@/types/hero";
 import { Textarea } from "../ui/textarea";
 import { Card, CardContent } from "../ui/card";
-import { trpc } from "@/utils/trpc";
 import { ShopSkeleton } from "../shopSkeleton";
 import { LoadingProps } from "@/pages/create";
 
 const DetailsForm = ({ isFetched }: LoadingProps) => {
   const { control } = useFormContext<FinalHeroSchema>();
-
-  const { data: heroImages } = trpc.shop.getAllItems.useQuery();
 
   return (
     <div className="w-[388px] mr-14">

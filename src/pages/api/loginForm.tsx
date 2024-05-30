@@ -4,18 +4,11 @@ import { Login, loginSchema } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GetServerSideProps } from "next";
 import { signIn } from "next-auth/react";
-import {
-  CSSProperties,
-  HTMLAttributes,
-  HTMLInputAutoCompleteAttribute,
-  InputHTMLAttributes,
-  useState,
-} from "react";
+import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
-import { Router } from "express";
 import { useRouter } from "next/router";
 
 export interface FieldProps {
@@ -100,7 +93,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         permanent: false,
       },
     };
-  } else if (!session) {
   }
 
   return {
