@@ -8,13 +8,17 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { FieldProps } from "../pages/api/loginForm";
+import { ContextType, loginSchema, userSchema } from "@/types/user";
+import { finalHeroSchema } from "@/types/hero";
+import { ZodAny, ZodObject, ZodRawShape, ZodString, z } from "zod";
 
 const TextField = ({
   fieldName,
   fieldLabel,
   placeholder,
   className,
-}: FieldProps) => {
+}: // theSchema
+FieldProps) => {
   const { control } = useFormContext();
 
   return (

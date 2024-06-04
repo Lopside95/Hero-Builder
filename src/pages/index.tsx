@@ -11,35 +11,27 @@ const Home = () => {
 
   const { data: user } = trpc.user.getUserById.useQuery();
 
-  if (router.isFallback) {
-    return (
-      <div>
-        <Loader2 className="animate-spin" />
-      </div>
-    );
-  }
-
   const quickUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
       console.log("New user created");
     },
   });
 
-  const handleQuick = () => {
-    const quickData: User = {
-      userName: "Lopside",
-      email: "james@email.com",
-      password: "Pass1*",
-      repeatPassword: "Pass1*",
-      pic: "",
-    };
+  // const handleQuick = () => {
+  //   const quickData: User = {
+  //     userName: "Lopside",
+  //     email: "james@email.com",
+  //     password: "Pass1*",
+  //     repeatPassword: "Pass1*",
+  //     pic: "",
+  //   };
 
-    try {
-      quickUser.mutateAsync(quickData);
-    } catch (error) {
-      console.error("Quick user error", error);
-    }
-  };
+  //   try {
+  //     quickUser.mutateAsync(quickData);
+  //   } catch (error) {
+  //     console.error("Quick user error", error);
+  //   }
+  // };
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
@@ -84,7 +76,7 @@ const Home = () => {
             <LoginForm />
           </article>
           <div className="pt-10">
-            <Button onClick={() => handleQuick()}>Quick Signup</Button>
+            {/* <Button onClick={() => handleQuick()}>Quick Signup</Button> */}
           </div>
         </section>
       </div>

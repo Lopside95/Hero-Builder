@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { finalHeroSchema } from "./hero";
 
 // zod schema for users
 
@@ -8,8 +9,11 @@ export const passwordRegex = z
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{5,}$/,
     "Invalid password"
   )
-  .min(5, "Must be at least 5 characters")
-  .optional();
+  .min(5, "Must be at least 5 characters");
+
+// export const passwordPieces = z.object({
+//   uppercase:
+// })
 
 export const userSchema = z
   .object({

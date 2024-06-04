@@ -1,15 +1,34 @@
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/utils/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
 import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { User, userSchema } from "@/types/user";
+import { useEffect, useState } from "react";
+import { Check, TicketIcon } from "lucide-react";
+
+export type PasswordConditions = {
+  uppercase: boolean;
+  hasNumber: boolean;
+  special: boolean;
+  longEnough: boolean;
+};
+
+const GreenCheck = () => {
+  return <Check className="text-green-500 w-4 h-4" />;
+};
 
 const SignupForm = () => {
+  // const { watch, getValues } = useFormContext<User>();
   const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -24,6 +43,38 @@ const SignupForm = () => {
   const router = useRouter();
 
   const { update: updateSession } = useSession();
+
+  const watchedPassword = form.watch("password");
+
+  const [satisfied, setSatisfied] = useState<PasswordConditions>({
+    uppercase: false,
+    hasNumber: false,
+    special: false,
+    longEnough: false,
+  });
+
+  useEffect(() => {
+    const checkUppercase =
+      watchedPassword !== undefined && /[A-Z]/.test(watchedPassword);
+    const checkHasNumber =
+      watchedPassword !== undefined && /\d/.test(watchedPassword);
+    const checkSpecial =
+      watchedPassword !== undefined &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(watchedPassword);
+    const checkLongEnough =
+      watchedPassword !== undefined && watchedPassword.length >= 5;
+
+    setSatisfied({
+      uppercase: checkUppercase,
+      hasNumber: checkHasNumber,
+      special: checkSpecial,
+      longEnough: checkLongEnough,
+    });
+  }, [watchedPassword]);
+
+  const decideColor = (condition: boolean) => {
+    return condition ? `text-green-500` : "text-orange-300";
+  };
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
@@ -54,11 +105,67 @@ const SignupForm = () => {
             <ul className="flex flex-col gap-3 list-disc w-[30rem]">
               <li>You&apos;ll use your email and password to log in</li>
               <li>Email doesn&apos;t need to be an existing email</li>
-              <li>
-                Passwords must include an uppercase letter, a number, a special
-                character and must be at least 5 characters long. Passwords are
-                encrypted.
-              </li>
+              <li>Passwords must include:</li>
+              <ul className="list-disc pl-10">
+                {" "}
+                <li className="flex gap-1 items-center">
+                  an{" "}
+                  <span
+                    // className={`text-[${decideColor(satisfied.uppercase)}]`}
+                    className={`${decideColor(satisfied.uppercase)} `}
+                  >
+                    uppercase letter
+                  </span>
+                  {Boolean(satisfied.uppercase) && <GreenCheck />}
+                  {/* <span style={{ color: decideColor(satisfied.uppercase) }}>
+                    uppercase letter
+                  </span> */}
+                </li>
+                <li className="flex gap-1 items-center">
+                  a{" "}
+                  <span className={`${decideColor(satisfied.hasNumber)}`}>
+                    {" "}
+                    number
+                  </span>
+                  {Boolean(satisfied.hasNumber) && <GreenCheck />}
+                </li>
+                <li className="flex gap-1 items-center">
+                  a{" "}
+                  <span className={`${decideColor(satisfied.special)}`}>
+                    {" "}
+                    special character
+                  </span>{" "}
+                  {Boolean(satisfied.special) && <GreenCheck />}
+                </li>
+                <li className="flex gap-1 items-center">
+                  and be at least{" "}
+                  <span className={`${decideColor(satisfied.longEnough)}`}>
+                    5 characters long
+                  </span>
+                  {Boolean(satisfied.longEnough) && <GreenCheck />}
+                </li>
+              </ul>
+              {/* <li>
+                Passwords must include an{" "}
+                <span style={{ color: decideColor(satisfied.uppercase) }}>
+                  uppercase letter
+                </span>
+                , a
+                <span style={{ color: decideColor(satisfied.hasNumber) }}>
+                  {" "}
+                  number
+                </span>
+                , a
+                <span style={{ color: decideColor(satisfied.special) }}>
+                  {" "}
+                  special character
+                </span>{" "}
+                and must be at least{" "}
+                <span style={{ color: decideColor(satisfied.longEnough) }}>
+                  5 characters long
+                </span>
+                . Passwords are encrypted.
+              </li> */}
             </ul>
           </CardContent>
         </Card>
