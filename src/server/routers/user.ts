@@ -8,6 +8,7 @@ import { PrismaClient } from "@prisma/client";
 
 const salt = bcrypt.genSaltSync(10);
 
+// Functions used to streamline fetching the appropriate user etc in the procedures. Needs work.
 export const getUser = async (userId: string, prisma: PrismaClient) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -16,7 +17,6 @@ export const getUser = async (userId: string, prisma: PrismaClient) => {
   });
   return user;
 };
-
 export const getHeroesByUser = async (userId: string, prisma: PrismaClient) => {
   const heroes = await prisma.finalHero.findMany({
     where: {
@@ -161,6 +161,8 @@ export const userRouter = createTRPCRouter({
         console.log("wrong pasword");
       }
 
+      // deletes a user's heroes before deleting the user.
+      // heroes need to exist in relation to a user and deleting the user without first deleting the heroes throws an error
       try {
         await prisma.finalHero.deleteMany({
           where: {

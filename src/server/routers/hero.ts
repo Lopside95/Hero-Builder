@@ -42,20 +42,3 @@ export const heroRouter = createTRPCRouter({
       return finalHero;
     }),
 });
-
-// interface Payloads {
-//   input?: string;
-//   details: Details;
-//   boots: Boots;
-//   weapon: Weapon;
-// }
-
-// export const setPayloads = ({ input, details, boots, weapon }: Payloads) => {
-//   const detailsPayload = {
-//     name: details.name,
-//     speed: details.speed,
-//     damage: details.damage,
-//     story: details.story,
-//     img: details.img,
-//   };
-// };

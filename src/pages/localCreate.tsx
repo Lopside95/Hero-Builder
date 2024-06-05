@@ -13,40 +13,14 @@ import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { HeroInterface } from "@/components/user/profile/gallery";
+import { defaultVals } from "@/utils/helpers";
 
 // TODO: Add skeleton and/or suspense
 
 const LocalCreate = () => {
   const form = useForm<FinalHeroSchema>({
     resolver: zodResolver(finalHeroSchema),
-    defaultValues: {
-      boots: {
-        name: "",
-        speed: 0,
-        bonus: "",
-        description: "",
-        cost: 0,
-        img: "",
-      },
-      weapon: {
-        name: "",
-        damage: 0,
-        bonus: "",
-        description: "",
-        cost: 0,
-        img: "",
-      },
-      details: {
-        speed: 0,
-        damage: 0,
-        name: "",
-        img: "",
-        story:
-          "We all start somewhere but, if you don’t have a story in mind, we’ll just use this placeholder text for now.",
-      },
-
-      gold: 90,
-    },
+    defaultValues: defaultVals,
   });
 
   const router = useRouter();
@@ -67,10 +41,6 @@ const LocalCreate = () => {
     if (typeof window !== "undefined") {
       localStorage.setItem("heroes", JSON.stringify(localHeroes));
     }
-  }, [localHeroes]);
-
-  useEffect(() => {
-    localStorage.setItem("heroes", JSON.stringify(localHeroes));
   }, [localHeroes]);
 
   const onSubmit: SubmitHandler<FinalHeroSchema> = async (
@@ -95,6 +65,9 @@ const LocalCreate = () => {
           <div className="flex gap-10 w-full flex-col ">
             <div className="flex w-full items-center justify-evenly pr-32">
               <BootsForm isFetched={isFetched} />
+              {/* Maybe not great, but 'isFetched' ensures that all the images have loaded in and the page is laid out properly
+              before the actual content is rendered. Prevents the page loading in chunks/disrupting the layout.
+              */}
               <WeaponsForm isFetched={isFetched} />
             </div>
             <div className="flex pl-14 justify-evenly items-center w-full">

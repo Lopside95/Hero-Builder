@@ -22,13 +22,12 @@ export type PasswordConditions = {
   special: boolean;
   longEnough: boolean;
 };
-
+// Placed check in custom component to avoid explicitly checking the condition for each of the password conditions in the tsx
 const GreenCheck = () => {
   return <Check className="text-green-500 w-4 h-4" />;
 };
 
 const SignupForm = () => {
-  // const { watch, getValues } = useFormContext<User>();
   const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -39,6 +38,8 @@ const SignupForm = () => {
       pic: "",
     },
   });
+
+  const { watch } = useFormContext<User>();
 
   const router = useRouter();
 
@@ -53,6 +54,8 @@ const SignupForm = () => {
     longEnough: false,
   });
 
+  // This checks the watchedPassword and returns true if the condition has been satisfied. Used to change the colors of the
+  // text, letting users know when their password is acceptable.
   useEffect(() => {
     const checkUppercase =
       watchedPassword !== undefined && /[A-Z]/.test(watchedPassword);

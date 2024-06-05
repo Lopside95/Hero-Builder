@@ -12,13 +12,6 @@ import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { useRouter } from "next/router";
 import { ZodAny, ZodObject, ZodRawShape, ZodString, z } from "zod";
 
-export interface FieldProps {
-  fieldName: string;
-  fieldLabel: string;
-  placeholder?: string;
-  className?: string | undefined;
-  // theSchema?: ZodObject<ZodRawShape>;
-}
 const LoginForm = () => {
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),

@@ -33,6 +33,7 @@ const LocalProfile = () => {
       <Button onClick={handleDelete}>Delete locally stored heroes</Button>
       {localHeroes && localHeroes?.length > 0 ? (
         localHeroes
+          // places most recent hero at top of the gallery
           .slice(0)
           .reverse()
           .map((hero, index, array) => {
@@ -44,6 +45,7 @@ const LocalProfile = () => {
                   weapon={hero.weapon as Weapon}
                 />
                 {index !== array.length - 1 && <Separator className="" />}
+                {/* Prevents separator from being shown after the bottom-most hero */}
               </div>
             );
           })

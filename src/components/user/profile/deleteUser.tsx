@@ -31,7 +31,7 @@ const DeleteUser = () => {
   const deleteUser = trpc.user.deleteAccount.useMutation({
     onSuccess: async () => {
       await utils.user.invalidate();
-      await signOut({ callbackUrl: "/" });
+      await signOut({ callbackUrl: "/" }); // forces site to reload, logging the users out (sometimes users stayed logged in even though the account had been deleted)
     },
   });
 

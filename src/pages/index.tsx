@@ -1,14 +1,9 @@
 import { trpc } from "@/utils/trpc";
 import Link from "next/link";
 import LoginForm from "@/pages/api/loginForm";
-import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { User } from "@/types/user";
-import { useRouter } from "next/router";
 
 const Home = () => {
-  const router = useRouter();
-
   const { data: user } = trpc.user.getUserById.useQuery();
 
   const quickUser = trpc.user.createUser.useMutation({
@@ -17,21 +12,22 @@ const Home = () => {
     },
   });
 
-  // const handleQuick = () => {
-  //   const quickData: User = {
-  //     userName: "Lopside",
-  //     email: "james@email.com",
-  //     password: "Pass1*",
-  //     repeatPassword: "Pass1*",
-  //     pic: "",
-  //   };
+  // Use for testing when deleting account
+  const handleQuick = () => {
+    const quickData: User = {
+      userName: "Lopside",
+      email: "james@email.com",
+      password: "Pass1*",
+      repeatPassword: "Pass1*",
+      pic: "",
+    };
 
-  //   try {
-  //     quickUser.mutateAsync(quickData);
-  //   } catch (error) {
-  //     console.error("Quick user error", error);
-  //   }
-  // };
+    try {
+      quickUser.mutateAsync(quickData);
+    } catch (error) {
+      console.error("Quick user error", error);
+    }
+  };
 
   return (
     <div className="bg-base-bg items-center flex flex-col min-h-screen">
@@ -51,8 +47,10 @@ const Home = () => {
                 </Link>
                 or{" "}
                 <Link
-                  className="text-green-300 underline-offset-4"
-                  href={user ? "" : "/localCreate"}
+                  className={`text-green-300 underline-offset-4 ${
+                    user ? "cursor-default" : "cursor-pointer"
+                  } `}
+                  href={user ? "" : "/localCreate"} // stops users from being able to go to localheroes if they are signed in
                 >
                   continue
                 </Link>

@@ -9,7 +9,7 @@ import {
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { FieldProps } from "../pages/api/loginForm";
+import { FieldProps } from "@/types/user";
 
 const PasswordField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
   const { control } = useFormContext();

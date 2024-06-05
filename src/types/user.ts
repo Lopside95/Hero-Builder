@@ -11,10 +11,6 @@ export const passwordRegex = z
   )
   .min(5, "Must be at least 5 characters");
 
-// export const passwordPieces = z.object({
-//   uppercase:
-// })
-
 export const userSchema = z
   .object({
     userName: z.string().min(1, "Required"),
@@ -50,8 +46,14 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Required"),
 });
 
-export type DeleteUserSchema = z.infer<typeof deleteUserSchema>;
-export type UpdateUser = z.infer<typeof updateUserSchema>;
-export type User = z.infer<typeof userSchema>;
+export interface FieldProps {
+  fieldName: string;
+  fieldLabel: string;
+  placeholder?: string;
+  className?: string | undefined;
+}
 
+export type User = z.infer<typeof userSchema>;
 export type Login = z.infer<typeof loginSchema>;
+export type UpdateUser = z.infer<typeof updateUserSchema>;
+export type DeleteUserSchema = z.infer<typeof deleteUserSchema>;

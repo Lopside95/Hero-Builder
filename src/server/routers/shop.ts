@@ -7,6 +7,13 @@ export const shopRouter = createTRPCRouter({
     const allWeapons = await prisma.weapon.findMany();
     return allWeapons;
   }),
+  getAllBoots: publicProcedure.query(async () => {
+    const allBoots = await prisma.boots.findMany();
+    return allBoots;
+  }),
+  getAllHeroPics: publicProcedure.query(async () => {
+    return await prisma.heroImages.findMany();
+  }),
   getAllItems: publicProcedure.query(async () => {
     const allBoots = await prisma.boots.findMany();
     const allWeapons = await prisma.weapon.findMany();
@@ -15,6 +22,7 @@ export const shopRouter = createTRPCRouter({
       weapons: allWeapons,
     };
   }),
+  // getFirstItems not currenlty in use
   getFirstItems: publicProcedure.query(async () => {
     const firstBoots = await prisma.boots.findFirst();
     const firstWeapons = await prisma.weapon.findFirst();
@@ -25,14 +33,8 @@ export const shopRouter = createTRPCRouter({
       images: firstImages,
     };
   }),
-  getAllBoots: publicProcedure.query(async () => {
-    const allBoots = await prisma.boots.findMany();
-    return allBoots;
-  }),
-  getAllHeroPics: publicProcedure.query(async () => {
-    return await prisma.heroImages.findMany();
-  }),
-  createNewBoots: publicProcedure // This is for possible future use, where users can create their own boots/weapons etc.
+  createNewBoots: publicProcedure // For possible future use, where users can create their own boots/weapons etc.
+    // This would also help to make the gold relevant / have it make sense
     .input(bootsSchema)
     .mutation(async ({ input }) => {
       const newBoots = await prisma.boots.create({

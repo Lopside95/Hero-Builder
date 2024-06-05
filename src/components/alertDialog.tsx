@@ -16,7 +16,9 @@ interface AlertInfo {
   isOpen?: boolean;
   closeClick: Function;
 }
-
+// This is  no longer in use (but could be useful in future).
+// Before adding the option to store heroes locally, it pointed out to users that they needed and account to save heroes
+// and/or that they weren't logged in
 const AlertDialog = ({
   title,
   message,

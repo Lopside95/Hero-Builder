@@ -14,7 +14,7 @@ import {
 const Navbar = () => {
   const router = useRouter();
 
-  const activePage = (path: string) => router.pathname === path; // Used to conditionally signify current page
+  const activePage = (path: string) => router.pathname === path; // Used to conditionally signify current/active page
 
   const { data: session } = useSession();
 
@@ -65,6 +65,7 @@ const Navbar = () => {
       </span>
 
       <span className="flex gap-3 pl-[35rem]">
+        {/* Navbar elements are conditionally rendered depending on whether or not the user is logged in */}
         {!session && (
           <Button
             className={`text-md text-base-txtClr  hover:underline-offset-[6px] ${
