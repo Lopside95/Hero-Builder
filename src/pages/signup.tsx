@@ -80,7 +80,6 @@ const SignupForm = () => {
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
-      alert("user created");
       updateSession();
     },
     onError: () => {
