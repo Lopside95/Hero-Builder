@@ -33,6 +33,7 @@ const PasswordField = ({ fieldName, fieldLabel, placeholder }: FieldProps) => {
                 <Input
                   {...field}
                   className=""
+                  defaultValue={field.value}
                   placeholder={placeholder}
                   type={showPassword ? "" : "password"}
                 />

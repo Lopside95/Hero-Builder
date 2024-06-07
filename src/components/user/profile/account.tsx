@@ -43,19 +43,15 @@ const Account = () => {
     <FormProvider {...form}>
       <form className="w-full" onSubmit={form.handleSubmit(onSubmit)}>
         <section className="flex items-center w-full justify-evenly pt-10 pb-5">
-          <article className="flex gap-5 w-72 flex-col">
-            <TextField
-              fieldLabel="Username"
-              fieldName="userName"
-              placeholder=""
-            />
-            <TextField fieldLabel="Email" fieldName="email" placeholder="" />
+          <article className="flex gap-4 w-72 flex-col">
+            <TextField fieldLabel="Username" fieldName="userName" />
+            <TextField fieldLabel="Email" fieldName="email" />
             <PasswordField
               fieldLabel="Password"
               fieldName="password"
               placeholder="Password"
             />
-            <Button type="submit">
+            <Button className="mt-2 mb-1" type="submit">
               {Boolean(isUpdating) && (
                 <Loader2 className="mr-2 h-5 w-5 animate-spin sm:h-4 sm:w-4  " />
               )}

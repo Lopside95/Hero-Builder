@@ -14,7 +14,7 @@ const Profile = () => {
 
   return (
     <div className="w-full min-h-screen pt-20 flex flex-col items-center">
-      <h1 className="text-6xl pb-10 ">Account</h1>
+      <h1 className="text-6xl pb-10 ">Your account</h1>
       <section className="flex gap-10 place-items-end  ">
         <article className="flex flex-col ">
           <Account />
@@ -23,7 +23,7 @@ const Profile = () => {
         <article className="flex flex-col gap-10">
           <article className="flex items-center justify-center gap-10">
             <div className="flex flex-col">
-              <h2 className="text-4xl">{user?.userName}</h2>
+              <h2 className="text-4xl pb-4">{user?.userName}</h2>
               <h1 className="text-2xl">
                 {heroArr.length > 1
                   ? heroArr.length + " heroes"

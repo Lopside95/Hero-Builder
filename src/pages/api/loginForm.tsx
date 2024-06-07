@@ -11,13 +11,16 @@ import PasswordField from "@/components/passwordInput";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { useRouter } from "next/router";
 import { ZodAny, ZodObject, ZodRawShape, ZodString, z } from "zod";
+import { trpc } from "@/utils/trpc";
 
 const LoginForm = () => {
+  const { data: user } = trpc.user.getUserById.useQuery();
+
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "james@email.com",
-      password: "Pass1*",
+      email: user?.email,
+      password: "",
     },
   });
 
