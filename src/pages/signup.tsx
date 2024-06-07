@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import { User, userSchema } from "@/types/user";
 import { useEffect, useState } from "react";
 import { Check, TicketIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export type PasswordConditions = {
   uppercase: boolean;
@@ -31,15 +32,13 @@ const SignupForm = () => {
   const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      userName: undefined,
-      email: undefined,
-      password: undefined,
-      repeatPassword: undefined,
-      pic: undefined,
+      userName: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+      pic: "",
     },
   });
-
-  const { watch } = useFormContext<User>();
 
   const router = useRouter();
 
@@ -81,7 +80,11 @@ const SignupForm = () => {
 
   const createNewUser = trpc.user.createUser.useMutation({
     onSuccess: async () => {
+      alert("user created");
       updateSession();
+    },
+    onError: () => {
+      console.log("WTF");
     },
   });
 
@@ -113,16 +116,10 @@ const SignupForm = () => {
                 {" "}
                 <li className="flex gap-1 items-center">
                   an{" "}
-                  <span
-                    // className={`text-[${decideColor(satisfied.uppercase)}]`}
-                    className={`${decideColor(satisfied.uppercase)} `}
-                  >
+                  <span className={`${decideColor(satisfied.uppercase)} `}>
                     uppercase letter
                   </span>
                   {Boolean(satisfied.uppercase) && <GreenCheck />}
-                  {/* <span style={{ color: decideColor(satisfied.uppercase) }}>
-                    uppercase letter
-                  </span> */}
                 </li>
                 <li className="flex gap-1 items-center">
                   a{" "}
@@ -153,21 +150,26 @@ const SignupForm = () => {
         </Card>
         <div className="w-80 self-center flex flex-col gap-5 ">
           <TextField
+            autoComplete="off"
             fieldLabel="Email *"
             fieldName="email"
             placeholder="example@email.com"
           />
           <TextField
+            autoComplete="off"
             fieldLabel="Username *"
             fieldName="userName"
             placeholder="Username"
           />
+          <Input autoComplete="o" />
           <PasswordField
+            autoComplete="off"
             fieldLabel="Password *"
             fieldName="password"
             placeholder="Password "
           />
           <PasswordField
+            autoComplete="off"
             fieldLabel="Repeat password *"
             fieldName="repeatPassword"
             placeholder="Repeat password "

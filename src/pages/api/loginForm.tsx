@@ -10,7 +10,6 @@ import TextField from "@/components/textInput";
 import PasswordField from "@/components/passwordInput";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { useRouter } from "next/router";
-import { ZodAny, ZodObject, ZodRawShape, ZodString, z } from "zod";
 import { trpc } from "@/utils/trpc";
 
 const LoginForm = () => {
@@ -63,6 +62,7 @@ const LoginForm = () => {
         <div className="bg-base-bg flex flex-col text-base-txtClr w-80 gap-3 justify-center items-center">
           {error !== "" && <LoginAlert />}
           <TextField
+            autoComplete="off"
             fieldLabel="Email"
             fieldName="email"
             placeholder="example@email.com"

@@ -38,7 +38,9 @@ const Navbar = () => {
         <>
           <Button
             className="text-md text-base-txtClr w-20  hover:underline-offset-[6px]"
-            onClick={() => signIn()}
+            onClick={(e) => {
+              activePage("/") ? e.preventDefault() : router.push("/"); // prevents the page from reloading if users are already on the login page.
+            }}
             variant="link"
           >
             Log in

@@ -15,8 +15,6 @@ import { useEffect, useState } from "react";
 import { HeroInterface } from "@/components/user/profile/gallery";
 import { defaultVals } from "@/utils/helpers";
 
-// TODO: Add skeleton and/or suspense
-
 const LocalCreate = () => {
   const form = useForm<FinalHeroSchema>({
     resolver: zodResolver(finalHeroSchema),

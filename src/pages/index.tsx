@@ -51,6 +51,7 @@ const Home = () => {
                     user ? "cursor-default" : "cursor-pointer"
                   } `}
                   href={user ? "" : "/localCreate"} // stops users from being able to go to localheroes if they are signed in
+                  //TODO: Implement protected routes
                 >
                   continue
                 </Link>

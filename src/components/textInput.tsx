@@ -34,8 +34,8 @@ const TextField = ({
             </FormLabel>
             <FormControl>
               <Input
-                autoComplete={autoComplete}
-                defaultValue={field.value}
+                // autoComplete={autoComplete}
+                // defaultValue={field.value}
                 {...field}
                 className={className}
                 placeholder={placeholder}

@@ -52,6 +52,7 @@ export interface FieldProps {
   placeholder?: string;
   className?: string | undefined;
   autoComplete?: string;
+  initialValue?: string | number;
 
   // autoComplete?: InputHTMLAttributes<HTMLInputElement>;
 }
