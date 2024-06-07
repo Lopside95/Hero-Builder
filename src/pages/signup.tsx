@@ -161,7 +161,6 @@ const SignupForm = () => {
             fieldName="userName"
             placeholder="Username"
           />
-          <Input autoComplete="o" />
           <PasswordField
             autoComplete="off"
             fieldLabel="Password *"
