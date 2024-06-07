@@ -1,40 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Deployed site: https://herobuilder.vercel.app/
+The Hero Builder:
+1. Users can create a profile through forms managed with Zod and React Hook Form.
+2. Following this, you can select items and personalise your hero with a name and backstory.
+3. By creating a hero, you save them to your account*. The info is stored on MongoDB and you can log back in whenever and view your heroes. 
+4. The database is managed with tRPC and Prisma.
+5. The site uses components from https://ui.shadcn.com/
 
-## Getting Started
 
-First, run the development server:
+*Accounts can be made with any random jumble of letters so long as they follow the 'random@jumble.com' email format (although I'd recommend using something easy to remember - I've been using james@email.com). Passwords are encrypted with bcrypt and salt rounds but have no requirements in terms length and/or use of special or capitalised characters.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+There is room for expansion (and polish) in the web app, some things maybe don't make perfect sense. For example, the gold required to buy items and what the point of having leftover gold is. Previously you could adjust the stats with your remanining gold but this renderd item selection somewhat pointless if you could just shift things around anyway. One of my ideas is that it could decrementally be used to determine the hero's health.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+As mentioned, there is room for improvement and growth with this project and it is in some ways a work in progress. 
