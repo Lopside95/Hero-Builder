@@ -155,7 +155,9 @@ export const userRouter = createTRPCRouter({
         });
       }
 
-      const validPass = bcrypt.compareSync(input.password, user.password);
+      const validPass = input.password
+        ? bcrypt.compareSync(input.password, user.password)
+        : undefined;
 
       if (!validPass) {
         console.log("wrong pasword");
