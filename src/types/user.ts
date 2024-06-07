@@ -51,6 +51,9 @@ export interface FieldProps {
   fieldLabel: string;
   placeholder?: string;
   className?: string | undefined;
+  autoComplete?: string;
+
+  // autoComplete?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 export type User = z.infer<typeof userSchema>;

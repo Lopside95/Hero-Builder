@@ -19,7 +19,7 @@ const LoginForm = () => {
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: user?.email,
+      email: user?.email || "",
       password: "",
     },
   });
@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/profile",
         permanent: false,
       },
     };

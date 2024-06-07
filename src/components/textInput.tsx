@@ -7,7 +7,6 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { useState } from "react";
 import { FieldProps } from "@/types/user";
 
 // Reusable text input component
@@ -17,6 +16,7 @@ const TextField = ({
   fieldLabel,
   placeholder,
   className,
+  autoComplete,
 }: FieldProps) => {
   const { control } = useFormContext();
 
@@ -34,7 +34,8 @@ const TextField = ({
             </FormLabel>
             <FormControl>
               <Input
-                // defaultValue={field.value}
+                autoComplete={autoComplete}
+                defaultValue={field.value}
                 {...field}
                 className={className}
                 placeholder={placeholder}

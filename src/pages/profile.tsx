@@ -5,6 +5,7 @@ import Account from "@/components/user/profile/account";
 import HeroTable from "@/components/user/profile/heroTable";
 import Image from "next/image";
 import { ShopSkeleton } from "@/components/shopSkeleton";
+import { User } from "@/types/user";
 
 const Profile = () => {
   const { data: user } = trpc.user.getUserById.useQuery();

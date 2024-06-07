@@ -31,11 +31,11 @@ const SignupForm = () => {
   const form = useForm<User>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      userName: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-      pic: "",
+      userName: undefined,
+      email: undefined,
+      password: undefined,
+      repeatPassword: undefined,
+      pic: undefined,
     },
   });
 
@@ -148,27 +148,6 @@ const SignupForm = () => {
                   {Boolean(satisfied.longEnough) && <GreenCheck />}
                 </li>
               </ul>
-              {/* <li>
-                Passwords must include an{" "}
-                <span style={{ color: decideColor(satisfied.uppercase) }}>
-                  uppercase letter
-                </span>
-                , a
-                <span style={{ color: decideColor(satisfied.hasNumber) }}>
-                  {" "}
-                  number
-                </span>
-                , a
-                <span style={{ color: decideColor(satisfied.special) }}>
-                  {" "}
-                  special character
-                </span>{" "}
-                and must be at least{" "}
-                <span style={{ color: decideColor(satisfied.longEnough) }}>
-                  5 characters long
-                </span>
-                . Passwords are encrypted.
-              </li> */}
             </ul>
           </CardContent>
         </Card>
