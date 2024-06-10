@@ -7,9 +7,8 @@ The Hero Builder:
 5. The site uses components from https://ui.shadcn.com/
 
 
-*Accounts can be made with any random jumble of letters so long as they follow the 'random@jumble.com' email format (although I'd recommend using something easy to remember - I've been using james@email.com). Passwords are encrypted with bcrypt and salt rounds but have no requirements in terms length and/or use of special or capitalised characters.
-
+*Accounts can be made with any random jumble of letters so long as they follow the 'random@jumble.com' email format (although I'd recommend using something easy to remember - I've been using james@email.com). Passwords are encrypted with bcrypt.
 
 There is room for expansion (and polish) in the web app, some things maybe don't make perfect sense. For example, the gold required to buy items and what the point of having leftover gold is. Previously you could adjust the stats with your remanining gold but this renderd item selection somewhat pointless if you could just shift things around anyway. One of my ideas is that it could decrementally be used to determine the hero's health.
 
-As mentioned, there is room for improvement and growth with this project and it is in some ways a work in progress. 
+As mentioned, there is room for improvement and growth with this project and it is a work in progress. 
